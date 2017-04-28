@@ -284,6 +284,7 @@ export const PLANS_LIST = {
 			FEATURE_WORDADS_INSTANT,
 			FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM,
 			FEATURE_MALWARE_SCANNING_DAILY,
+			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 		] ),
 		getBillingTimeFrame: () => i18n.translate( 'per year' )
@@ -310,6 +311,7 @@ export const PLANS_LIST = {
 			FEATURE_WORDADS_INSTANT,
 			FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM,
 			FEATURE_MALWARE_SCANNING_DAILY,
+			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 		] ),
 		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' )
@@ -389,6 +391,7 @@ export const PLANS_LIST = {
 			FEATURE_ONE_CLICK_THREAT_RESOLUTION,
 			FEATURE_ADVANCED_SEO,
 			FEATURE_GOOGLE_ANALYTICS,
+			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 			isEnabled( 'publicize-scheduling' ) && FEATURE_REPUBLICIZE_SCHEDULING
 		] ),
@@ -424,6 +427,7 @@ export const PLANS_LIST = {
 			FEATURE_ONE_CLICK_THREAT_RESOLUTION,
 			FEATURE_ADVANCED_SEO,
 			FEATURE_GOOGLE_ANALYTICS,
+			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 			isEnabled( 'publicize-scheduling' ) && FEATURE_REPUBLICIZE_SCHEDULING
 		] ),
