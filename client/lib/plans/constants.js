@@ -284,7 +284,6 @@ export const PLANS_LIST = {
 			FEATURE_WORDADS_INSTANT,
 			FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM,
 			FEATURE_MALWARE_SCANNING_DAILY,
-			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 		] ),
 		getBillingTimeFrame: () => i18n.translate( 'per year' )
@@ -311,7 +310,6 @@ export const PLANS_LIST = {
 			FEATURE_WORDADS_INSTANT,
 			FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM,
 			FEATURE_MALWARE_SCANNING_DAILY,
-			FEATURE_UNLIMITED_PREMIUM_THEMES,
 			isEnabled( 'republicize' ) && FEATURE_REPUBLICIZE,
 		] ),
 		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' )
