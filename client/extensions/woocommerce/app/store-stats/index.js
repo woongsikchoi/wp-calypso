@@ -14,6 +14,10 @@ import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
 import Chart from './store-stats-chart';
 import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
 import DatePicker from 'my-sites/stats/stats-date-picker';
+import Module from './store-stats-module';
+import List from './store-stats-list';
+import SectionHeader from 'components/section-header';
+import { topProducts } from 'woocommerce/app/store-stats/constants';
 
 class StoreStats extends Component {
 	static propTypes = {
@@ -32,6 +36,15 @@ class StoreStats extends Component {
 			date: today,
 			quantity: '30'
 		};
+		const topSellersQuery = {
+			unit,
+			date: selectedDate,
+			quantity: '7',
+			limit: '3',
+		};
+		const topProductsHeader = (
+			<SectionHeader href="/store/stats/products">{ topProducts.title }</SectionHeader>
+		);
 		return (
 			<Main className="store-stats woocommerce" wideLayout={ true }>
 				<Navigation unit={ unit } type="orders" slug={ slug } />
@@ -55,6 +68,20 @@ class StoreStats extends Component {
 						showQueryDate
 					/>
 				</StatsPeriodNavigation>
+				<Module
+					siteId={ siteId }
+					header={ topProductsHeader }
+					emptyMessage={ topProducts.empty }
+					query={ topSellersQuery }
+					statType="statsTopSellers"
+				>
+					<List
+						siteId={ siteId }
+						values={ topProducts.values }
+						query={ topSellersQuery }
+						statType="statsTopSellers"
+					/>
+				</Module>
 			</Main>
 		);
 	}
