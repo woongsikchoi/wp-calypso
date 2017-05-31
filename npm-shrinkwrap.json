@@ -3773,7 +3773,7 @@
       "dev": true
     },
     "notifications-panel": {
-      "version": "1.1.13"
+      "version": "automattic/notifications-panel#update/text-styling"
     },
     "npm-path": {
       "version": "1.1.0",
