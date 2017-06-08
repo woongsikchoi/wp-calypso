@@ -163,7 +163,7 @@
 		"woocommerce/extension-settings-shipping": true,
 		"woocommerce/extension-settings-tax": true,
 		"woocommerce/extension-stats": false,
-		"wp-login": true,
+		"wp-login": false,
 		"wpcom-user-bootstrap": false
 	}
 }
