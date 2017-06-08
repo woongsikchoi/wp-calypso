@@ -77,6 +77,7 @@ const EditorSidebar = ( {
 							selectedRevisionId={ selectedRevisionId }
 							selectRevision={ selectRevision }
 							siteId={ site.ID }
+							type={ type }
 						/>
 						: null
 				}

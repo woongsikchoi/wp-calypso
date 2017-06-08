@@ -51,7 +51,11 @@ class EditorRevisionsList extends PureComponent {
 	render() {
 		return (
 			<div>
-				<QueryPostRevisions postId={ this.props.postId } siteId={ this.props.siteId } />
+				<QueryPostRevisions
+					postId={ this.props.postId }
+					postType={ this.props.type }
+					siteId={ this.props.siteId }
+				/>
 				<EditorRevisionsListHeader
 					loadRevision={ this.loadRevision }
 					selectedRevisionId={ this.props.selectedRevisionId }
@@ -85,6 +89,7 @@ EditorRevisionsList.propTypes = {
 	selectedRevisionId: PropTypes.number,
 	selectRevision: PropTypes.func,
 	siteId: PropTypes.number,
+	type: PropTypes.string,
 };
 
 export default connect(
