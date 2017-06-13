@@ -23,8 +23,11 @@ import ReaderMain from 'components/reader-main';
 import { addQueryArgs } from 'lib/url';
 import SearchStreamHeader, { POSTS } from './search-stream-header';
 import withWidth from 'lib/with-width';
+import { SORT_BY_LAST_UPDATED, SORT_BY_RELEVANCE } from './site-results';
 
 const WIDE_DISPLAY_CUTOFF = 660;
+
+const pickSort = sort => ( sort === 'date' ? SORT_BY_LAST_UPDATED : SORT_BY_RELEVANCE );
 
 class SearchStream extends React.Component {
 	static propTypes = {
@@ -159,13 +162,13 @@ class SearchStream extends React.Component {
 						</div>
 						{ query &&
 							<div className="search-stream__site-results">
-								<SiteResults query={ query } sort={ sortOrder } />
+								<SiteResults query={ query } sort={ pickSort( sortOrder ) } />
 							</div> }
 					</div> }
 				{ ! wideDisplay &&
 					<div className="search-stream__single-column-results">
 						{ ( searchType === POSTS && <PostResults { ...this.props } /> ) ||
-							<SiteResults query={ query } sort={ sortOrder } /> }
+							<SiteResults query={ query } sort={ pickSort( sortOrder ) } /> }
 					</div> }
 			</div>
 		);
