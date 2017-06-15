@@ -687,10 +687,7 @@ export const normalizers = {
 		if ( ! payload || ! payload.data ) {
 			return [];
 		}
-		return payload.data.map( d => {
-			d.total = d.sold * d.price;
-			return d;
-		} );
+		return payload.data;
 	},
 
 	statsTopCategories( payload ) {
@@ -701,6 +698,13 @@ export const normalizers = {
 	},
 
 	statsTopCoupons( payload ) {
+		if ( ! payload || ! payload.data ) {
+			return [];
+		}
+		return payload.data;
+	},
+
+	statsTopEarners( payload ) {
 		if ( ! payload || ! payload.data ) {
 			return [];
 		}
