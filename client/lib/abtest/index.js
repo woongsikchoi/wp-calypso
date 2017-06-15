@@ -221,7 +221,7 @@ ABTest.prototype.assignVariation = function() {
 	let variationName, randomAllocationAmount;
 	let sum = 0;
 
-	const userid = Number( user.data.ID );
+	const userid = ( typeof user !== 'undefined' ) ? Number( user.data.ID ) : 'noUserObject';
 	const allocationsTotal = reduce( this.variationDetails, ( allocations, allocation ) => {
 		return allocations + allocation;
 	}, 0 );
