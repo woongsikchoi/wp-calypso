@@ -218,13 +218,18 @@ ABTest.prototype.getSavedVariation = function() {
 };
 
 ABTest.prototype.assignVariation = function() {
-	let variationName, randomAllocationAmount;
+	let variationName, randomAllocationAmount, userid;
 	let sum = 0;
 
-	const userid = ( typeof user !== 'undefined' && user.data !== 'undefined' ) ? Number( user.data.ID ) : 'noUserObject';
 	const allocationsTotal = reduce( this.variationDetails, ( allocations, allocation ) => {
 		return allocations + allocation;
 	}, 0 );
+
+	if ( typeof user !== 'undefined' && typeof user.data !== 'undefined' ) {
+		userid = Number( user.data.ID );
+	} else {
+		userid = Number( 'noUserObject' );
+	}
 
 	if ( this.assignmentMethod === 'userid' && !isNaN( userid ) ) {
 		randomAllocationAmount = userid % allocationsTotal;
