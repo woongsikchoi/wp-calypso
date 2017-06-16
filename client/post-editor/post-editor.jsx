@@ -671,7 +671,7 @@ export const PostEditor = React.createClass( {
 	},
 
 	onPreviewEdit: function() {
-		this.setState( { showPreview: false, isPostPublishPreview: false } );
+		this.setState( { showPreview: false, isPostPublishPreview: false, notice: null } );
 		return false;
 	},
 
