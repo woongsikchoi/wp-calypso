@@ -4,12 +4,8 @@
 import { mergeHandlers } from 'state/action-watchers/utils';
 import activity from './activity';
 import automatedTransfer from './automated-transfer';
+import blogStickers from './blog-stickers';
 import comments from './comments';
 import media from './media';
 
-export default mergeHandlers(
-	activity,
-	automatedTransfer,
-	comments,
-	media
-);
+export default mergeHandlers( activity, automatedTransfer, blogStickers, comments, media );
