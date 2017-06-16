@@ -231,7 +231,7 @@ ABTest.prototype.assignVariation = function() {
 		userid = Number( 'noUserObject' );
 	}
 
-	if ( this.assignmentMethod === 'userid' && !isNaN( userid ) ) {
+	if ( this.assignmentMethod === 'userid' && ! isNaN( userid ) ) {
 		randomAllocationAmount = userid % allocationsTotal;
 	} else {
 		randomAllocationAmount = Math.random() * allocationsTotal;
