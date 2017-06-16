@@ -19,7 +19,7 @@ const ProductHeader = ( { onTrash, onSave, translate } ) => {
 		<Button primary onClick={ onSave } disabled={ onSave === false }>{ translate( 'Save' ) }</Button>;
 
 	return (
-		<ActionHeader>
+		<ActionHeader title={ translate( 'Products' ) }>
 			{ trashButton }
 			{ saveButton }
 		</ActionHeader>
