@@ -19,13 +19,13 @@ export default React.createClass( {
 
 		text: PropTypes.string,
 		loadingText: PropTypes.string,
-		size: PropTypes.number
+		size: PropTypes.number,
 	},
 
 	getDefaultProps() {
 		return {
 			size: 24,
-			loading: false
+			loading: false,
 		};
 	},
 
@@ -34,13 +34,10 @@ export default React.createClass( {
 
 		// Pass any extra props down to the Button component, leaving out
 		// any SpinnerButton specific props
-		const buttonProps = omit( this.props, [
-			'loading',
-			'loadingText',
-			'text',
-			'size',
-			'disabled'
-		] );
+		const buttonProps = omit(
+			this.props,
+			[ 'loading', 'loadingText', 'text', 'size', 'disabled' ],
+		);
 
 		return (
 			<div>
@@ -48,13 +45,8 @@ export default React.createClass( {
 					{ loading ? loadingText : text }
 				</Button>
 
-				{ loading &&
-					<Spinner
-						size={ size }
-						className="spinner-button__spinner"
-					/>
-				}
+				{ loading && <Spinner size={ size } className="spinner-button__spinner" /> }
 			</div>
 		);
-	}
+	},
 } );

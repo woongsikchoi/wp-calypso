@@ -6,10 +6,7 @@ import { expect } from 'chai';
 /**
  * Internal dependencies
  */
-import {
-	productsRequest,
-	productsRequestSuccess,
-} from '../list-reducer';
+import { productsRequest, productsRequestSuccess } from '../list-reducer';
 
 import {
 	WOOCOMMERCE_PRODUCTS_REQUEST,

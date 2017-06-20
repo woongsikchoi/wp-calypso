@@ -19,16 +19,15 @@ import SidebarNavigation from 'my-sites/sidebar-navigation';
 import JetpackDevModeNotice from './jetpack-dev-mode-notice';
 
 export class SiteSettingsComponent extends Component {
-
 	static propTypes = {
 		section: PropTypes.string,
 		// Connected props
 		siteId: PropTypes.number,
-		jetpackSettingsUiSupported: PropTypes.bool
+		jetpackSettingsUiSupported: PropTypes.bool,
 	};
 
 	static defaultProps = {
-		section: 'general'
+		section: 'general',
 	};
 
 	getSection() {
@@ -48,30 +47,24 @@ export class SiteSettingsComponent extends Component {
 
 		return (
 			<Main className="site-settings">
-					{
-						jetpackSettingsUiSupported &&
-						<JetpackDevModeNotice />
-					}
-					<SidebarNavigation />
-					{ siteId && <SiteSettingsNavigation section={ section } /> }
-					<QueryProductsList />
-					{ siteId && <QuerySitePurchases siteId={ siteId } /> }
-					{ siteId && this.getSection() }
+				{ jetpackSettingsUiSupported && <JetpackDevModeNotice /> }
+				<SidebarNavigation />
+				{ siteId && <SiteSettingsNavigation section={ section } /> }
+				<QueryProductsList />
+				{ siteId && <QuerySitePurchases siteId={ siteId } /> }
+				{ siteId && this.getSection() }
 			</Main>
 		);
 	}
-
 }
 
-export default connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
-		const jetpackSite = isJetpackSite( state, siteId );
-		const jetpackUiSupported = siteSupportsJetpackSettingsUi( state, siteId );
+export default connect( state => {
+	const siteId = getSelectedSiteId( state );
+	const jetpackSite = isJetpackSite( state, siteId );
+	const jetpackUiSupported = siteSupportsJetpackSettingsUi( state, siteId );
 
-		return {
-			siteId,
-			jetpackSettingsUiSupported: jetpackSite && jetpackUiSupported,
-		};
-	}
-)( SiteSettingsComponent );
+	return {
+		siteId,
+		jetpackSettingsUiSupported: jetpackSite && jetpackUiSupported,
+	};
+} )( SiteSettingsComponent );

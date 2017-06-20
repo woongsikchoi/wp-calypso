@@ -6,10 +6,7 @@ import {
 	REWIND_RESTORE_COMPLETED,
 	REWIND_RESTORE_UPDATE_ERROR,
 } from 'state/action-types';
-import {
-	createReducer,
-	keyedReducer,
-} from 'state/utils';
+import { createReducer, keyedReducer } from 'state/utils';
 
 // TODO (seear): Use real state when we add restore status data-layer
 const restoreStartState = () => ( {
@@ -23,14 +20,26 @@ const restoreCompleteState = () => ( {
 } );
 const stubNull = () => null;
 
-export const restoreError = keyedReducer( 'siteId', createReducer( {}, {
-	[ REWIND_RESTORE ]: stubNull,
-	[ REWIND_RESTORE_COMPLETED ]: stubNull,
-	[ REWIND_RESTORE_UPDATE_ERROR ]: ( state, { error } ) => error,
-} ) );
+export const restoreError = keyedReducer(
+	'siteId',
+	createReducer(
+		{},
+		{
+			[ REWIND_RESTORE ]: stubNull,
+			[ REWIND_RESTORE_COMPLETED ]: stubNull,
+			[ REWIND_RESTORE_UPDATE_ERROR ]: ( state, { error } ) => error,
+		},
+	),
+);
 
-export const restoreProgress = keyedReducer( 'siteId', createReducer( {}, {
-	[ REWIND_RESTORE ]: restoreStartState,
-	[ REWIND_RESTORE_COMPLETED ]: restoreCompleteState,
-	[ REWIND_RESTORE_UPDATE_ERROR ]: stubNull,
-} ) );
+export const restoreProgress = keyedReducer(
+	'siteId',
+	createReducer(
+		{},
+		{
+			[ REWIND_RESTORE ]: restoreStartState,
+			[ REWIND_RESTORE_COMPLETED ]: restoreCompleteState,
+			[ REWIND_RESTORE_UPDATE_ERROR ]: stubNull,
+		},
+	),
+);

@@ -16,21 +16,27 @@ import TokenField from 'components/token-field';
 import FormSettingExplanation from 'components/forms/form-setting-explanation';
 
 // TODO Rename this card since it contains other controls, and may contain more in the future (like tax)
-const ProductFormCategoriesCard = (
-	{ siteId, product, productCategories, editProduct, translate }
-) => {
-	const handleChange = ( categoryNames ) => {
-		const newCategories = compact( categoryNames.map( ( name ) => {
-			const category = find( productCategories, { name: escape( name ) } );
+const ProductFormCategoriesCard = ( {
+	siteId,
+	product,
+	productCategories,
+	editProduct,
+	translate,
+} ) => {
+	const handleChange = categoryNames => {
+		const newCategories = compact(
+			categoryNames.map( name => {
+				const category = find( productCategories, { name: escape( name ) } );
 
-			if ( ! category ) {
-				// TODO: Add new product category to edit state.
-				// TODO: Remove 'compact' calls afterwards as they will no longer be needed.
-				return undefined;
-			}
+				if ( ! category ) {
+					// TODO: Add new product category to edit state.
+					// TODO: Remove 'compact' calls afterwards as they will no longer be needed.
+					return undefined;
+				}
 
-			return pick( category, 'id' );
-		} ) );
+				return pick( category, 'id' );
+			} ),
+		);
 
 		const data = { id: product.id, categories: newCategories };
 		editProduct( siteId, product, data );
@@ -41,10 +47,12 @@ const ProductFormCategoriesCard = (
 	};
 
 	const selectedCategories = product.categories || [];
-	const selectedCategoryNames = compact( selectedCategories.map( ( c ) => {
-		const category = find( productCategories, { id: c.id } );
-		return category && unescape( category.name ) || undefined;
-	} ) );
+	const selectedCategoryNames = compact(
+		selectedCategories.map( c => {
+			const category = find( productCategories, { id: c.id } );
+			return ( category && unescape( category.name ) ) || undefined;
+		} ),
+	);
 	const productCategoryNames = productCategories.map( c => unescape( c.name ) );
 
 	return (
@@ -63,13 +71,11 @@ const ProductFormCategoriesCard = (
 				</FormSettingExplanation>
 			</FormFieldSet>
 			<div className="products__product-form-featured">
-				<FormLabel htmlFor="featured">{ translate( 'Featured' ) }
-					<CompactFormToggle
-						onChange={ toggleFeatured }
-						checked={ product.featured }
-					>
-					{ translate( 'Feature this product to promote it on your store' ) }
-				</CompactFormToggle>
+				<FormLabel htmlFor="featured">
+					{ translate( 'Featured' ) }
+					<CompactFormToggle onChange={ toggleFeatured } checked={ product.featured }>
+						{ translate( 'Feature this product to promote it on your store' ) }
+					</CompactFormToggle>
 				</FormLabel>
 			</div>
 		</Card>

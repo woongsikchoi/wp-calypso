@@ -51,4 +51,3 @@ function handleActionListAnnotate( actionList, action ) {
 
 	return actionList;
 }
-

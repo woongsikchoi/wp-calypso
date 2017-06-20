@@ -18,7 +18,7 @@ class DatePickerExample extends Component {
 			{
 				title: 'Today',
 				date: new Date(),
-				type: 'scheduled'
+				type: 'scheduled',
 			},
 
 			{
@@ -93,8 +93,8 @@ class DatePickerExample extends Component {
 				title: 'Yesterday',
 				date: new Date( +new Date() - 60 * 60 * 24 * 1000 ),
 				type: 'past-event',
-			}
-		]
+			},
+		],
 	};
 
 	selectDay = ( date, modifiers ) => {
@@ -111,7 +111,8 @@ class DatePickerExample extends Component {
 				<DatePicker
 					events={ this.state.events }
 					onSelectDay={ this.selectDay }
-					selectedDay={ this.state.selectedDay } />
+					selectedDay={ this.state.selectedDay }
+				/>
 			</Card>
 		);
 	}
@@ -120,4 +121,3 @@ class DatePickerExample extends Component {
 DatePickerExample.displayName = 'DatePicker';
 
 export default DatePickerExample;
-

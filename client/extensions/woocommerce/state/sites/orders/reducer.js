@@ -27,7 +27,11 @@ export function isLoading( state = {}, action ) {
 		case WOOCOMMERCE_ORDERS_REQUEST:
 		case WOOCOMMERCE_ORDERS_REQUEST_SUCCESS:
 		case WOOCOMMERCE_ORDERS_REQUEST_FAILURE:
-			return Object.assign( {}, state, { [ action.page ]: WOOCOMMERCE_ORDERS_REQUEST === action.type } );
+			return Object.assign(
+				{},
+				state,
+				{ [ action.page ]: WOOCOMMERCE_ORDERS_REQUEST === action.type },
+			);
 		default:
 			return state;
 	}

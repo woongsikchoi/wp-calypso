@@ -33,7 +33,7 @@ export class LoginLinks extends React.Component {
 		this.props.recordTracksEvent( 'calypso_login_help_link_click' );
 	};
 
-	recordLostPhoneLinkClick = ( event ) => {
+	recordLostPhoneLinkClick = event => {
 		event.preventDefault();
 
 		this.props.recordTracksEvent( 'calypso_login_lost_phone_link_click' );
@@ -41,7 +41,7 @@ export class LoginLinks extends React.Component {
 		page( login( { isNative: true, twoFactorAuthType: 'backup' } ) );
 	};
 
-	recordMagicLoginLinkClick = ( event ) => {
+	recordMagicLoginLinkClick = event => {
 		event.preventDefault();
 
 		this.props.recordTracksEvent( 'calypso_login_magic_login_request_click' );
@@ -65,7 +65,8 @@ export class LoginLinks extends React.Component {
 				icon={ true }
 				onClick={ this.recordHelpLinkClick }
 				target="_blank"
-				href="https://en.support.wordpress.com/security/two-step-authentication/">
+				href="https://en.support.wordpress.com/security/two-step-authentication/"
+			>
 				{ this.props.translate( 'Get help' ) }
 			</ExternalLink>
 		);

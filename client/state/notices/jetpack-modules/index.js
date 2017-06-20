@@ -15,7 +15,10 @@ import {
 import { MODULE_NOTICES } from './constants';
 import { successNotice, errorNotice } from 'state/notices/actions';
 
-export const onJetpackModuleActivationActionMessage = ( dispatch, { type, moduleSlug, silent } ) => {
+export const onJetpackModuleActivationActionMessage = (
+	dispatch,
+	{ type, moduleSlug, silent },
+ ) => {
 	if ( silent ) {
 		return;
 	}

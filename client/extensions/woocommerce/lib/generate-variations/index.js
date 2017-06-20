@@ -16,18 +16,20 @@ import formattedVariationName from '../formatted-variation-name';
  */
 export default function generateVariations( { name, attributes } ) {
 	const variationTypes = [];
-	const variationAttributes = (
-		attributes &&
-		attributes.filter( attribute => attribute.variation && attribute.name && attribute.options.length > 0 )
-	) || [];
+	const variationAttributes = ( attributes &&
+		attributes.filter(
+			attribute => attribute.variation && attribute.name && attribute.options.length > 0,
+		) ) || [];
 
 	variationAttributes.forEach( function( attribute ) {
-		variationTypes.push( attribute.options.map( function( option ) {
-			return {
-				name: attribute.name,
-				option,
-			};
-		} ) );
+		variationTypes.push(
+			attribute.options.map( function( option ) {
+				return {
+					name: attribute.name,
+					option,
+				};
+			} ),
+		);
 	} );
 
 	return cartesian( ...variationTypes ).map( function( combination ) {
@@ -40,7 +42,8 @@ export default function generateVariations( { name, attributes } ) {
 }
 
 function generateDefaultSku( productName, attributes ) {
-	const sku = ( productName && ( productName + '-' ) || '' ) + formattedVariationName( { attributes } );
+	const sku =
+		( ( productName && productName + '-' ) || '' ) + formattedVariationName( { attributes } );
 	return trim( sku.toLowerCase().replace( /\s+/g, '-' ).replace( /-{2,}/g, '-' ) );
 }
 
@@ -54,9 +57,9 @@ function cartesian( ...arrays ) {
 	}
 	const array1 = arrays.splice( 0, 1 )[ 0 ];
 	arrays = cartesian( ...arrays );
-	for ( i = 0, l = array1.length; i < l; i++ ) {
+	for ( ( i = 0 ), ( l = array1.length ); i < l; i++ ) {
 		if ( arrays && arrays.length ) {
-			for ( j = 0, m = arrays.length; j < m; j++ ) {
+			for ( ( j = 0 ), ( m = arrays.length ); j < m; j++ ) {
 				o.push( [ array1[ i ] ].concat( arrays[ j ] ) );
 			}
 		} else {

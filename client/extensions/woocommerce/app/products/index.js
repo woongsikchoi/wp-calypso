@@ -16,7 +16,11 @@ import EmptyContent from 'components/empty-content';
 import { fetchProducts } from 'woocommerce/state/sites/products/actions';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import { getTotalProducts, areProductsLoaded } from 'woocommerce/state/sites/products/selectors';
-import { getProductListCurrentPage, getProductListProducts, getProductListRequestedPage } from 'woocommerce/state/ui/products/selectors';
+import {
+	getProductListCurrentPage,
+	getProductListProducts,
+	getProductListRequestedPage,
+} from 'woocommerce/state/ui/products/selectors';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
 import Main from 'components/main';
 import Pagination from 'my-sites/stats/pagination';
@@ -28,10 +32,7 @@ class Products extends Component {
 		site: PropTypes.shape( {
 			slug: PropTypes.string,
 		} ),
-		products: PropTypes.oneOfType( [
-			PropTypes.array,
-			PropTypes.bool,
-		] ),
+		products: PropTypes.oneOfType( [ PropTypes.array, PropTypes.bool ] ),
 		currentPage: PropTypes.number,
 		currentPageLoaded: PropTypes.bool,
 		requestedPage: PropTypes.number,
@@ -52,29 +53,29 @@ class Products extends Component {
 
 	componentWillReceiveProps( newProps ) {
 		const { site } = this.props;
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchProducts( newSiteId, 1 );
 		}
 	}
 
-	switchPage = ( page ) => {
+	switchPage = page => {
 		const { site } = this.props;
 		this.props.fetchProducts( site.ID, page );
-	}
+	};
 
 	pagination() {
 		const { site, currentPage, totalProducts, currentPageLoaded, requestedPage } = this.props;
 
 		// If we know previously that all products fit on one page, don't show the placeholder
 		// since the Pagination component doesn't display anything for single page display.
-		if ( totalProducts && totalProducts < ( this.perPage + 1 ) ) {
+		if ( totalProducts && totalProducts < this.perPage + 1 ) {
 			return null;
 		}
 
 		if ( ! site || ! currentPageLoaded ) {
-			return ( <div className="products__list-placeholder pagination"></div> );
+			return <div className="products__list-placeholder pagination" />;
 		}
 
 		const page = requestedPage || currentPage;
@@ -95,14 +96,23 @@ class Products extends Component {
 				{ translate( 'Add your first product' ) }
 			</Button>
 		);
-		return <EmptyContent
-				title={ translate( 'You don\'t have any products yet.' ) }
+		return (
+			<EmptyContent
+				title={ translate( "You don't have any products yet." ) }
 				action={ emptyContentAction }
-		/>;
+			/>
+		);
 	}
 
 	renderList() {
-		const { site, products, totalProducts, currentPageLoaded, requestedPageLoaded, requestedPage } = this.props;
+		const {
+			site,
+			products,
+			totalProducts,
+			currentPageLoaded,
+			requestedPageLoaded,
+			requestedPage,
+		} = this.props;
 
 		if ( currentPageLoaded === true && totalProducts === 0 ) {
 			return this.renderEmptyContent();
@@ -111,11 +121,7 @@ class Products extends Component {
 		const isRequesting = ( requestedPage && ! requestedPageLoaded ) || ! products ? true : false;
 		return (
 			<div className="products__list-wrapper">
-				<ProductsListTable
-					site={ site }
-					products={ products }
-					isRequesting={ isRequesting }
-				/>
+				<ProductsListTable site={ site } products={ products } isRequesting={ isRequesting } />
 				{ this.pagination() }
 			</div>
 		);
@@ -143,7 +149,8 @@ function mapStateToProps( state ) {
 	const currentPage = site && getProductListCurrentPage( state, site.ID );
 	const currentPageLoaded = site && currentPage && areProductsLoaded( state, currentPage, site.ID );
 	const requestedPage = site && getProductListRequestedPage( state, site.ID );
-	const requestedPageLoaded = site && requestedPage && areProductsLoaded( state, requestedPage, site.ID );
+	const requestedPageLoaded =
+		site && requestedPage && areProductsLoaded( state, requestedPage, site.ID );
 	const products = site && getProductListProducts( state, site.ID );
 	const totalProducts = site && getTotalProducts( state, site.ID );
 	return {
@@ -162,7 +169,7 @@ function mapDispatchToProps( dispatch ) {
 		{
 			fetchProducts,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

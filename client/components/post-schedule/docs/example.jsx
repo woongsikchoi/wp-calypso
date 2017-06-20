@@ -23,7 +23,7 @@ export default React.createClass( {
 	getInitialState() {
 		let date = new Date();
 		const tz = 'America/Los_Angeles';
-		const tomorrow = ( new Date() ).setDate( date.getDate() + 1 );
+		const tomorrow = new Date().setDate( date.getDate() + 1 );
 
 		date.setDate( date.getDate() + 3 );
 		date.setMilliseconds( 0 );
@@ -38,29 +38,29 @@ export default React.createClass( {
 					id: 1,
 					title: 'Happy 30th birthday',
 					date: new Date( '2015-07-18T15:00:00' ),
-					type: 'birthday'
+					type: 'birthday',
 				},
 				{
 					id: 2,
 					title: 'Tomorrow is tomorrow',
-					date: tomorrow
+					date: tomorrow,
 				},
 				{
 					id: 3,
 					title: 'WordCamp Lima 2016!',
 					date: new Date( '2016-07-16T09:00:00' ),
-					type: 'wordcamp-event'
-				}
+					type: 'wordcamp-event',
+				},
 			],
 			gmtOffset: 1,
 			timezone: tz,
-			date: date
+			date: date,
 		};
 	},
 
 	componentWillMount: function() {
 		this.setState( {
-			isFuture: true
+			isFuture: true,
 		} );
 	},
 
@@ -69,7 +69,7 @@ export default React.createClass( {
 
 		this.setState( {
 			isFuture: +new Date() < +new Date( date ),
-			date: date
+			date: date,
 		} );
 	},
 
@@ -98,27 +98,31 @@ export default React.createClass( {
 	render() {
 		return (
 			<div>
-				<Card style={ {
-					width: '300px',
-					verticalAlign: 'top',
-					display: 'inline-block',
-					margin: 0
-				} }>
+				<Card
+					style={ {
+						width: '300px',
+						verticalAlign: 'top',
+						display: 'inline-block',
+						margin: 0,
+					} }
+				>
 					<PostSchedule
 						events={ this.state.events }
 						onDateChange={ this.setDate }
 						onMonthChange={ this.setMonth }
 						gmtOffset={ this.state.gmtOffset }
 						timezone={ this.state.timezone }
-						selectedDay={ this.state.date } />
+						selectedDay={ this.state.date }
+					/>
 				</Card>
 
-				<div style={ {
-					width: '260px',
-					display: 'inline-block',
-					verticalAlign: 'top',
-					margin: ' 0 0 0 30px'
-				} }
+				<div
+					style={ {
+						width: '260px',
+						display: 'inline-block',
+						verticalAlign: 'top',
+						margin: ' 0 0 0 30px',
+					} }
 				>
 					<Card className="card__component-instance">
 						<h3>
@@ -129,23 +133,17 @@ export default React.createClass( {
 
 						<div className="card__block">
 							<label>state.timezone</label>
-							<div
-								className="state-value"
-								style={ { fontSize: '11px', marginBottom: '2px' } }
-							>
+							<div className="state-value" style={ { fontSize: '11px', marginBottom: '2px' } }>
 								{ this.state.timezone || 'not defined' }
 							</div>
 
-							<Timezone
-								selectedZone={ this.state.timezone }
-								onSelect={ this.setTimezone }
-							/>
+							<Timezone selectedZone={ this.state.timezone } onSelect={ this.setTimezone } />
 
 							<a
 								className="card__property-action"
 								style={ {
 									top: '-8px',
-									position: 'relative'
+									position: 'relative',
 								} }
 								onClick={ this.clearState.bind( this, 'timezone' ) }
 								href="#"
@@ -174,15 +172,8 @@ export default React.createClass( {
 
 						<div className="card__block">
 							<label>state.date</label>
-							<div
-								className="state-value"
-								style={ { fontSize: '11px' } }
-							>
-								{
-									this.state.date
-										? this.state.date.format()
-										: 'not defined'
-								}
+							<div className="state-value" style={ { fontSize: '11px' } }>
+								{ this.state.date ? this.state.date.format() : 'not defined' }
 							</div>
 
 							<a
@@ -205,29 +196,15 @@ export default React.createClass( {
 
 						<div className="card__block">
 							<label>prop.onDateChange( date )</label>
-							<div
-								className="state-value"
-								style={ { fontSize: '11px' } }
-							>
-								{
-									this.state.date
-										? this.state.date.format()
-										: 'not defined'
-								}
+							<div className="state-value" style={ { fontSize: '11px' } }>
+								{ this.state.date ? this.state.date.format() : 'not defined' }
 							</div>
 						</div>
 
 						<div className="card__block">
 							<label>prop.onMonthChange( date )</label>
-							<div
-								className="state-value"
-								style={ { fontSize: '11px' } }
-							>
-								{
-									this.state.month
-										? this.state.month.format()
-										: 'not defined'
-								}
+							<div className="state-value" style={ { fontSize: '11px' } }>
+								{ this.state.month ? this.state.month.format() : 'not defined' }
 							</div>
 						</div>
 					</Card>
@@ -252,15 +229,11 @@ export default React.createClass( {
 				className="state-value"
 				style={ {
 					marginLeft: '10px',
-					fontSize: '11px'
+					fontSize: '11px',
 				} }
 			>
-				{
-					this.state.isFuture
-						? 'FUTURE'
-						: 'PRESENT or PAST'
-				}
+				{ this.state.isFuture ? 'FUTURE' : 'PRESENT or PAST' }
 			</span>
 		);
-	}
+	},
 } );

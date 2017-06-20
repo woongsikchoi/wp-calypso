@@ -12,7 +12,10 @@ import { findIndex } from 'lodash';
  */
 import Card from 'components/card';
 import QuerySiteStats from 'components/data/query-site-stats';
-import { getSiteStatsNormalizedData, isRequestingSiteStatsForQuery } from 'state/stats/lists/selectors';
+import {
+	getSiteStatsNormalizedData,
+	isRequestingSiteStatsForQuery,
+} from 'state/stats/lists/selectors';
 import ElementChart from 'components/chart';
 import Legend from 'components/chart/legend';
 import Tabs from 'my-sites/stats/stats-tabs';
@@ -31,7 +34,7 @@ class StoreStatsChart extends Component {
 	};
 
 	state = {
-		selectedTabIndex: 0
+		selectedTabIndex: 0,
 	};
 
 	barClick = bar => {
@@ -78,20 +81,19 @@ class StoreStatsChart extends Component {
 		const selectedIndex = this.getSelectedIndex( data );
 		return (
 			<Card className="store-stats-chart stats-module">
-				{ siteId && <QuerySiteStats
-					query={ query }
-					siteId={ siteId }
-					statType="statsOrders"
-				/> }
-				<Legend
-					activeTab={ selectedTab }
-				/>
+				{ siteId && <QuerySiteStats query={ query } siteId={ siteId } statType="statsOrders" /> }
+				<Legend activeTab={ selectedTab } />
 				<ElementChart loading={ isLoading } data={ chartData } barClick={ this.barClick } />
 				<Tabs data={ chartData }>
 					{ tabs.map( ( tab, tabIndex ) => {
 						if ( ! isLoading ) {
 							const itemChartData = this.buildChartData( data[ selectedIndex ], tabs[ tabIndex ] );
-							const delta = calculateDelta( data[ selectedIndex ], data[ selectedIndex - 1 ], tabs[ tabIndex ].attr, unit );
+							const delta = calculateDelta(
+								data[ selectedIndex ],
+								data[ selectedIndex - 1 ],
+								tabs[ tabIndex ].attr,
+								unit,
+							);
 							return (
 								<Tab
 									key={ tab.attr }
@@ -113,11 +115,9 @@ class StoreStatsChart extends Component {
 	}
 }
 
-export default connect(
-	( state, { query, siteId } ) => {
-		return {
-			data: getSiteStatsNormalizedData( state, siteId, 'statsOrders', query ),
-			isRequesting: isRequestingSiteStatsForQuery( state, siteId, 'statsOrders', query ),
-		};
-	}
-)( StoreStatsChart );
+export default connect( ( state, { query, siteId } ) => {
+	return {
+		data: getSiteStatsNormalizedData( state, siteId, 'statsOrders', query ),
+		isRequesting: isRequestingSiteStatsForQuery( state, siteId, 'statsOrders', query ),
+	};
+} )( StoreStatsChart );

@@ -7,14 +7,13 @@ import {
 	WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_REQUEST,
 	WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_REQUEST_SUCCESS,
 } from 'woocommerce/state/action-types';
-import {
-	areShippingZoneLocationsLoaded,
-	areShippingZoneLocationsLoading,
-} from './selectors';
+import { areShippingZoneLocationsLoaded, areShippingZoneLocationsLoading } from './selectors';
 
 export const fetchShippingZoneLocations = ( siteId, zoneId ) => ( dispatch, getState ) => {
-	if ( areShippingZoneLocationsLoaded( getState(), zoneId, siteId ) ||
-		areShippingZoneLocationsLoading( getState(), zoneId, siteId ) ) {
+	if (
+		areShippingZoneLocationsLoaded( getState(), zoneId, siteId ) ||
+		areShippingZoneLocationsLoading( getState(), zoneId, siteId )
+	) {
 		return;
 	}
 
@@ -26,8 +25,9 @@ export const fetchShippingZoneLocations = ( siteId, zoneId ) => ( dispatch, getS
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'shipping/zones/' + zoneId + '/locations' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'shipping/zones/' + zoneId + '/locations' )
+		.then( data => {
 			dispatch( {
 				type: WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_REQUEST_SUCCESS,
 				siteId,

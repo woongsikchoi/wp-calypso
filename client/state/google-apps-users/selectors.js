@@ -8,7 +8,7 @@ function getGoogleAppsUsersState( state ) {
 }
 
 function createGoogleAppsUsersSelector( fn ) {
-	return createSelector( fn, ( state ) => [ getGoogleAppsUsersState( state ) ] );
+	return createSelector( fn, state => [ getGoogleAppsUsersState( state ) ] );
 }
 
 /**
@@ -18,7 +18,8 @@ function createGoogleAppsUsersSelector( fn ) {
  * @returns {[]} Filtered users
  */
 export const getByDomain = createGoogleAppsUsersSelector(
-	( state, domainName ) => getGoogleAppsUsersState( state ).items.filter( item => item.domain === domainName )
+	( state, domainName ) =>
+		getGoogleAppsUsersState( state ).items.filter( item => item.domain === domainName ),
 );
 
 /**
@@ -28,7 +29,8 @@ export const getByDomain = createGoogleAppsUsersSelector(
  * @returns {[]} Filtered users
  */
 export const getBySite = createGoogleAppsUsersSelector(
-	( state, siteId ) => getGoogleAppsUsersState( state ).items.filter( item => item.site_id === siteId )
+	( state, siteId ) =>
+		getGoogleAppsUsersState( state ).items.filter( item => item.site_id === siteId ),
 );
 
 /**

@@ -7,10 +7,7 @@ import {
 	WOOCOMMERCE_SHIPPING_ZONE_METHODS_REQUEST,
 	WOOCOMMERCE_SHIPPING_ZONE_METHODS_REQUEST_SUCCESS,
 } from 'woocommerce/state/action-types';
-import {
-	areShippingZoneMethodsLoaded,
-	areShippingZoneMethodsLoading,
-} from './selectors';
+import { areShippingZoneMethodsLoaded, areShippingZoneMethodsLoading } from './selectors';
 
 export const fetchShippingZoneMethodsSuccess = ( siteId, zoneId, data ) => {
 	return {
@@ -22,8 +19,10 @@ export const fetchShippingZoneMethodsSuccess = ( siteId, zoneId, data ) => {
 };
 
 export const fetchShippingZoneMethods = ( siteId, zoneId ) => ( dispatch, getState ) => {
-	if ( areShippingZoneMethodsLoaded( getState(), zoneId, siteId ) ||
-		areShippingZoneMethodsLoading( getState(), zoneId, siteId ) ) {
+	if (
+		areShippingZoneMethodsLoaded( getState(), zoneId, siteId ) ||
+		areShippingZoneMethodsLoading( getState(), zoneId, siteId )
+	) {
 		return;
 	}
 
@@ -35,8 +34,9 @@ export const fetchShippingZoneMethods = ( siteId, zoneId ) => ( dispatch, getSta
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'shipping/zones/' + zoneId + '/methods' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'shipping/zones/' + zoneId + '/methods' )
+		.then( data => {
 			dispatch( fetchShippingZoneMethodsSuccess( siteId, zoneId, data ) );
 		} )
 		.catch( err => {

@@ -12,7 +12,7 @@ import { getSiteFragment, sectionify } from 'lib/route';
 import { renderWithReduxStore } from 'lib/react-helpers';
 import WPJobManager from './main';
 
-export const renderTab = ( component, tab = '' ) => ( context ) => {
+export const renderTab = ( component, tab = '' ) => context => {
 	const siteId = getSiteFragment( context.path );
 	const basePath = sectionify( context.path );
 	let baseAnalyticsPath;
@@ -38,6 +38,6 @@ export const renderTab = ( component, tab = '' ) => ( context ) => {
 			{ React.createElement( component ) }
 		</WPJobManager>,
 		document.getElementById( 'primary' ),
-		context.store
+		context.store,
 	);
 };

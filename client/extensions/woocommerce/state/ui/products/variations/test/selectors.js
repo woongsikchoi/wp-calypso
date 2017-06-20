@@ -35,10 +35,9 @@ describe( 'selectors', () => {
 					ui: {
 						products: {
 							123: {
-								variations: {
-								}
-							}
-						}
+								variations: {},
+							},
+						},
 					},
 				},
 			},
@@ -129,7 +128,11 @@ describe( 'selectors', () => {
 			const uiProducts = state.extensions.woocommerce.ui.products;
 			set( uiProducts, [ siteId, 'variations', 'edits', '0', 'productId' ], 2 );
 			set( uiProducts, [ siteId, 'variations', 'edits', '0', 'creates' ], [ newVariation ] );
-			set( uiProducts, [ siteId, 'variations', 'edits', '0', 'currentlyEditingId' ], newVariation.id );
+			set(
+				uiProducts,
+				[ siteId, 'variations', 'edits', '0', 'currentlyEditingId' ],
+				newVariation.id,
+			);
 
 			expect( getCurrentlyEditingVariation( state, 2 ) ).to.eql( newVariation );
 		} );

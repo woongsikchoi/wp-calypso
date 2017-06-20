@@ -8,44 +8,44 @@ const CURRENCIES = {
 		symbol: '$',
 		grouping: ',',
 		decimal: '.',
-		precision: 2
+		precision: 2,
 	},
 	AUD: {
 		symbol: 'A$',
 		grouping: ',',
 		decimal: '.',
-		precision: 2
+		precision: 2,
 	},
 	CAD: {
 		symbol: 'C$',
 		grouping: ',',
 		decimal: '.',
-		precision: 2
+		precision: 2,
 	},
 	EUR: {
 		symbol: '€',
 		grouping: '.',
 		decimal: ',',
-		precision: 2
+		precision: 2,
 	},
 	GBP: {
 		symbol: '£',
 		grouping: ',',
 		decimal: '.',
-		precision: 2
+		precision: 2,
 	},
 	JPY: {
 		symbol: '¥',
 		grouping: ',',
 		decimal: '.',
-		precision: 0
+		precision: 0,
 	},
 	BRL: {
 		symbol: 'R$',
 		grouping: ',',
 		decimal: '.',
-		precision: 2
-	}
+		precision: 2,
+	},
 };
 
 /**
@@ -64,17 +64,12 @@ export default function formatCurrency( number, code, options = {} ) {
 	if ( ! currencyDefaults || isNaN( number ) ) {
 		return null;
 	}
-	const {
-		decimal,
-		grouping,
-		precision,
-		symbol
-	} = { ...currencyDefaults, ...options };
+	const { decimal, grouping, precision, symbol } = { ...currencyDefaults, ...options };
 	const sign = number < 0 ? '-' : '';
 	const value = numberFormat( Math.abs( number ), {
 		decimals: precision,
 		thousandsSep: grouping,
-		decPoint: decimal
+		decPoint: decimal,
 	} );
 	return `${ sign }${ symbol }${ value }`;
 }
@@ -95,32 +90,27 @@ export function getCurrencyObject( number, code, options = {} ) {
 	if ( ! currencyDefaults || isNaN( number ) ) {
 		return null;
 	}
-	const {
-		decimal,
-		grouping,
-		precision,
-		symbol
-	} = { ...currencyDefaults, ...options };
+	const { decimal, grouping, precision, symbol } = { ...currencyDefaults, ...options };
 	const sign = number < 0 ? '-' : '';
 	const absNumber = Math.abs( number );
 	const rawInteger = Math.floor( absNumber );
 	const integer = numberFormat( rawInteger, {
 		decimals: 0,
 		thousandsSep: grouping,
-		decPoint: decimal
+		decPoint: decimal,
 	} );
 	const fraction = precision > 0
 		? numberFormat( absNumber - rawInteger, {
-			decimals: precision,
-			thousandsSep: grouping,
-			decPoint: decimal
-		} ).slice( 1 )
+				decimals: precision,
+				thousandsSep: grouping,
+				decPoint: decimal,
+			} ).slice( 1 )
 		: '';
 	return {
 		sign,
 		symbol,
 		integer,
-		fraction
+		fraction,
 	};
 }
 

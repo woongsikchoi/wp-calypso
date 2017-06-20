@@ -28,14 +28,12 @@ const FlowProgressIndicator = ( { flowName, positionInFlow, translate } ) => {
 
 		return (
 			<div className="flow-progress-indicator">
-				{
-					translate( 'Step %(stepNumber)d of %(stepTotal)d', {
-						args: {
-							stepNumber: positionInFlow + 1,
-							stepTotal: flowLength
-						}
-					} )
-				}
+				{ translate( 'Step %(stepNumber)d of %(stepTotal)d', {
+					args: {
+						stepNumber: positionInFlow + 1,
+						stepTotal: flowLength,
+					},
+				} ) }
 			</div>
 		);
 	}

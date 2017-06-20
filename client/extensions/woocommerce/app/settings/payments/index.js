@@ -14,15 +14,13 @@ import SettingsPaymentsOffSite from './payments-off-site';
 import SettingsPaymentsOnSite from './payments-on-site';
 
 class SettingsPayments extends Component {
-
 	static propTypes = {
 		className: PropTypes.string,
 	};
 
 	render() {
 		return (
-			<Main
-				className={ classNames( 'settingsPayments', this.props.className ) }>
+			<Main className={ classNames( 'settingsPayments', this.props.className ) }>
 				<SettingsPaymentsLocationCurrency />
 				<SettingsPaymentsOnSite />
 				<SettingsPaymentsOffSite />
@@ -30,7 +28,6 @@ class SettingsPayments extends Component {
 			</Main>
 		);
 	}
-
 }
 
 export default SettingsPayments;

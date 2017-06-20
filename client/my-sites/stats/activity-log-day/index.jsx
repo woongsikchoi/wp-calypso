@@ -26,10 +26,7 @@ class ActivityLogDay extends Component {
 	};
 
 	handleClickRestore = () => {
-		const {
-			requestRestore,
-			timestamp,
-		} = this.props;
+		const { requestRestore, timestamp } = this.props;
 		requestRestore( timestamp );
 	};
 
@@ -60,31 +57,23 @@ class ActivityLogDay extends Component {
 	 * @returns { object } Heading to display with date and number of events
 	 */
 	getEventsHeading() {
-		const {
-			logs,
-			moment,
-			timestamp,
-			translate,
-		} = this.props;
+		const { logs, moment, timestamp, translate } = this.props;
 
 		return (
 			<div>
 				<div className="activity-log-day__day">{ moment( timestamp ).format( 'LL' ) }</div>
-				<div className="activity-log-day__events">{
-					translate( '%d Event', '%d Events', {
+				<div className="activity-log-day__events">
+					{ translate( '%d Event', '%d Events', {
 						args: logs.length,
 						count: logs.length,
-					} )
-				}</div>
+					} ) }
+				</div>
 			</div>
 		);
 	}
 
 	render() {
-		const {
-			logs,
-			requestRestore,
-		} = this.props;
+		const { logs, requestRestore } = this.props;
 
 		return (
 			<div className="activity-log-day">
@@ -93,23 +82,24 @@ class ActivityLogDay extends Component {
 					summary={ this.getRewindButton( 'primary' ) }
 					expandedSummary={ this.getRewindButton() }
 				>
-					{ logs.map( ( log, index ) => (
-						<ActivityLogItem
-							key={ index }
-							requestRestore={ requestRestore }
-
-							title={ log.name }
-							subTitle={ log.subTitle }
-							description={ log.description }
-							icon={ log.icon }
-							siteId={ this.props.siteId }
-							timestamp={ log.ts_site }
-							user={ log.user }
-							actionText={ log.actionText }
-							status={ log.status }
-							className={ log.className }
-						/>
-					) ) }
+					{ logs.map(
+						( log, index ) => (
+							<ActivityLogItem
+								key={ index }
+								requestRestore={ requestRestore }
+								title={ log.name }
+								subTitle={ log.subTitle }
+								description={ log.description }
+								icon={ log.icon }
+								siteId={ this.props.siteId }
+								timestamp={ log.ts_site }
+								user={ log.user }
+								actionText={ log.actionText }
+								status={ log.status }
+								className={ log.className }
+							/>
+						),
+					) }
 				</FoldableCard>
 			</div>
 		);

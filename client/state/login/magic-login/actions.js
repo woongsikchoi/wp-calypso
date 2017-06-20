@@ -64,20 +64,24 @@ export const hideMagicLoginRequestNotice = () => {
 export const fetchMagicLoginRequestEmail = email => dispatch => {
 	dispatch( { type: MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_FETCH } );
 
-	return wpcom.undocumented().requestMagicLoginEmail( {
-		email,
-	} ).then( () => {
-		dispatch( { type: MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_SUCCESS } );
-		dispatch( {
-			type: MAGIC_LOGIN_SHOW_CHECK_YOUR_EMAIL_PAGE,
-			email
+	return wpcom
+		.undocumented()
+		.requestMagicLoginEmail( {
+			email,
+		} )
+		.then( () => {
+			dispatch( { type: MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_SUCCESS } );
+			dispatch( {
+				type: MAGIC_LOGIN_SHOW_CHECK_YOUR_EMAIL_PAGE,
+				email,
+			} );
+		} )
+		.catch( error => {
+			dispatch( {
+				type: MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_ERROR,
+				error: error.message,
+			} );
 		} );
-	} ).catch( error => {
-		dispatch( {
-			type: MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_ERROR,
-			error: error.message,
-		} );
-	} );
 };
 
 const authError = error => {

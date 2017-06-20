@@ -33,11 +33,11 @@ class DatePickerDay extends Component {
 			hour: 0,
 			minute: 0,
 			second: 0,
-			millisecond: 0
+			millisecond: 0,
 		} );
 
 		date = date || this.props.date;
-		return ( +today - 1 ) >= +date;
+		return +today - 1 >= +date;
 	}
 
 	showTooltip = () => {
@@ -46,11 +46,11 @@ class DatePickerDay extends Component {
 		}
 
 		this.setState( { showTooltip: true } );
-	}
+	};
 
 	hideTooltip = () => {
 		this.setState( { showTooltip: false } );
-	}
+	};
 
 	renderTooltip() {
 		if ( ! this.state.showTooltip ) {
@@ -61,13 +61,10 @@ class DatePickerDay extends Component {
 			return null;
 		}
 
-		const label = this.props.translate(
-			'%d post',
-			'%d posts', {
-				count: this.props.events.length,
-				args: this.props.events.length,
-			}
-		);
+		const label = this.props.translate( '%d post', '%d posts', {
+			count: this.props.events.length,
+			args: this.props.events.length,
+		} );
 
 		const moreEvents = this.props.events.length - this.props.maxEventsPerTooltip;
 
@@ -81,29 +78,33 @@ class DatePickerDay extends Component {
 				<span>{ label }</span>
 				<hr className="date-picker__division" />
 				<ul>
-					{ map( this.props.events, ( event, i ) => ( i < this.props.maxEventsPerTooltip ) &&
-						<li key={ event.id }>
-							<CalendarEvent
-								icon={ event.icon }
-								socialIcon={ event.socialIcon }
-								socialIconColor={ event.socialIconColor }
-								title={ event.title } />
-						</li>
+					{ map(
+						this.props.events,
+						( event, i ) =>
+							i < this.props.maxEventsPerTooltip &&
+							<li key={ event.id }>
+								<CalendarEvent
+									icon={ event.icon }
+									socialIcon={ event.socialIcon }
+									socialIconColor={ event.socialIconColor }
+									title={ event.title }
+								/>
+							</li>,
 					) }
 
-					{ ( moreEvents > 0 ) &&
+					{ moreEvents > 0 &&
 						<li>
 							{ this.props.translate(
 								'… and %(moreEvents)d more post',
-								'… and %(moreEvents)d more posts', {
+								'… and %(moreEvents)d more posts',
+								{
 									count: moreEvents,
 									args: {
-										moreEvents
-									}
-								}
+										moreEvents,
+									},
+								},
 							) }
-						</li>
-					}
+						</li> }
 				</ul>
 			</Tooltip>
 		);
@@ -123,10 +124,7 @@ class DatePickerDay extends Component {
 			for ( i; i < this.props.events.length; i++ ) {
 				dayEvent = this.props.events[ i ];
 
-				if (
-					dayEvent.type &&
-					( ! classes[ 'date-picker__day_event_' + dayEvent.type ] )
-				) {
+				if ( dayEvent.type && ! classes[ 'date-picker__day_event_' + dayEvent.type ] ) {
 					classes[ 'date-picker__day_event_' + dayEvent.type ] = true;
 				}
 			}
@@ -140,9 +138,9 @@ class DatePickerDay extends Component {
 				onMouseLeave={ this.hideTooltip }
 			>
 				<span
-					key={ 'selected-' + ( this.props.date.getTime() / 1000 | 0 ) }
-					className="date-picker__day-selected">
-				</span>
+					key={ 'selected-' + ( ( this.props.date.getTime() / 1000 ) | 0 ) }
+					className="date-picker__day-selected"
+				/>
 				<span className="date-picker__day-text">
 					{ this.props.date.getDate() }
 				</span>
@@ -154,4 +152,3 @@ class DatePickerDay extends Component {
 }
 
 export default localize( DatePickerDay );
-

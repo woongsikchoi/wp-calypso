@@ -42,11 +42,13 @@ const ShippingZone = ( { translate, locationName, locationDescription, methods, 
 ShippingZone.propTypes = {
 	locationName: PropTypes.string,
 	locationDescription: PropTypes.string,
-	methods: PropTypes.arrayOf( PropTypes.shape( {
-		name: PropTypes.string,
-		description: PropTypes.string,
-	} ) ),
-	icon: PropTypes.string
+	methods: PropTypes.arrayOf(
+		PropTypes.shape( {
+			name: PropTypes.string,
+			description: PropTypes.string,
+		} ),
+	),
+	icon: PropTypes.string,
 };
 
 export default localize( ShippingZone );

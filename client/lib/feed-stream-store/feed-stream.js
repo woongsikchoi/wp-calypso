@@ -477,7 +477,7 @@ export default class FeedStream {
 				this.pendingDateAfter = moment(
 					FeedPostStore.get( this.keyMaker( data.posts[ data.posts.length - 1 ] ) )[
 						this.dateProperty
-					],
+					 ],
 				);
 				this.emitChange();
 			}

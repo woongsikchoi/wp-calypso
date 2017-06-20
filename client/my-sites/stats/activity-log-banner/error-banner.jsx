@@ -10,9 +10,7 @@ import { localize } from 'i18n-calypso';
 import ActivityLogBanner from './index';
 import Button from 'components/button';
 
-function ErrorBanner( {
-	translate,
-} ) {
+function ErrorBanner( { translate } ) {
 	return (
 		<ActivityLogBanner
 			isDismissable
@@ -21,7 +19,7 @@ function ErrorBanner( {
 			title={ translate( 'Problem restoring your site' ) }
 		>
 			<p>{ translate( 'We came across a problem while trying to restore your site.' ) }</p>
-			<Button primary >
+			<Button primary>
 				{ translate( 'Try again' ) }
 			</Button>
 			{ '  ' }

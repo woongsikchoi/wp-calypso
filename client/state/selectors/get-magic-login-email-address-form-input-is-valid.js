@@ -10,8 +10,5 @@ import getMagicLoginEmailAddressFormInput from './get-magic-login-email-address-
 
 export default function getMagicLoginEmailAddressFormInputIsValid( state ) {
 	const email = getMagicLoginEmailAddressFormInput( state );
-	return !! (
-		typeof email === 'string' &&
-		emailValidator.validate( email )
-	);
+	return !! ( typeof email === 'string' && emailValidator.validate( email ) );
 }

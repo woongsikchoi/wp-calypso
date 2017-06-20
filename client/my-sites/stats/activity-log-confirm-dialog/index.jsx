@@ -29,11 +29,7 @@ class ActivityLogConfirmDialog extends Component {
 	};
 
 	renderButtons() {
-		const {
-			onClose,
-			onConfirm,
-			translate,
-		} = this.props;
+		const { onClose, onConfirm, translate } = this.props;
 		return (
 			<div>
 				<Button onClick={ onClose }>
@@ -47,39 +43,26 @@ class ActivityLogConfirmDialog extends Component {
 	}
 
 	render() {
-		const {
-			isVisible,
-			moment,
-			siteTitle,
-			timestamp,
-			translate,
-		} = this.props;
+		const { isVisible, moment, siteTitle, timestamp, translate } = this.props;
 
 		return (
-			<Dialog
-				additionalClassNames="activity-log-confirm-dialog"
-				isVisible={ isVisible }
-			>
+			<Dialog additionalClassNames="activity-log-confirm-dialog" isVisible={ isVisible }>
 				<h1>{ translate( 'Restore Site' ) }</h1>
 				<p className="activity-log-confirm-dialog__highlight">
-					{
-						translate(
-							'To proceed please confirm this restore on your site %(siteTitle)s',
-							{ args: { siteTitle } }
-						)
-					}
+					{ translate(
+						'To proceed please confirm this restore on your site %(siteTitle)s',
+						{ args: { siteTitle } },
+					) }
 				</p>
 
 				<div className="activity-log-confirm-dialog__line">
 					<Gridicon icon={ 'history' } />
-					{
-						translate( 'Restoring to {{b}}%(time)s{{/b}}', {
-							args: {
-								time: moment( timestamp ).format( 'LLL' ),
-							},
-							components: { b: <b /> },
-						} )
-					}
+					{ translate( 'Restoring to {{b}}%(time)s{{/b}}', {
+						args: {
+							time: moment( timestamp ).format( 'LLL' ),
+						},
+						components: { b: <b /> },
+					} ) }
 				</div>
 				<div className="activity-log-confirm-dialog__line">
 					<Gridicon icon={ 'notice' } />

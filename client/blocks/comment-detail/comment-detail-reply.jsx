@@ -10,7 +10,7 @@ export class CommentDetailReply extends Component {
 
 		return (
 			<div className="comment-detail__reply">
-				<textarea placeholder={ translate( 'Reply' ) }></textarea>
+				<textarea placeholder={ translate( 'Reply' ) } />
 			</div>
 		);
 	}

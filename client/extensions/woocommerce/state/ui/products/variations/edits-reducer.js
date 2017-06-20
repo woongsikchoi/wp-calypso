@@ -28,10 +28,10 @@ function editProductVariationAction( edits, action ) {
 	let found = false;
 
 	// Look for an existing product edits first.
-	const _edits = prevEdits.map( ( productEdits ) => {
+	const _edits = prevEdits.map( productEdits => {
 		if ( productId === productEdits.productId ) {
 			found = true;
-			const variationId = variation && variation.id || { index: Number( uniqueId() ) };
+			const variationId = ( variation && variation.id ) || { index: Number( uniqueId() ) };
 			const _variation = variation || { id: variationId };
 			const _array = editProductVariation( productEdits[ bucket ], _variation, data );
 			return {
@@ -46,7 +46,7 @@ function editProductVariationAction( edits, action ) {
 
 	if ( ! found ) {
 		// product not in edits, so add it now.
-		const variationId = variation && variation.id || { index: Number( uniqueId() ) };
+		const variationId = ( variation && variation.id ) || { index: Number( uniqueId() ) };
 		const _variation = variation || { id: variationId };
 
 		const _array = editProductVariation( null, _variation, data );
@@ -67,7 +67,7 @@ function editProductVariation( array, variation, data ) {
 	let found = false;
 
 	// Look for this object in the appropriate create or edit array first.
-	const _array = prevArray.map( ( v ) => {
+	const _array = prevArray.map( v => {
 		if ( variation.id === v.id ) {
 			found = true;
 			return { ...v, ...data };
@@ -92,7 +92,7 @@ function editProductAttributeAction( edits, action ) {
 	let productEdits = null;
 
 	// Look for an existing product edits first.
-	edits = prevEdits.map( ( edit ) => {
+	edits = prevEdits.map( edit => {
 		if ( product.id === edit.productId ) {
 			productEdits = edit;
 		}
@@ -104,16 +104,16 @@ function editProductAttributeAction( edits, action ) {
 	if ( null === productEdits ) {
 		edits.push( {
 			productId: product.id,
-			creates
+			creates,
 		} );
 		return edits;
 	}
 
-	return edits.map( ( edit ) => {
+	return edits.map( edit => {
 		if ( product.id === edit.productId ) {
 			return {
 				...productEdits,
-				creates
+				creates,
 			};
 		}
 		return edit;
@@ -122,11 +122,16 @@ function editProductAttributeAction( edits, action ) {
 
 // TODO Check against a product's existing variations (retrieved from the API) and deal with those in the checks below.
 function editProductVariations( productEdits, variations ) {
-	const creates = productEdits && productEdits.creates || [];
+	const creates = ( productEdits && productEdits.creates ) || [];
 
 	// Add new variations that do not exist yet.
-	variations.forEach( ( variation ) => {
-		if ( ! find( creates, ( variationCreate ) => isEqual( variation.attributes, variationCreate.attributes ) ) ) {
+	variations.forEach( variation => {
+		if (
+			! find(
+				creates,
+				variationCreate => isEqual( variation.attributes, variationCreate.attributes ),
+			)
+		) {
 			creates.push( {
 				id: { index: Number( uniqueId() ) },
 				attributes: variation.attributes,
@@ -137,9 +142,14 @@ function editProductVariations( productEdits, variations ) {
 	} );
 
 	// Remove variations that are no longer valid.
-	return creates.filter( ( variationCreate ) => {
-		if ( variationCreate.attributes.length &&
-			! find( variations, ( variation ) => isEqual( variationCreate.attributes, variation.attributes ) ) ) {
+	return creates.filter( variationCreate => {
+		if (
+			variationCreate.attributes.length &&
+			! find(
+				variations,
+				variation => isEqual( variationCreate.attributes, variation.attributes ),
+			)
+		) {
 			return false;
 		}
 		return true;

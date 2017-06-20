@@ -14,9 +14,7 @@ import {
 	getOptedOutofTaxesSetup,
 	getTriedCustomizerDuringInitialSetup,
 } from 'woocommerce/state/sites/setup-choices/selectors';
-import {
-	setFinishedInitialSetup,
-} from 'woocommerce/state/sites/setup-choices/actions';
+import { setFinishedInitialSetup } from 'woocommerce/state/sites/setup-choices/actions';
 import SetupFooter from './setup-footer';
 import SetupHeader from './setup-header';
 import SetupTasks from './setup-tasks';
@@ -29,10 +27,10 @@ class SetupTasksView extends Component {
 		} ),
 	};
 
-	onFinished = ( event ) => {
+	onFinished = event => {
 		event.preventDefault();
 		this.props.setFinishedInitialSetup( this.props.site.ID, true );
-	}
+	};
 
 	render = () => {
 		const { allTasksCompleted, site, translate } = this.props;
@@ -42,26 +40,27 @@ class SetupTasksView extends Component {
 				<SetupHeader
 					imageSource={ '/calypso/images/extensions/woocommerce/woocommerce-setup.svg' }
 					imageWidth={ 160 }
-					title={ translate( 'Howdy! Let\'s set up your store & start selling' ) }
-					subtitle={ translate( 'Below you will find the essential tasks to complete before making your store live.' ) }
+					title={ translate( "Howdy! Let's set up your store & start selling" ) }
+					subtitle={ translate(
+						'Below you will find the essential tasks to complete before making your store live.',
+					) }
 				/>
-				<SetupTasks
-					site={ site }
-				/>
+				<SetupTasks site={ site } />
 				<SetupFooter
 					onClick={ this.onFinished }
-					label={ translate( 'I\'m finished setting up' ) }
+					label={ translate( "I'm finished setting up" ) }
 					primary={ allTasksCompleted }
 				/>
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
 	// TODO - add test for hasProducts, paymentsAreSetUp, shippingIsSetUp and taxesAreSetUp
 	// when those selectors become available
-	const allTasksCompleted = getOptedOutOfShippingSetup( state ) &&
+	const allTasksCompleted =
+		getOptedOutOfShippingSetup( state ) &&
 		getOptedOutofTaxesSetup( state ) &&
 		getTriedCustomizerDuringInitialSetup( state );
 
@@ -75,7 +74,7 @@ function mapDispatchToProps( dispatch ) {
 		{
 			setFinishedInitialSetup,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

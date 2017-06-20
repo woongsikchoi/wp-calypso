@@ -3,12 +3,7 @@
  */
 import React, { Component } from 'react';
 import { localize } from 'i18n-calypso';
-import {
-	includes,
-	noop,
-	map,
-	identity
-} from 'lodash';
+import { includes, noop, map, identity } from 'lodash';
 
 /**
  * Internal dependencies
@@ -30,15 +25,15 @@ export class MediaLibraryFilterBar extends Component {
 		site: React.PropTypes.object,
 		onFilterChange: React.PropTypes.func,
 		onSearch: React.PropTypes.func,
-		translate: React.PropTypes.func
+		translate: React.PropTypes.func,
 	};
 
-	static defaultProps ={
+	static defaultProps = {
 		filter: '',
 		basePath: '/media',
 		onFilterChange: noop,
 		onSearch: noop,
-		translate: identity
+		translate: identity,
 	};
 
 	getSearchPlaceholderText() {
@@ -86,7 +81,7 @@ export class MediaLibraryFilterBar extends Component {
 	renderTabItems() {
 		const tabs = [ '', 'images', 'documents', 'videos', 'audio' ];
 
-		return map( tabs, filter =>
+		return map( tabs, filter => (
 			<FilterItem
 				key={ 'filter-tab-' + filter }
 				value={ filter }
@@ -96,7 +91,7 @@ export class MediaLibraryFilterBar extends Component {
 			>
 				{ this.getFilterLabel( filter ) }
 			</FilterItem>
-		);
+		) );
 	}
 
 	renderSearchSection() {
@@ -112,7 +107,8 @@ export class MediaLibraryFilterBar extends Component {
 				onSearch={ this.props.onSearch }
 				initialValue={ this.props.search }
 				placeholder={ this.getSearchPlaceholderText() }
-				delaySearch={ true } />
+				delaySearch={ true }
+			/>
 		);
 	}
 

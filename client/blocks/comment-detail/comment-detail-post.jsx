@@ -8,12 +8,7 @@ import React from 'react';
  */
 import SiteIcon from 'blocks/site-icon';
 
-export const CommentDetailPost = ( {
-	postAuthorDisplayName,
-	postTitle,
-	postUrl,
-	siteId,
-} ) =>
+export const CommentDetailPost = ( { postAuthorDisplayName, postTitle, postUrl, siteId } ) => (
 	<div className="comment-detail__post">
 		<SiteIcon siteId={ siteId } size={ 24 } />
 		<div className="comment-detail__post-info">
@@ -24,6 +19,7 @@ export const CommentDetailPost = ( {
 				{ postTitle }
 			</a>
 		</div>
-	</div>;
+	</div>
+);
 
 export default CommentDetailPost;

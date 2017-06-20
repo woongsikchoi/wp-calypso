@@ -23,7 +23,9 @@ describe( 'WizardBar', function() {
 	it( 'should have the color provided by the color property', function() {
 		const wizardBar = shallow( <WizardBar value={ 20 } color="red" /> );
 
-		expect( wizardBar.find( '.wizard-bar__progress' ).props().style.backgroundColor ).to.be.equal( 'red' );
+		expect( wizardBar.find( '.wizard-bar__progress' ).props().style.backgroundColor ).to.be.equal(
+			'red',
+		);
 	} );
 
 	it( 'should not be able to be more than 100% complete', () => {

@@ -26,7 +26,7 @@ import {
 	PLAN_JETPACK_PERSONAL,
 	PLAN_JETPACK_PERSONAL_MONTHLY,
 	PLAN_PERSONAL,
-	getPlanClass
+	getPlanClass,
 } from 'lib/plans/constants';
 import PlanIcon from 'components/plans/plan-icon';
 import { plansLink } from 'lib/plans';
@@ -37,29 +37,16 @@ import { getCurrentPlan } from 'state/sites/plans/selectors';
 import isSiteAutomatedTransfer from 'state/selectors/is-site-automated-transfer';
 
 class PlanFeaturesHeader extends Component {
-
 	render() {
-		const {
-			planType,
-			popular,
-			newPlan,
-			title,
-			translate
-		} = this.props;
+		const { planType, popular, newPlan, title, translate } = this.props;
 		const headerClasses = classNames( 'plan-features__header', getPlanClass( planType ) );
 
 		return (
-			<header className={ headerClasses } onClick={ this.props.onClick } >
-				{
-					popular && <Ribbon>{ translate( 'Popular' ) }</Ribbon>
-				}
-				{
-					newPlan && <Ribbon>{ translate( 'New' ) }</Ribbon>
-				}
-				{
-					this.isPlanCurrent() && <Ribbon>{ translate( 'Your Plan' ) }</Ribbon>
-				}
-				<div className="plan-features__header-figure" >
+			<header className={ headerClasses } onClick={ this.props.onClick }>
+				{ popular && <Ribbon>{ translate( 'Popular' ) }</Ribbon> }
+				{ newPlan && <Ribbon>{ translate( 'New' ) }</Ribbon> }
+				{ this.isPlanCurrent() && <Ribbon>{ translate( 'Your Plan' ) }</Ribbon> }
+				<div className="plan-features__header-figure">
 					<PlanIcon plan={ planType } />
 				</div>
 				<div className="plan-features__header-text">
@@ -79,31 +66,27 @@ class PlanFeaturesHeader extends Component {
 			site,
 			translate,
 			isSiteAT,
-			hideMonthly
+			hideMonthly,
 		} = this.props;
 
 		const isDiscounted = !! discountPrice;
 		const timeframeClasses = classNames( 'plan-features__header-timeframe', {
 			'is-discounted': isDiscounted,
-			'is-placeholder': isPlaceholder
+			'is-placeholder': isPlaceholder,
 		} );
 
-		if (
-			isSiteAT ||
-			! site.jetpack ||
-			this.props.planType === PLAN_JETPACK_FREE ||
-			hideMonthly
-		) {
+		if ( isSiteAT || ! site.jetpack || this.props.planType === PLAN_JETPACK_FREE || hideMonthly ) {
 			return (
 				<p className={ timeframeClasses }>
 					{ ! isPlaceholder ? billingTimeFrame : '' }
-					{ isDiscounted && ! isPlaceholder &&
+					{ isDiscounted &&
+						! isPlaceholder &&
 						<InfoPopover
 							className="plan-features__header-tip-info"
-							position={ isMobile() ? 'top' : 'bottom left' }>
+							position={ isMobile() ? 'top' : 'bottom left' }
+						>
 							{ translate( 'Discount for first year' ) }
-						</InfoPopover>
-					}
+						</InfoPopover> }
 				</p>
 			);
 		}
@@ -112,22 +95,10 @@ class PlanFeaturesHeader extends Component {
 	}
 
 	getIntervalTypeToggle() {
-		const {
-			translate,
-			rawPrice,
-			intervalType,
-			site,
-			basePlansPath,
-			hideMonthly
-		} = this.props;
+		const { translate, rawPrice, intervalType, site, basePlansPath, hideMonthly } = this.props;
 
-		if ( hideMonthly ||
-			! rawPrice ||
-			this.isPlanCurrent() ) {
-			return (
-				<div className="plan-features__interval-type is-placeholder">
-				</div>
-			);
+		if ( hideMonthly || ! rawPrice || this.isPlanCurrent() ) {
+			return <div className="plan-features__interval-type is-placeholder" />;
 		}
 
 		let plansUrl = '/plans';
@@ -155,11 +126,7 @@ class PlanFeaturesHeader extends Component {
 	}
 
 	isPlanCurrent() {
-		const {
-			planType,
-			current,
-			currentSitePlan
-		} = this.props;
+		const { planType, current, currentSitePlan } = this.props;
 
 		if ( ! currentSitePlan ) {
 			return current;
@@ -175,19 +142,17 @@ class PlanFeaturesHeader extends Component {
 			rawPrice,
 			isPlaceholder,
 			relatedMonthlyPlan,
-			site
+			site,
 		} = this.props;
 
 		if ( isPlaceholder ) {
 			const isJetpackSite = !! site.jetpack;
 			const classes = classNames( 'is-placeholder', {
 				'plan-features__price': ! isJetpackSite,
-				'plan-features__price-jetpack': isJetpackSite
+				'plan-features__price-jetpack': isJetpackSite,
 			} );
 
-			return (
-				<div className={ classes } ></div>
-			);
+			return <div className={ classes } />;
 		}
 		if ( discountPrice ) {
 			return (
@@ -208,9 +173,7 @@ class PlanFeaturesHeader extends Component {
 			);
 		}
 
-		return (
-			<PlanPrice currencyCode={ currencyCode } rawPrice={ rawPrice } />
-		);
+		return <PlanPrice currencyCode={ currencyCode } rawPrice={ rawPrice } />;
 	}
 }
 
@@ -218,19 +181,21 @@ PlanFeaturesHeader.propTypes = {
 	billingTimeFrame: PropTypes.string.isRequired,
 	current: PropTypes.bool,
 	onClick: PropTypes.func,
-	planType: React.PropTypes.oneOf( [
-		PLAN_FREE,
-		PLAN_PREMIUM,
-		PLAN_BUSINESS,
-		PLAN_JETPACK_FREE,
-		PLAN_JETPACK_BUSINESS,
-		PLAN_JETPACK_BUSINESS_MONTHLY,
-		PLAN_JETPACK_PREMIUM,
-		PLAN_JETPACK_PREMIUM_MONTHLY,
-		PLAN_JETPACK_PERSONAL,
-		PLAN_JETPACK_PERSONAL_MONTHLY,
-		PLAN_PERSONAL
-	] ).isRequired,
+	planType: React.PropTypes.oneOf(
+		[
+			PLAN_FREE,
+			PLAN_PREMIUM,
+			PLAN_BUSINESS,
+			PLAN_JETPACK_FREE,
+			PLAN_JETPACK_BUSINESS,
+			PLAN_JETPACK_BUSINESS_MONTHLY,
+			PLAN_JETPACK_PREMIUM,
+			PLAN_JETPACK_PREMIUM_MONTHLY,
+			PLAN_JETPACK_PERSONAL,
+			PLAN_JETPACK_PERSONAL_MONTHLY,
+			PLAN_PERSONAL,
+		],
+	).isRequired,
 	popular: PropTypes.bool,
 	newPlan: PropTypes.bool,
 	rawPrice: PropTypes.number,
@@ -244,7 +209,7 @@ PlanFeaturesHeader.propTypes = {
 	isInJetpackConnect: PropTypes.bool,
 	currentSitePlan: PropTypes.object,
 	relatedMonthlyPlan: PropTypes.object,
-	isSiteAT: PropTypes.bool
+	isSiteAT: PropTypes.bool,
 };
 
 PlanFeaturesHeader.defaultProps = {
@@ -257,18 +222,15 @@ PlanFeaturesHeader.defaultProps = {
 	site: {},
 	basePlansPath: null,
 	currentSitePlan: {},
-	isSiteAT: false
+	isSiteAT: false,
 };
 
 export default connect( ( state, ownProps ) => {
 	const { isInSignup } = ownProps;
 	const selectedSiteId = isInSignup ? null : getSelectedSiteId( state );
 	const currentSitePlan = getCurrentPlan( state, selectedSiteId );
-	return Object.assign( {},
-		ownProps,
-		{
-			currentSitePlan,
-			isSiteAT: isSiteAutomatedTransfer( state, selectedSiteId )
-		}
-	);
+	return Object.assign( {}, ownProps, {
+		currentSitePlan,
+		isSiteAT: isSiteAutomatedTransfer( state, selectedSiteId ),
+	} );
 } )( localize( PlanFeaturesHeader ) );

@@ -52,7 +52,7 @@ class PurchasesList extends Component {
 						slug={ site.slug }
 						purchases={ site.purchases }
 					/>
-				)
+				),
 			);
 		}
 
@@ -63,7 +63,7 @@ class PurchasesList extends Component {
 						title={ this.props.translate( 'Looking to upgrade?' ) }
 						line={ this.props.translate(
 							'Our plans give your site the power to thrive. ' +
-								'Find the plan that works for you.'
+								'Find the plan that works for you.',
 						) }
 						action={ this.props.translate( 'Upgrade Now' ) }
 						actionURL={ '/plans' }
@@ -98,5 +98,5 @@ export default connect(
 		isFetchingUserPurchases: isFetchingUserPurchases( state ),
 		sites: getSites( state ),
 	} ),
-	undefined
+	undefined,
 )( localize( PurchasesList ) );

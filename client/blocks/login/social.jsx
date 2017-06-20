@@ -32,52 +32,58 @@ class SocialLoginForm extends Component {
 		bearerToken: null,
 	};
 
-	handleGoogleResponse = ( response ) => {
+	handleGoogleResponse = response => {
 		const { onSuccess, redirectTo } = this.props;
 
 		if ( ! response.Zi || ! response.Zi.id_token ) {
 			return;
 		}
 
-		this.props.loginSocialUser( 'google', response.Zi.id_token, redirectTo ).then( () => {
-			this.props.recordTracksEvent( 'calypso_login_social_login_success', {
-				social_account_type: 'google',
-			} );
-
-			onSuccess();
-		} ).catch( error => {
-			if ( error.code === 'unknown_user' ) {
-				this.props.createSocialUser( 'google', response.Zi.id_token, 'login' ).then( wpcomResponse => {
-					this.props.recordTracksEvent( 'calypso_login_social_signup_success', {
-						social_account_type: 'google',
-					} );
-
-					this.setState( {
-						username: wpcomResponse.username,
-						bearerToken: wpcomResponse.bearer_token
-					} );
-				} ).catch( wpcomError => {
-					this.props.recordTracksEvent( 'calypso_login_social_signup_failure', {
-						social_account_type: 'google',
-						error_code: wpcomError.error,
-						error_message: wpcomError.message
-					} );
-				} );
-			} else {
-				this.props.recordTracksEvent( 'calypso_login_social_login_failure', {
+		this.props
+			.loginSocialUser( 'google', response.Zi.id_token, redirectTo )
+			.then( () => {
+				this.props.recordTracksEvent( 'calypso_login_social_login_success', {
 					social_account_type: 'google',
-					error_code: error.code,
-					error_message: error.message
 				} );
 
-				this.props.errorNotice( error.message );
-			}
-		} );
+				onSuccess();
+			} )
+			.catch( error => {
+				if ( error.code === 'unknown_user' ) {
+					this.props
+						.createSocialUser( 'google', response.Zi.id_token, 'login' )
+						.then( wpcomResponse => {
+							this.props.recordTracksEvent( 'calypso_login_social_signup_success', {
+								social_account_type: 'google',
+							} );
+
+							this.setState( {
+								username: wpcomResponse.username,
+								bearerToken: wpcomResponse.bearer_token,
+							} );
+						} )
+						.catch( wpcomError => {
+							this.props.recordTracksEvent( 'calypso_login_social_signup_failure', {
+								social_account_type: 'google',
+								error_code: wpcomError.error,
+								error_message: wpcomError.message,
+							} );
+						} );
+				} else {
+					this.props.recordTracksEvent( 'calypso_login_social_login_failure', {
+						social_account_type: 'google',
+						error_code: error.code,
+						error_message: error.message,
+					} );
+
+					this.props.errorNotice( error.message );
+				}
+			} );
 	};
 
 	trackGoogleLogin = () => {
 		this.props.recordTracksEvent( 'calypso_login_social_button_click', {
-			social_account_type: 'google'
+			social_account_type: 'google',
 		} );
 	};
 
@@ -92,23 +98,23 @@ class SocialLoginForm extends Component {
 					<GoogleLoginButton
 						clientId={ config( 'google_oauth_client_id' ) }
 						responseHandler={ this.handleGoogleResponse }
-						onClick={ this.trackGoogleLogin } />
+						onClick={ this.trackGoogleLogin }
+					/>
 				</div>
 
-				{ this.state.bearerToken && (
+				{ this.state.bearerToken &&
 					<WpcomLoginForm
 						log={ this.state.username }
 						authorization={ 'Bearer ' + this.state.bearerToken }
 						redirectTo="/start"
-					/>
-				) }
+					/> }
 			</div>
 		);
 	}
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		redirectTo: getCurrentQueryArguments( state ).redirect_to,
 	} ),
 	{
@@ -118,5 +124,5 @@ export default connect(
 		createSocialUser,
 		loginSocialUser,
 		recordTracksEvent,
-	}
+	},
 )( localize( SocialLoginForm ) );

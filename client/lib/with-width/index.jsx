@@ -16,7 +16,8 @@ import { debounce } from 'lodash';
  * @param {object} EnhancedComponent - react component to wrap and give the prop width to
  * @returns {object} the enhanced component
  */
-export default ( EnhancedComponent, { domTarget } = {} ) => class WithWidth extends React.Component {
+export default ( EnhancedComponent, { domTarget } = {} ) => class WithWidth
+	extends React.Component {
 	static displayName = `WithWidth( ${ EnhancedComponent.displayName } )`;
 
 	state = {
@@ -35,7 +36,7 @@ export default ( EnhancedComponent, { domTarget } = {} ) => class WithWidth exte
 	componentDidMount() {
 		this.resizeEventListener = window.addEventListener(
 			'resize',
-			debounce( this.handleResize, 50 )
+			debounce( this.handleResize, 50 ),
 		);
 		this.handleResize();
 	}

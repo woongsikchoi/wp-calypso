@@ -175,7 +175,7 @@ class SearchStream extends Component {
 			>
 				{ this.props.showBack && <HeaderBack /> }
 				<div ref={ this.handleStreamMounted } />
-				{/* for non-recs add more margin-top.  this is a soon-to-be-deleted hack */}
+				{ /* for non-recs add more margin-top.  this is a soon-to-be-deleted hack */ }
 				{ this.props.postsStore &&
 					this.props.postsStore.id !== 'custom_recs_posts_with_images' &&
 					<div style={ { height: '100px' } } /> }

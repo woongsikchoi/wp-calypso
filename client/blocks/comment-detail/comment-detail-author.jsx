@@ -68,37 +68,35 @@ export class CommentDetailAuthor extends Component {
 					</div>
 					<div className="comment-detail__author-more-element">
 						<Gridicon icon="mail" />
-								<span>
-									{ authorEmail }
-								</span>
+						<span>
+							{ authorEmail }
+						</span>
 					</div>
 					<div className="comment-detail__author-more-element">
 						<Gridicon icon="link" />
-								<span>
-									{ authorUrl }
-								</span>
+						<span>
+							{ authorUrl }
+						</span>
 					</div>
 					<div className="comment-detail__author-more-element">
 						<Gridicon icon="globe" />
-								<span>
-									{ authorIp }
-								</span>
+						<span>
+							{ authorIp }
+						</span>
 					</div>
 				</div>
 				<div className="comment-detail__author-more-actions">
 					<a
 						className={ classNames(
-									'comment-detail__author-more-element comment-detail__author-more-element-block-user',
-									{ 'is-blocked': authorIsBlocked }
-								) }
+							'comment-detail__author-more-element comment-detail__author-more-element-block-user',
+							{ 'is-blocked': authorIsBlocked },
+						) }
 						onClick={ blockUser }
 					>
 						<Gridicon icon="block" />
-								<span>{
-									authorIsBlocked
-										? translate( 'Unblock user' )
-										: translate( 'Block user' )
-								}</span>
+						<span>
+							{ authorIsBlocked ? translate( 'Unblock user' ) : translate( 'Block user' ) }
+						</span>
 					</a>
 				</div>
 			</div>
@@ -124,10 +122,7 @@ export class CommentDetailAuthor extends Component {
 			<div className={ classes }>
 				<div className="comment-detail__author-preview">
 					<div className="comment-detail__author-avatar">
-						<img
-							className="comment-detail__author-avatar-image"
-							src={ authorAvatarUrl }
-						/>
+						<img className="comment-detail__author-avatar-image" src={ authorAvatarUrl } />
 					</div>
 					<div className="comment-detail__author-info">
 						<div className="comment-detail__author-info-element comment-detail__author-name">
@@ -142,12 +137,10 @@ export class CommentDetailAuthor extends Component {
 							{ moment( commentDate ).format( 'MMMM D, YYYY H:mma' ) }
 						</div>
 					</div>
-					{
-						showAuthorInfo &&
+					{ showAuthorInfo &&
 						<a className="comment-detail__author-more-info-toggle" onClick={ this.toggleExpanded }>
 							<Gridicon icon="info-outline" />
-						</a>
-					}
+						</a> }
 				</div>
 				{ this.authorMoreInfo() }
 			</div>

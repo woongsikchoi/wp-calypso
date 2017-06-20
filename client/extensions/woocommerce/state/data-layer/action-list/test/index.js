@@ -14,11 +14,7 @@ import {
 	actionListStepSuccess,
 	actionListStepFailure,
 } from 'woocommerce/state/action-list/actions';
-import {
-	handleStepNext,
-	handleStepSuccess,
-	handleStepFailure,
-} from '../';
+import { handleStepNext, handleStepSuccess, handleStepFailure } from '../';
 
 describe( 'handlers', () => {
 	describe( '#handleStepNext', () => {
@@ -29,12 +25,10 @@ describe( 'handlers', () => {
 				extensions: {
 					woocommerce: {
 						actionList: {
-							steps: [
-								{ description: 'Step 1', action: step1Action },
-							],
-						}
-					}
-				}
+							steps: [ { description: 'Step 1', action: step1Action } ],
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -62,9 +56,9 @@ describe( 'handlers', () => {
 								{ description: 'Step 1', action: { type: '%%1%%' } },
 								{ description: 'Step 2', action: { type: '%%2%%' } },
 							],
-						}
-					}
-				}
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -96,16 +90,23 @@ describe( 'handlers', () => {
 					woocommerce: {
 						actionList: {
 							steps: [
-								{ description: 'Step 1', action: { type: '%%1%%' },
-									startTime: step1Start, endTime: step1End },
-								{ description: 'Step 2', action: { type: '%%2%%' },
-									startTime: step2Start },
+								{
+									description: 'Step 1',
+									action: { type: '%%1%%' },
+									startTime: step1Start,
+									endTime: step1End,
+								},
+								{
+									description: 'Step 2',
+									action: { type: '%%2%%' },
+									startTime: step2Start,
+								},
 							],
 							successAction,
 							failureAction,
-						}
-					}
-				}
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -134,13 +135,16 @@ describe( 'handlers', () => {
 					woocommerce: {
 						actionList: {
 							steps: [
-								{ description: 'Step 1', action: { type: '%%1%%' },
-									startTime: step1Start },
+								{
+									description: 'Step 1',
+									action: { type: '%%1%%' },
+									startTime: step1Start,
+								},
 							],
 							clearUponComplete: true,
-						}
-					}
-				}
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -176,9 +180,9 @@ describe( 'handlers', () => {
 							],
 							successAction,
 							failureAction,
-						}
-					}
-				}
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -201,13 +205,11 @@ describe( 'handlers', () => {
 				extensions: {
 					woocommerce: {
 						actionList: {
-							steps: [
-								{ description: 'Step 1', action: { type: '%%1%%' } },
-							],
+							steps: [ { description: 'Step 1', action: { type: '%%1%%' } } ],
 							clearUponComplete: true,
-						}
-					}
-				}
+						},
+					},
+				},
 			};
 
 			const store = {
@@ -227,4 +229,3 @@ describe( 'handlers', () => {
 		} );
 	} );
 } );
-

@@ -28,7 +28,6 @@ import { getEditedPost } from 'state/posts/selectors';
 import EditorVisibility from 'post-editor/editor-visibility';
 
 export class EditPostStatus extends Component {
-
 	static propTypes = {
 		moment: PropTypes.func,
 		setPostDate: PropTypes.func,
@@ -48,7 +47,7 @@ export class EditPostStatus extends Component {
 		super( props );
 		this.state = {
 			showTZTooltip: false,
-			showPostSchedulePopover: false
+			showPostSchedulePopover: false,
 		};
 	}
 
@@ -67,7 +66,7 @@ export class EditPostStatus extends Component {
 		recordEvent( 'Changed Sticky Setting', stickyEventLabel );
 
 		this.props.editPost( this.props.siteId, this.props.postId, {
-			sticky: ! this.props.post.sticky
+			sticky: ! this.props.post.sticky,
 		} );
 	};
 
@@ -78,13 +77,13 @@ export class EditPostStatus extends Component {
 		recordEvent( 'Changed Pending Status', pending ? 'Marked Draft' : 'Marked Pending' );
 
 		this.props.editPost( this.props.siteId, this.props.postId, {
-			status: pending ? 'draft' : 'pending'
+			status: pending ? 'draft' : 'pending',
 		} );
 	};
 
 	togglePostSchedulePopover = () => {
 		this.setState( {
-			showPostSchedulePopover: ! this.state.showPostSchedulePopover
+			showPostSchedulePopover: ! this.state.showPostSchedulePopover,
 		} );
 	};
 
@@ -113,15 +112,16 @@ export class EditPostStatus extends Component {
 			canPublish = siteUtils.userCan( 'publish_posts', this.props.site );
 		}
 
-		const adminUrl = this.props.site &&
-			this.props.site.options &&
-			this.props.site.options.admin_url;
+		const adminUrl =
+			this.props.site && this.props.site.options && this.props.site.options.admin_url;
 
-		const fullDate = postScheduleUtils.convertDateToUserLocation(
-			( this.props.postDate || new Date() ),
-			siteUtils.timezone( this.props.site ),
-			siteUtils.gmtOffset( this.props.site )
-		).format( 'll LT' );
+		const fullDate = postScheduleUtils
+			.convertDateToUserLocation(
+				this.props.postDate || new Date(),
+				siteUtils.timezone( this.props.site ),
+				siteUtils.gmtOffset( this.props.site ),
+			)
+			.format( 'll LT' );
 
 		return (
 			<div className="edit-post-status">
@@ -132,19 +132,19 @@ export class EditPostStatus extends Component {
 					onMouseLeave={ this.hideTZTooltip }
 					onClick={ this.togglePostSchedulePopover }
 				>
-					{
-						postUtils.isFutureDated( this.props.savedPost )
-							? <span className="edit-post-status__future-label">
-									{ translate( 'Future' ) }
-								</span>
-							: <Gridicon icon="time" size={ 18 } />
-					}
+					{ postUtils.isFutureDated( this.props.savedPost )
+						? <span className="edit-post-status__future-label">
+								{ translate( 'Future' ) }
+							</span>
+						: <Gridicon icon="time" size={ 18 } /> }
 
 					{ fullDate }
 					{ this.renderTZTooltop() }
 					{ this.renderPostSchedulePopover() }
 				</span>
-				{ this.props.type === 'post' && ! isPostPrivate && ! isPasswordProtected &&
+				{ this.props.type === 'post' &&
+					! isPostPrivate &&
+					! isPasswordProtected &&
 					<label className="edit-post-status__sticky">
 						<span className="edit-post-status__label-text">
 							{ translate( 'Stick to the front page' ) }
@@ -157,9 +157,10 @@ export class EditPostStatus extends Component {
 							onChange={ this.toggleStickyStatus }
 							aria-label={ translate( 'Stick post to the front page' ) }
 						/>
-					</label>
-				}
-				{ ( ! isPublished && ! isScheduled && canPublish ) &&
+					</label> }
+				{ ! isPublished &&
+					! isScheduled &&
+					canPublish &&
 					<label className="edit-post-status__pending-review">
 						<span className="edit-post-status__label-text">
 							{ translate( 'Pending review' ) }
@@ -172,17 +173,15 @@ export class EditPostStatus extends Component {
 							onChange={ this.togglePendingStatus }
 							aria-label={ translate( 'Request review for post' ) }
 						/>
-					</label>
-				}
-				{ ( isPublished || isScheduled || isPending && ! canPublish ) &&
+					</label> }
+				{ ( isPublished || isScheduled || ( isPending && ! canPublish ) ) &&
 					<Button
 						className="edit-post-status__revert-to-draft"
 						onClick={ this.revertToDraft }
 						compact={ true }
 					>
 						<Gridicon icon="undo" size={ 18 } /> { translate( 'Revert to draft' ) }
-					</Button>
-				}
+					</Button> }
 				{ this.renderPostVisibility() }
 				<Revisions
 					revisions={ this.props.post && this.props.post.revisions }
@@ -212,17 +211,13 @@ export class EditPostStatus extends Component {
 			context: 'post-settings',
 		};
 
-		return (
-			<EditorVisibility { ...props } />
-		);
+		return <EditorVisibility { ...props } />;
 	}
 
 	renderPostSchedulePopover() {
 		const tz = siteUtils.timezone( this.props.site ),
 			gmt = siteUtils.gmtOffset( this.props.site ),
-			selectedDay = this.props.postDate
-				? this.props.moment( this.props.postDate )
-				: null;
+			selectedDay = this.props.postDate ? this.props.moment( this.props.postDate ) : null;
 
 		return (
 			<Popover
@@ -265,13 +260,9 @@ export class EditPostStatus extends Component {
 			>
 				<div className="edit-post-status__full-date__tooltip">
 					{ timezone ? timezone + ' ' : 'UTC' }
-					{
-						postScheduleUtils.getLocalizedDate(
-							postUtils.getEditedTime( this.props.post ),
-							timezone,
-							gmtOffset
-						).format( 'Z' )
-					}
+					{ postScheduleUtils
+						.getLocalizedDate( postUtils.getEditedTime( this.props.post ), timezone, gmtOffset )
+						.format( 'Z' ) }
 				</div>
 			</Tooltip>
 		);
@@ -279,7 +270,7 @@ export class EditPostStatus extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const postId = getEditorPostId( state );
 		const post = getEditedPost( state, siteId, postId );
@@ -287,8 +278,8 @@ export default connect(
 		return {
 			siteId,
 			postId,
-			post
+			post,
 		};
 	},
-	{ editPost }
+	{ editPost },
 )( localize( EditPostStatus ) );

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  */
 import Main from 'components/main';
 import Navigation from './store-stats-navigation';
-import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
+import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
 import Chart from './store-stats-chart';
 import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
 import DatePicker from 'my-sites/stats/stats-date-picker';
@@ -59,11 +59,9 @@ class StoreStats extends Component {
 	}
 }
 
-export default connect(
-	state => {
-		return {
-			slug: getSelectedSiteSlug( state ),
-			siteId: getSelectedSiteId( state ),
-		};
-	}
-)( StoreStats );
+export default connect( state => {
+	return {
+		slug: getSelectedSiteSlug( state ),
+		siteId: getSelectedSiteId( state ),
+	};
+} )( StoreStats );

@@ -50,5 +50,5 @@ export default connect(
 			requestingNotices: isRequestingNotices( state, siteId ),
 		};
 	},
-	{ requestNotices }
+	{ requestNotices },
 )( QueryNotices );

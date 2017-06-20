@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	areSettingsGeneralLoaded,
-	areSettingsGeneralLoading,
-} from './selectors';
+import { areSettingsGeneralLoaded, areSettingsGeneralLoading } from './selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import request from '../../request';
 import { setError } from '../../status/wc-api/actions';
@@ -15,7 +12,7 @@ import {
 	WOOCOMMERCE_SETTINGS_GENERAL_REQUEST_SUCCESS,
 } from 'woocommerce/state/action-types';
 
-export const fetchSettingsGeneral = ( siteId ) => ( dispatch, getState ) => {
+export const fetchSettingsGeneral = siteId => ( dispatch, getState ) => {
 	if (
 		areSettingsGeneralLoaded( getState(), siteId ) ||
 		areSettingsGeneralLoading( getState(), siteId )
@@ -30,8 +27,9 @@ export const fetchSettingsGeneral = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'settings/general' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'settings/general' )
+		.then( data => {
 			dispatch( {
 				type: WOOCOMMERCE_SETTINGS_GENERAL_REQUEST_SUCCESS,
 				siteId,
@@ -51,12 +49,10 @@ const saveCurrencySuccess = ( siteId, data ) => {
 	};
 };
 
-export const saveCurrency = (
-	siteId,
-	currency,
-	successAction = null,
-	failureAction = null
-) => ( dispatch, getState ) => {
+export const saveCurrency = ( siteId, currency, successAction = null, failureAction = null ) => (
+	dispatch,
+	getState,
+ ) => {
 	const state = getState();
 	if ( ! siteId ) {
 		siteId = getSelectedSiteId( state );
@@ -68,8 +64,9 @@ export const saveCurrency = (
 
 	dispatch( updateAction );
 
-	return request( siteId ).put( 'settings/general/woocommerce_currency', { value: currency } )
-		.then( ( data ) => {
+	return request( siteId )
+		.put( 'settings/general/woocommerce_currency', { value: currency } )
+		.then( data => {
 			dispatch( saveCurrencySuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );

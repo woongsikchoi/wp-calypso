@@ -80,9 +80,10 @@ export const requestNotice = createReducer( null, {
 	[ ROUTE_SET ]: () => null,
 } );
 
-const updateTwoStepNonce = ( state, { twoStepNonce, nonceType } ) => Object.assign( {}, state, {
-	[ `two_step_nonce_${ nonceType }` ]: twoStepNonce
-} );
+const updateTwoStepNonce = ( state, { twoStepNonce, nonceType } ) =>
+	Object.assign( {}, state, {
+		[ `two_step_nonce_${ nonceType }` ]: twoStepNonce,
+	} );
 
 export const twoFactorAuth = createReducer( null, {
 	[ LOGIN_REQUEST ]: () => null,
@@ -118,11 +119,22 @@ export const twoFactorAuthRequestError = createReducer( null, {
 	[ ROUTE_SET ]: () => null,
 } );
 
-export const twoFactorAuthPushPoll = createReducer( { inProgress: false, success: false }, {
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_START ]: state => ( { ...state, inProgress: true, success: false } ),
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_STOP ]: state => ( { ...state, inProgress: false } ),
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_COMPLETED ]: state => ( { ...state, inProgress: false, success: true } ),
-} );
+export const twoFactorAuthPushPoll = createReducer(
+	{ inProgress: false, success: false },
+	{
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_START ]: state => ( {
+			...state,
+			inProgress: true,
+			success: false,
+		} ),
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_STOP ]: state => ( { ...state, inProgress: false } ),
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_COMPLETED ]: state => ( {
+			...state,
+			inProgress: false,
+			success: true,
+		} ),
+	},
+);
 
 export default combineReducers( {
 	isRequesting,

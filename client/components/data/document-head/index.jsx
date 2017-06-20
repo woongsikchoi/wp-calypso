@@ -3,7 +3,7 @@
  */
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 
 /**
  * Internal dependencies.
@@ -13,15 +13,12 @@ import {
 	setDocumentHeadTitle as setTitle,
 	setDocumentHeadLink as setLink,
 	setDocumentHeadMeta as setMeta,
-	setDocumentHeadUnreadCount as setUnreadCount
+	setDocumentHeadUnreadCount as setUnreadCount,
 } from 'state/document-head/actions';
 
 class DocumentHead extends Component {
 	componentWillMount() {
-		const {
-			title,
-			unreadCount
-		} = this.props;
+		const { title, unreadCount } = this.props;
 
 		if ( this.props.title !== undefined ) {
 			this.props.setTitle( title );
@@ -80,17 +77,17 @@ DocumentHead.propTypes = {
 	setTitle: PropTypes.func.isRequired,
 	setLink: PropTypes.func.isRequired,
 	setMeta: PropTypes.func.isRequired,
-	setUnreadCount: PropTypes.func.isRequired
+	setUnreadCount: PropTypes.func.isRequired,
 };
 
 export default connect(
 	state => ( {
-		formattedTitle: getDocumentHeadFormattedTitle( state )
+		formattedTitle: getDocumentHeadFormattedTitle( state ),
 	} ),
 	{
 		setTitle,
 		setLink,
 		setMeta,
-		setUnreadCount
-	}
+		setUnreadCount,
+	},
 )( DocumentHead );

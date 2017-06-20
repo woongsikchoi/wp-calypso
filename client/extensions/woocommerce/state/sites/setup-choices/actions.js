@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	areSetupChoicesLoaded,
-	areSetupChoicesLoading,
-} from './selectors';
+import { areSetupChoicesLoaded, areSetupChoicesLoading } from './selectors';
 import { setError } from '../status/wc-api/actions';
 import {
 	WOOCOMMERCE_SETUP_CHOICE_UPDATE_REQUEST,
@@ -14,7 +11,7 @@ import {
 } from 'woocommerce/state/action-types';
 import wp from 'lib/wp';
 
-export const fetchSetupChoices = ( siteId ) => ( dispatch, getState ) => {
+export const fetchSetupChoices = siteId => ( dispatch, getState ) => {
 	if ( areSetupChoicesLoading( getState(), siteId ) ) {
 		return;
 	}
@@ -30,8 +27,9 @@ export const fetchSetupChoices = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return wp.req.get( { path: `/sites/${ siteId }/calypso-preferences/woocommerce` } )
-		.then( ( data ) => {
+	return wp.req
+		.get( { path: `/sites/${ siteId }/calypso-preferences/woocommerce` } )
+		.then( data => {
 			dispatch( {
 				type: WOOCOMMERCE_SETUP_CHOICES_REQUEST_SUCCESS,
 				siteId,
@@ -58,37 +56,45 @@ const updateSetupChoice = ( dispatch, siteId, key, value ) => {
 		body: { [ key ]: value },
 	};
 
-	return wp.req.post( postData ).then( ( data ) => {
-		dispatch( {
-			type: WOOCOMMERCE_SETUP_CHOICE_UPDATE_REQUEST_SUCCESS,
-			siteId,
-			data,
+	return wp.req
+		.post( postData )
+		.then( data => {
+			dispatch( {
+				type: WOOCOMMERCE_SETUP_CHOICE_UPDATE_REQUEST_SUCCESS,
+				siteId,
+				data,
+			} );
+		} )
+		.catch( err => {
+			dispatch( setError( siteId, postAction, err ) );
 		} );
-	} ).catch( err => {
-		dispatch( setError( siteId, postAction, err ) );
-	} );
 };
 
-export const setFinishedInitialSetup = ( siteId, value ) => ( dispatch ) => {
+export const setFinishedInitialSetup = ( siteId, value ) => dispatch => {
 	return updateSetupChoice( dispatch, siteId, 'finished_initial_setup', value );
 };
 
-export const setOptedOutOfShippingSetup = ( siteId, value ) => ( dispatch ) => {
+export const setOptedOutOfShippingSetup = ( siteId, value ) => dispatch => {
 	return updateSetupChoice( dispatch, siteId, 'opted_out_of_shipping_setup', value );
 };
 
-export const setOptedOutOfTaxesSetup = ( siteId, value ) => ( dispatch ) => {
+export const setOptedOutOfTaxesSetup = ( siteId, value ) => dispatch => {
 	return updateSetupChoice( dispatch, siteId, 'opted_out_of_taxes_setup', value );
 };
 
-export const setTriedCustomizerDuringInitialSetup = ( siteId, value ) => ( dispatch ) => {
+export const setTriedCustomizerDuringInitialSetup = ( siteId, value ) => dispatch => {
 	return updateSetupChoice( dispatch, siteId, 'tried_customizer_during_initial_setup', value );
 };
 
-export const setFinishedInstallOfRequiredPlugins = ( siteId, value ) => ( dispatch ) => {
-	return updateSetupChoice( dispatch, siteId, 'finished_initial_install_of_required_plugins', value );
+export const setFinishedInstallOfRequiredPlugins = ( siteId, value ) => dispatch => {
+	return updateSetupChoice(
+		dispatch,
+		siteId,
+		'finished_initial_install_of_required_plugins',
+		value,
+	);
 };
 
-export const setSetStoreAddressDuringInitialSetup = ( siteId, value ) => ( dispatch ) => {
+export const setSetStoreAddressDuringInitialSetup = ( siteId, value ) => dispatch => {
 	return updateSetupChoice( dispatch, siteId, 'set_store_address_during_initial_setup', value );
 };

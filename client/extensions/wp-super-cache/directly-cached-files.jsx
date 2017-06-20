@@ -41,7 +41,7 @@ class DirectlyCachedFiles extends Component {
 			isSaving,
 			setFieldArrayValue,
 			site,
-			translate
+			translate,
 		} = this.props;
 		const cache_direct_pages = fields.cache_direct_pages || [];
 		const cache_path = fields.cache_path || '';
@@ -53,32 +53,30 @@ class DirectlyCachedFiles extends Component {
 						compact
 						primary
 						disabled={ isRequesting || isSaving }
-						onClick={ handleSubmitForm }>
-						{ isSaving
-							? translate( 'Saving…' )
-							: translate( 'Save Settings' )
-						}
+						onClick={ handleSubmitForm }
+					>
+						{ isSaving ? translate( 'Saving…' ) : translate( 'Save Settings' ) }
 					</Button>
 				</SectionHeader>
 				<Card className="wp-super-cache__directly-cached-files">
 					<p>
 						{ translate(
 							'Directly cached files are files created directly off %(cache_path)s where your blog lives. This ' +
-							'feature is only useful if you are expecting a major Digg or Slashdot level of traffic to one post or page.',
+								'feature is only useful if you are expecting a major Digg or Slashdot level of traffic to one post or page.',
 							{
 								args: { cache_path: cache_path },
-							}
+							},
 						) }
 					</p>
 					<div>
 						<p>
 							{ translate(
 								'For example: to cache {{em}}%(url)s/about/{{/em}}, you would enter %(url)s/about/ or /about/. ' +
-								'The cached file will be generated the next time an anonymous user visits that page.',
+									'The cached file will be generated the next time an anonymous user visits that page.',
 								{
 									args: { url: site && site.URL },
 									components: { em: <em /> },
-								}
+								},
 							) }
 						</p>
 						<form>
@@ -87,18 +85,18 @@ class DirectlyCachedFiles extends Component {
 									disabled={ isRequesting || isSaving }
 									onChange={ handleChange( 'new_direct_page' ) }
 									onKeyDown={ this.onKeyDown }
-									ref="newDirectPage" />
+									ref="newDirectPage"
+								/>
 							</FormFieldset>
 
 							{ cache_direct_pages.length > 0 &&
-							<FormLabel>
-								{ translate(
-									'Existing Direct Page',
-									'Existing Direct Pages',
-									{ count: cache_direct_pages.length }
-								) }
-							</FormLabel>
-							}
+								<FormLabel>
+									{ translate(
+										'Existing Direct Page',
+										'Existing Direct Pages',
+										{ count: cache_direct_pages.length },
+									) }
+								</FormLabel> }
 
 							{ cache_direct_pages.map( ( page, index ) => (
 								<FormFieldset key={ index }>
@@ -106,17 +104,17 @@ class DirectlyCachedFiles extends Component {
 										disabled={ isRequesting || isSaving }
 										key={ index }
 										onChange={ setFieldArrayValue( 'cache_direct_pages', index ) }
-										value={ page || '' } />
+										value={ page || '' }
+									/>
 								</FormFieldset>
 							) ) }
 
 							{ cache_direct_pages.length > 0 &&
-							<FormSettingExplanation>
-								{ translate(
-									'Make the textbox blank to remove it from the list of direct pages and delete the cached file.'
-								) }
-							</FormSettingExplanation>
-							}
+								<FormSettingExplanation>
+									{ translate(
+										'Make the textbox blank to remove it from the list of direct pages and delete the cached file.',
+									) }
+								</FormSettingExplanation> }
 						</form>
 					</div>
 				</Card>
@@ -126,10 +124,7 @@ class DirectlyCachedFiles extends Component {
 }
 
 const getFormSettings = settings => {
-	return pick( settings, [
-		'cache_direct_pages',
-		'cache_path',
-	] );
+	return pick( settings, [ 'cache_direct_pages', 'cache_path' ] );
 };
 
 export default WrapSettingsForm( getFormSettings )( DirectlyCachedFiles );

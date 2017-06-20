@@ -9,19 +9,13 @@ import Gridicon from 'gridicons';
 /**
  * Internal dependencies
  */
-import {
-	getPostShareScheduledActions,
-	getPostSharePublishedActions,
-} from 'state/selectors';
+import { getPostShareScheduledActions, getPostSharePublishedActions } from 'state/selectors';
 import QuerySharePostActions from 'components/data/query-share-post-actions/index.jsx';
 import CompactCard from 'components/card/compact';
 import SocialLogo from 'social-logos';
 import EllipsisMenu from 'components/ellipsis-menu';
 import PopoverMenuItem from 'components/popover/menu-item';
-import {
-	SCHEDULED,
-	PUBLISHED,
-} from './constants';
+import { SCHEDULED, PUBLISHED } from './constants';
 import SectionNav from 'components/section-nav';
 import NavTabs from 'components/section-nav/tabs';
 import NavItem from 'components/section-nav/item';
@@ -67,12 +61,7 @@ class PublicizeActionsList extends PureComponent {
 	};
 
 	renderActionItem( item, index ) {
-		const {
-			service,
-			connectionName,
-			shareDate,
-			message,
-		} = item;
+		const { service, connectionName, shareDate, message } = item;
 
 		return (
 			<CompactCard className="post-share__footer-items" key={ index }>
@@ -99,12 +88,7 @@ class PublicizeActionsList extends PureComponent {
 	}
 
 	renderFooterSectionItemActions( item ) {
-		const {
-			ID: actionId,
-			message,
-			service,
-			url,
-		} = item;
+		const { ID: actionId, message, service, url } = item;
 
 		if ( this.state.selectedShareTab === SCHEDULED ) {
 			return this.renderScheduledMenu( actionId, message, service );
@@ -112,7 +96,13 @@ class PublicizeActionsList extends PureComponent {
 
 		// PUBLISHED tab
 		return (
-			url && <a className="post-share__external-url" href={ url } target="_blank" rel="noopener noreferrer" >
+			url &&
+			<a
+				className="post-share__external-url"
+				href={ url }
+				target="_blank"
+				rel="noopener noreferrer"
+			>
 				<Gridicon icon="external" size={ 24 } />
 			</a>
 		);
@@ -130,7 +120,7 @@ class PublicizeActionsList extends PureComponent {
 					icon="visible"
 				>
 					{ translate( 'Preview' ) }
-				</PopoverMenuItem>
+				</PopoverMenuItem>,
 			);
 		}
 
@@ -141,32 +131,31 @@ class PublicizeActionsList extends PureComponent {
 				icon="trash"
 			>
 				{ translate( 'Trash' ) }
-			</PopoverMenuItem>
+			</PopoverMenuItem>,
 		);
 
 		if ( actions.length === 0 ) {
 			return <div />;
 		}
-		return ( <EllipsisMenu>
-			{ actions }
-		</EllipsisMenu> );
+		return (
+			<EllipsisMenu>
+				{ actions }
+			</EllipsisMenu>
+		);
 	}
 
 	deleteScheduledAction( actionId ) {
 		return () => {
 			this.setState( {
 				showDeleteDialog: true,
-				selectedScheduledShareId: actionId
+				selectedScheduledShareId: actionId,
 			} );
 		};
 	}
 
-	closeDeleteDialog = ( dialogAction ) => {
+	closeDeleteDialog = dialogAction => {
 		if ( dialogAction === 'delete' ) {
-			const {
-				siteId,
-				postId,
-			} = this.props;
+			const { siteId, postId } = this.props;
 			analytics.tracks.recordEvent( 'calypso_publicize_scheduled_delete' );
 			this.props.deletePostShareAction( siteId, postId, this.state.selectedScheduledShareId );
 		}
@@ -222,12 +211,7 @@ class PublicizeActionsList extends PureComponent {
 	}
 
 	render() {
-		const {
-			hasRepublicizeFeature,
-			hasRepublicizeSchedulingFeature,
-			postId,
-			siteId,
-		} = this.props;
+		const { hasRepublicizeFeature, hasRepublicizeSchedulingFeature, postId, siteId } = this.props;
 
 		return (
 			<div>
@@ -240,8 +224,7 @@ class PublicizeActionsList extends PureComponent {
 								onClick={ this.setFooterSection( SCHEDULED ) }
 							>
 								Scheduled
-							</NavItem>
-						}
+							</NavItem> }
 						<NavItem
 							selected={ this.state.selectedShareTab === PUBLISHED }
 							count={ this.props.publishedActions.length }
@@ -264,7 +247,7 @@ class PublicizeActionsList extends PureComponent {
 					siteId={ siteId }
 					postId={ postId }
 					message={ this.state.previewMessage }
-					selectedService= { this.state.previewService }
+					selectedService={ this.state.previewService }
 					isVisible={ this.state.showPreviewModal }
 					onClose={ this.togglePreviewModal() }
 				/>

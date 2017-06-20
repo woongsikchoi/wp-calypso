@@ -6,10 +6,7 @@ import { expect } from 'chai';
 /**
  * Internal dependencies
  */
-import {
-	isRequestingNotices,
-	getNotices,
-} from '../selectors';
+import { isRequestingNotices, getNotices } from '../selectors';
 
 describe( 'selectors', () => {
 	const primarySiteId = 123456;
@@ -20,7 +17,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const isRequesting = isRequestingNotices( state, primarySiteId );
 
@@ -34,10 +31,10 @@ describe( 'selectors', () => {
 						notices: {
 							requesting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingNotices( state, secondarySiteId );
 
@@ -51,10 +48,10 @@ describe( 'selectors', () => {
 						notices: {
 							requesting: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingNotices( state, primarySiteId );
 
@@ -68,10 +65,10 @@ describe( 'selectors', () => {
 						notices: {
 							requesting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingNotices( state, primarySiteId );
 
@@ -84,14 +81,14 @@ describe( 'selectors', () => {
 			cache_writable: {
 				message: '/home/public_html/ is writable.',
 				type: 'warning',
-			}
+			},
 		};
 
 		it( 'should return empty object if no state exists', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const notices = getNotices( state, primarySiteId );
 
@@ -105,10 +102,10 @@ describe( 'selectors', () => {
 						notices: {
 							items: {
 								[ primarySiteId ]: primaryNotices,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const notices = getNotices( state, secondarySiteId );
 
@@ -122,10 +119,10 @@ describe( 'selectors', () => {
 						notices: {
 							items: {
 								[ primarySiteId ]: primaryNotices,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const notices = getNotices( state, primarySiteId );
 

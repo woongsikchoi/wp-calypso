@@ -46,7 +46,9 @@ describe( 'selectors', () => {
 				},
 			};
 
-			expect( getShippingZoneMethod( state, 17, 123 ) ).to.deep.equal( { id: 17, methodType: 'free_shipping' } );
+			expect( getShippingZoneMethod( state, 17, 123 ) ).to.deep.equal(
+				{ id: 17, methodType: 'free_shipping' },
+			);
 		} );
 	} );
 
@@ -57,10 +59,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						sites: {
 							123: {
-								shippingZones: [
-									{ id: 1, methodIds: LOADING },
-									{ id: 2, methodIds: [ 7, 42 ] },
-								]
+								shippingZones: [ { id: 1, methodIds: LOADING }, { id: 2, methodIds: [ 7, 42 ] } ],
 							},
 						},
 					},

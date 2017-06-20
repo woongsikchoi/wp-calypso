@@ -36,14 +36,14 @@ import {
 	getPrimarySiteId,
 	getSites,
 	isDomainOnlySite,
-	isSiteAutomatedTransfer
+	isSiteAutomatedTransfer,
 } from 'state/selectors';
 import {
 	getCustomizerUrl,
 	getSite,
 	isJetpackMinimumVersion,
 	isJetpackModuleActive,
-	isJetpackSite
+	isJetpackSite,
 } from 'state/sites/selectors';
 import { getStatsPathForTab } from 'lib/route/path';
 import { abtest } from 'lib/abtest';
@@ -54,7 +54,6 @@ import { abtest } from 'lib/abtest';
 const debug = debugFactory( 'calypso:my-sites:sidebar' );
 
 export class MySitesSidebar extends Component {
-
 	static propTypes = {
 		setNextLayoutFocus: PropTypes.func.isRequired,
 		setLayoutFocus: PropTypes.func.isRequired,
@@ -74,7 +73,7 @@ export class MySitesSidebar extends Component {
 		window.scrollTo( 0, 0 );
 	};
 
-	onPreviewSite = ( event ) => {
+	onPreviewSite = event => {
 		const { site } = this.props;
 		analytics.ga.recordEvent( 'Sidebar', 'Clicked View Site' );
 		if ( site.is_previewable && ! event.metaKey && ! event.ctrlKey ) {
@@ -117,9 +116,11 @@ export class MySitesSidebar extends Component {
 
 	publish() {
 		return (
-			<PublishMenu siteId={ this.props.siteId }
+			<PublishMenu
+				siteId={ this.props.siteId }
 				itemLinkClass={ this.itemLinkClass }
-				onNavigate={ this.onNavigate } />
+				onNavigate={ this.onNavigate }
+			/>
 		);
 	}
 
@@ -138,7 +139,8 @@ export class MySitesSidebar extends Component {
 				className={ this.itemLinkClass( [ '/stats', '/store/stats' ], 'stats' ) }
 				link={ statsLink }
 				onNavigate={ this.onNavigate }
-				icon="stats-alt">
+				icon="stats-alt"
+			>
 				<a href={ statsLink }>
 					<StatsSparkline className="sidebar__sparkline" siteId={ siteId } />
 				</a>
@@ -176,7 +178,8 @@ export class MySitesSidebar extends Component {
 				className={ this.itemLinkClass( '/ads', 'rads' ) }
 				link={ adsLink }
 				onNavigate={ this.onNavigate }
-				icon="speaker" />
+				icon="speaker"
+			/>
 		);
 	}
 
@@ -321,7 +324,7 @@ export class MySitesSidebar extends Component {
 
 		if ( site && productsValues.isFreeTrial( site.plan ) ) {
 			planName = this.props.translate( 'Trial', {
-				context: 'Label in the sidebar indicating that the user is on the free trial for a plan.'
+				context: 'Label in the sidebar indicating that the user is on the free trial for a plan.',
 			} );
 		}
 
@@ -329,9 +332,13 @@ export class MySitesSidebar extends Component {
 			<li className={ this.itemLinkClass( [ '/plans' ], linkClass ) }>
 				<a onClick={ this.trackUpgradeClick } href={ planLink }>
 					<JetpackLogo size={ 24 } />
-					<span className="menu-link-text">{ this.props.translate( 'Plan', { context: 'noun' } ) }</span>
+					<span className="menu-link-text">
+						{ this.props.translate( 'Plan', { context: 'noun' } ) }
+					</span>
 				</a>
-				<a href={ planLink } className="plan-name" onClick={ this.trackUpgradeClick }>{ planName }</a>
+				<a href={ planLink } className="plan-name" onClick={ this.trackUpgradeClick }>
+					{ planName }
+				</a>
 			</li>
 		);
 	}
@@ -339,8 +346,11 @@ export class MySitesSidebar extends Component {
 	store() {
 		const { canUserManageOptions, isJetpack, site, siteSuffix, translate } = this.props;
 		const storeLink = '/store' + siteSuffix;
-		const showStoreLink = config.isEnabled( 'woocommerce/extension-dashboard' ) &&
-			site && isJetpack && canUserManageOptions;
+		const showStoreLink =
+			config.isEnabled( 'woocommerce/extension-dashboard' ) &&
+			site &&
+			isJetpack &&
+			canUserManageOptions;
 
 		return (
 			showStoreLink &&
@@ -348,7 +358,8 @@ export class MySitesSidebar extends Component {
 				label={ translate( 'Store (BETA)' ) }
 				link={ storeLink }
 				onNavigate={ this.onNavigate }
-				icon="cart" >
+				icon="cart"
+			>
 				<SidebarButton href={ storeLink }>
 					{ translate( 'Set up' ) }
 				</SidebarButton>
@@ -358,7 +369,7 @@ export class MySitesSidebar extends Component {
 
 	trackUpgradeClick = () => {
 		analytics.tracks.recordEvent( 'calypso_upgrade_nudge_cta_click', {
-			cta_name: 'sidebar_upgrade_default'
+			cta_name: 'sidebar_upgrade_default',
 		} );
 		this.onNavigate();
 	};
@@ -386,7 +397,8 @@ export class MySitesSidebar extends Component {
 				link={ sharingLink }
 				onNavigate={ this.onNavigate }
 				icon="share"
-				preloadSectionName="sharing" />
+				preloadSectionName="sharing"
+			/>
 		);
 	}
 
@@ -407,8 +419,13 @@ export class MySitesSidebar extends Component {
 			usersLink = site.options.admin_url + 'users.php';
 		}
 
-		if ( ! config.isEnabled( 'jetpack/invites' ) &&
-			! this.props.isSiteAutomatedTransfer && site && site.options && this.props.isJetpack ) {
+		if (
+			! config.isEnabled( 'jetpack/invites' ) &&
+			! this.props.isSiteAutomatedTransfer &&
+			site &&
+			site.options &&
+			this.props.isJetpack
+		) {
 			addPeopleLink = site.options.admin_url + 'user-new.php';
 		}
 
@@ -448,14 +465,15 @@ export class MySitesSidebar extends Component {
 				onNavigate={ this.onNavigate }
 				icon="cog"
 				preloadSectionName="settings"
-				tipTarget="settings" />
+				tipTarget="settings"
+			/>
 		);
 	}
 
 	wpAdmin() {
 		const { site } = this.props;
 
-		if ( ! site || ! site.options ) {
+		if ( ! site || ! site.options ) {
 			return null;
 		}
 
@@ -470,7 +488,12 @@ export class MySitesSidebar extends Component {
 
 		return (
 			<li className="wp-admin">
-				<a onClick={ this.trackWpadminClick } href={ site.options.admin_url } target="_blank" rel="noopener noreferrer">
+				<a
+					onClick={ this.trackWpadminClick }
+					href={ site.options.admin_url }
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<Gridicon icon="my-sites" size={ 24 } />
 					<span className="menu-link-text">{ this.props.translate( 'WP Admin' ) }</span>
 					<Gridicon icon="external" size={ 24 } />
@@ -508,8 +531,7 @@ export class MySitesSidebar extends Component {
 	};
 
 	getAddNewSiteUrl() {
-		if ( this.props.hasJetpackSites ||
-			abtest( 'newSiteWithJetpack' ) === 'showNewJetpackSite' ) {
+		if ( this.props.hasJetpackSites || abtest( 'newSiteWithJetpack' ) === 'showNewJetpackSite' ) {
 			return '/jetpack/new/?ref=calypso-selector';
 		}
 		return config( 'signup_url' ) + '?ref=calypso-selector';
@@ -521,7 +543,8 @@ export class MySitesSidebar extends Component {
 		}
 
 		return (
-			<Button borderless
+			<Button
+				borderless
 				className="my-sites-sidebar__add-new-site"
 				href={ this.getAddNewSiteUrl() }
 				onClick={ this.focusContent }
@@ -541,21 +564,27 @@ export class MySitesSidebar extends Component {
 							icon="cog"
 							label={ this.props.translate( 'Settings' ) }
 							link={ '/domains/manage' + this.props.siteSuffix }
-							onNavigate={ this.onNavigate } />
+							onNavigate={ this.onNavigate }
+						/>
 					</ul>
 				</SidebarMenu>
 			);
 		}
 
 		const publish = !! this.publish(),
-			configuration = ( !! this.sharing() || !! this.users() || !! this.siteSettings() || !! this.plugins() || !! this.upgrades() );
+			configuration =
+				!! this.sharing() ||
+				!! this.users() ||
+				!! this.siteSettings() ||
+				!! this.plugins() ||
+				!! this.upgrades();
 
 		return (
 			<div>
 				<SidebarMenu>
 					<ul>
-						{/* TODO: enable once we have the new view ready */}
-						{/* this.preview() */}
+						{ /* TODO: enable once we have the new view ready */ }
+						{ /* this.preview() */ }
 						{ this.stats() }
 						{ this.plan() }
 						{ this.store() }
@@ -564,37 +593,34 @@ export class MySitesSidebar extends Component {
 
 				{ publish
 					? <SidebarMenu>
-						<SidebarHeading>{ this.props.translate( 'Publish' ) }</SidebarHeading>
-						{ this.publish() }
-					</SidebarMenu>
-					: null
-				}
+							<SidebarHeading>{ this.props.translate( 'Publish' ) }</SidebarHeading>
+							{ this.publish() }
+						</SidebarMenu>
+					: null }
 
 				{ !! this.themes()
 					? <SidebarMenu>
-						<SidebarHeading>{ this.props.translate( 'Personalize' ) }</SidebarHeading>
-						<ul>
-							{ this.themes() }
-						</ul>
-					</SidebarMenu>
-					: null
-				}
+							<SidebarHeading>{ this.props.translate( 'Personalize' ) }</SidebarHeading>
+							<ul>
+								{ this.themes() }
+							</ul>
+						</SidebarMenu>
+					: null }
 
 				{ configuration
 					? <SidebarMenu>
-						<SidebarHeading>{ this.props.translate( 'Configure' ) }</SidebarHeading>
-						<ul>
-							{ this.ads() }
-							{ this.sharing() }
-							{ this.users() }
-							{ this.plugins() }
-							{ this.upgrades() }
-							{ this.siteSettings() }
-							{ this.wpAdmin() }
-						</ul>
-					</SidebarMenu>
-					: null
-				}
+							<SidebarHeading>{ this.props.translate( 'Configure' ) }</SidebarHeading>
+							<ul>
+								{ this.ads() }
+								{ this.sharing() }
+								{ this.users() }
+								{ this.plugins() }
+								{ this.upgrades() }
+								{ this.siteSettings() }
+								{ this.wpAdmin() }
+							</ul>
+						</SidebarMenu>
+					: null }
 			</div>
 		);
 	}
@@ -621,20 +647,19 @@ export class MySitesSidebar extends Component {
 function mapStateToProps( state ) {
 	const currentUser = getCurrentUser( state );
 	const selectedSiteId = getSelectedSiteId( state );
-	const isSingleSite = !! selectedSiteId || currentUser.site_count === 1;
-	const siteId = selectedSiteId || ( isSingleSite && getPrimarySiteId( state ) ) || null;
+	const isSingleSite = !! selectedSiteId || currentUser.site_count === 1;
+	const siteId = selectedSiteId || ( isSingleSite && getPrimarySiteId( state ) ) || null;
 	const site = getSite( state, siteId );
 
 	const isJetpack = isJetpackSite( state, siteId );
 	// FIXME: Fun with Boolean algebra :-)
-	const isSharingEnabledOnJetpackSite = ! (
-		! isJetpackModuleActive( state, siteId, 'publicize' ) &&
-		( ! isJetpackModuleActive( state, siteId, 'sharedaddy' ) || isJetpackMinimumVersion( state, siteId, '3.4-dev' ) )
-	);
+	const isSharingEnabledOnJetpackSite = ! ( ! isJetpackModuleActive( state, siteId, 'publicize' ) &&
+		( ! isJetpackModuleActive( state, siteId, 'sharedaddy' ) ||
+			isJetpackMinimumVersion( state, siteId, '3.4-dev' ) ) );
 	// FIXME: Turn into dedicated selector
-	const canManagePlugins = !! getSites( state ).some( ( s ) => (
-		( s.capabilities && s.capabilities.manage_options )
-	) );
+	const canManagePlugins = !! getSites( state ).some(
+		s => s.capabilities && s.capabilities.manage_options,
+	);
 
 	// FIXME: Turn into dedicated selector
 	const hasJetpackSites = getSites( state ).some( s => s.jetpack );
@@ -663,4 +688,9 @@ function mapStateToProps( state ) {
 }
 
 // TODO: make this pure when sites can be retrieved from the Redux state
-export default connect( mapStateToProps, { setNextLayoutFocus, setLayoutFocus }, null, { pure: false } )( localize( MySitesSidebar ) );
+export default connect(
+	mapStateToProps,
+	{ setNextLayoutFocus, setLayoutFocus },
+	null,
+	{ pure: false },
+)( localize( MySitesSidebar ) );

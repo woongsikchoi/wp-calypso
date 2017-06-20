@@ -15,12 +15,8 @@ import {
 	getOptedOutofTaxesSetup,
 	getTriedCustomizerDuringInitialSetup,
 } from 'woocommerce/state/sites/setup-choices/selectors';
-import {
-	getTotalProducts
-} from 'woocommerce/state/sites/products/selectors';
-import {
-	fetchProducts
-} from 'woocommerce/state/sites/products/actions';
+import { getTotalProducts } from 'woocommerce/state/sites/products/selectors';
+import { fetchProducts } from 'woocommerce/state/sites/products/actions';
 import {
 	fetchSetupChoices,
 	setOptedOutOfShippingSetup,
@@ -53,34 +49,34 @@ class SetupTasks extends Component {
 			this.props.fetchSetupChoices( site.ID );
 			this.props.fetchProducts( site.ID, 1 );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchSetupChoices( newSiteId );
 		}
-	}
+	};
 
-	onClickNoShip = ( event ) => {
+	onClickNoShip = event => {
 		event.preventDefault();
 		this.setState( {
-			showShippingTask: false
+			showShippingTask: false,
 		} );
 		this.props.setOptedOutOfShippingSetup( this.props.site.ID, true );
-	}
+	};
 
 	onClickNoTaxes = () => {
 		event.preventDefault();
 		this.setState( {
-			showTaxesTask: false
+			showTaxesTask: false,
 		} );
 		this.props.setOptedOutOfTaxesSetup( this.props.site.ID, true );
-	}
+	};
 
 	getSetupTasks = () => {
 		const {
@@ -90,7 +86,7 @@ class SetupTasks extends Component {
 			paymentsAreSetUp,
 			shippingIsSetUp,
 			taxesAreSetUp,
-			translate
+			translate,
 		} = this.props;
 
 		return [
@@ -104,8 +100,8 @@ class SetupTasks extends Component {
 					{
 						label: 'Add a product',
 						path: getLink( '/store/product/:site', site ),
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: shippingIsSetUp,
@@ -119,11 +115,11 @@ class SetupTasks extends Component {
 						path: getLink( '/store/settings/shipping/:site', site ),
 					},
 					{
-						label: translate( 'I won\'t be shipping' ),
+						label: translate( "I won't be shipping" ),
 						isSecondary: true,
-						onClick: this.onClickNoShip
-					}
-				]
+						onClick: this.onClickNoShip,
+					},
+				],
 			},
 			{
 				checked: paymentsAreSetUp,
@@ -135,8 +131,8 @@ class SetupTasks extends Component {
 					{
 						label: translate( 'Set up payments' ),
 						path: getLink( '/store/settings/payments/:site', site ),
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: taxesAreSetUp,
@@ -150,11 +146,11 @@ class SetupTasks extends Component {
 						path: getLink( '/store/settings/taxes/:site', site ),
 					},
 					{
-						label: translate( 'I\'m not charging sales tax' ),
+						label: translate( "I'm not charging sales tax" ),
 						isSecondary: true,
-						onClick: this.onClickNoTaxes
-					}
-				]
+						onClick: this.onClickNoTaxes,
+					},
+				],
 			},
 			{
 				checked: triedCustomizer,
@@ -167,11 +163,11 @@ class SetupTasks extends Component {
 						label: translate( 'Customize' ),
 						path: getLink( 'https://:site/wp-admin/customize.php?return=%2Fwp-admin%2F', site ),
 						// TODO use onClick here instead in order to hit setTriedCustomizerDuringInitialSetup
-					}
-				]
-			}
+					},
+				],
+			},
 		];
-	}
+	};
 
 	renderSetupTask = ( setupTask, index ) => {
 		if ( ! setupTask.show ) {
@@ -182,13 +178,13 @@ class SetupTasks extends Component {
 			<SetupTask
 				actions={ setupTask.actions }
 				checked={ setupTask.checked }
-				docURL= { setupTask.docURL }
+				docURL={ setupTask.docURL }
 				explanation={ setupTask.explanation }
 				key={ index }
 				label={ setupTask.label }
 			/>
 		);
-	}
+	};
 
 	render = () => {
 		return (
@@ -196,7 +192,7 @@ class SetupTasks extends Component {
 				{ this.getSetupTasks().map( this.renderSetupTask ) }
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
@@ -222,7 +218,7 @@ function mapDispatchToProps( dispatch ) {
 			setOptedOutOfTaxesSetup,
 			setTriedCustomizerDuringInitialSetup,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

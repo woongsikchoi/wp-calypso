@@ -18,11 +18,20 @@ import {
  * @param  {Object} action Action object
  * @return {Object} Updated requesting state
  */
-const requesting = createReducer( {}, {
-	[ WP_SUPER_CACHE_RECEIVE_NOTICES ]: ( state, { siteId } ) => ( { ...state, [ siteId ]: false } ),
-	[ WP_SUPER_CACHE_REQUEST_NOTICES ]: ( state, { siteId } ) => ( { ...state, [ siteId ]: true } ),
-	[ WP_SUPER_CACHE_REQUEST_NOTICES_FAILURE ]: ( state, { siteId } ) => ( { ...state, [ siteId ]: false } )
-} );
+const requesting = createReducer(
+	{},
+	{
+		[ WP_SUPER_CACHE_RECEIVE_NOTICES ]: ( state, { siteId } ) => ( {
+			...state,
+			[ siteId ]: false,
+		} ),
+		[ WP_SUPER_CACHE_REQUEST_NOTICES ]: ( state, { siteId } ) => ( { ...state, [ siteId ]: true } ),
+		[ WP_SUPER_CACHE_REQUEST_NOTICES_FAILURE ]: ( state, { siteId } ) => ( {
+			...state,
+			[ siteId ]: false,
+		} ),
+	},
+);
 
 /**
  * Tracks the notices for a particular site.
@@ -31,9 +40,16 @@ const requesting = createReducer( {}, {
  * @param  {Object} action Action object
  * @return {Object} Updated notices
  */
-const items = createReducer( {}, {
-	[ WP_SUPER_CACHE_RECEIVE_NOTICES ]: ( state, action ) => ( { ...state, [ action.siteId ]: action.notices } ),
-}, itemsSchema );
+const items = createReducer(
+	{},
+	{
+		[ WP_SUPER_CACHE_RECEIVE_NOTICES ]: ( state, action ) => ( {
+			...state,
+			[ action.siteId ]: action.notices,
+		} ),
+	},
+	itemsSchema,
+);
 
 export default combineReducers( {
 	items,

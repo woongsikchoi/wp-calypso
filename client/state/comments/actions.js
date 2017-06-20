@@ -21,13 +21,8 @@ import {
 	COMMENTS_REMOVE,
 	COMMENTS_ERROR,
 } from '../action-types';
-import {
-	createRequestId
-} from './utils';
-import {
-	NUMBER_OF_COMMENTS_PER_FETCH,
-	PLACEHOLDER_STATE
-} from './constants';
+import { createRequestId } from './utils';
+import { NUMBER_OF_COMMENTS_PER_FETCH, PLACEHOLDER_STATE } from './constants';
 
 /***
  * Internal handler for comments request failure
@@ -43,7 +38,7 @@ function commentsRequestFailure( dispatch, siteId, postId, requestId, err ) {
 		siteId,
 		postId,
 		requestId,
-		error: err
+		error: err,
 	} );
 }
 
@@ -66,8 +61,8 @@ export function requestPostComments( siteId, postId, status = 'approved' ) {
 		query: {
 			order: 'DESC',
 			number: NUMBER_OF_COMMENTS_PER_FETCH,
-			status
-		}
+			status,
+		},
 	};
 }
 
@@ -87,17 +82,17 @@ function createPlaceholderComment( commentText, postId, parentCommentId ) {
 	// We need placehodler id to be unique in the context of siteId, postId for that specific user,
 	// date milliseconds will do for that purpose.
 	return {
-		ID: 'placeholder-' + ( new Date().getTime() ),
+		ID: 'placeholder-' + new Date().getTime(),
 		parent: parentCommentId ? { ID: parentCommentId } : false,
-		date: ( new Date() ).toISOString(),
+		date: new Date().toISOString(),
 		content: commentText,
 		status: 'pending',
 		type: 'comment',
 		post: {
-			ID: postId
+			ID: postId,
 		},
 		isPlaceholder: true,
-		placeholderState: PLACEHOLDER_STATE.PENDING
+		placeholderState: PLACEHOLDER_STATE.PENDING,
 	};
 }
 
@@ -113,7 +108,7 @@ export function removeComment( siteId, postId, commentId ) {
 		type: COMMENTS_REMOVE,
 		siteId,
 		postId,
-		commentId
+		commentId,
 	};
 }
 
@@ -130,7 +125,7 @@ export function writeComment( commentText, siteId, postId, parentCommentId ) {
 		return;
 	}
 
-	return ( dispatch ) => {
+	return dispatch => {
 		const placeholderComment = createPlaceholderComment( commentText, postId, parentCommentId ),
 			skipSort = !! parentCommentId;
 
@@ -140,62 +135,70 @@ export function writeComment( commentText, siteId, postId, parentCommentId ) {
 			siteId,
 			postId,
 			comments: [ placeholderComment ],
-			skipSort
+			skipSort,
 		} );
 
 		let apiPromise;
 
 		if ( parentCommentId ) {
-			apiPromise = wpcom.site( siteId ).post( postId ).comment( parentCommentId ).reply( {}, commentText );
+			apiPromise = wpcom
+				.site( siteId )
+				.post( postId )
+				.comment( parentCommentId )
+				.reply( {}, commentText );
 		} else {
 			apiPromise = wpcom.site( siteId ).post( postId ).comment().add( commentText );
 		}
 
-		return apiPromise.then( ( comment ) => {
-			// remove the placeholder
-			dispatch( {
-				type: COMMENTS_REMOVE,
-				siteId,
-				postId,
-				commentId: placeholderComment.ID
-			} );
-
-			// insert the real comment
-			dispatch( {
-				type: COMMENTS_RECEIVE,
-				siteId,
-				postId,
-				comments: [ comment ],
-				skipSort
-			} );
-
-			const requestId = createRequestId( siteId, postId, {} );
-
-			wpcom.site( siteId )
-				.post( postId )
-				.comment()
-				.replies()
-				.then( ( { found: totalCommentsCount } ) => dispatch( {
-					type: COMMENTS_COUNT_RECEIVE,
+		return apiPromise
+			.then( comment => {
+				// remove the placeholder
+				dispatch( {
+					type: COMMENTS_REMOVE,
 					siteId,
 					postId,
-					totalCommentsCount
-				} ) )
-				.catch( ( err ) => commentsRequestFailure( dispatch, siteId, postId, requestId, err ) );
+					commentId: placeholderComment.ID,
+				} );
 
-			return comment;
-		} )
-		.catch( ( error ) => {
-			dispatch( {
-				type: COMMENTS_ERROR,
-				siteId,
-				postId,
-				commentId: placeholderComment.ID,
-				error
+				// insert the real comment
+				dispatch( {
+					type: COMMENTS_RECEIVE,
+					siteId,
+					postId,
+					comments: [ comment ],
+					skipSort,
+				} );
+
+				const requestId = createRequestId( siteId, postId, {} );
+
+				wpcom
+					.site( siteId )
+					.post( postId )
+					.comment()
+					.replies()
+					.then( ( { found: totalCommentsCount } ) =>
+						dispatch( {
+							type: COMMENTS_COUNT_RECEIVE,
+							siteId,
+							postId,
+							totalCommentsCount,
+						} ),
+					 )
+					.catch( err => commentsRequestFailure( dispatch, siteId, postId, requestId, err ) );
+
+				return comment;
+			} )
+			.catch( error => {
+				dispatch( {
+					type: COMMENTS_ERROR,
+					siteId,
+					postId,
+					commentId: placeholderComment.ID,
+					error,
+				} );
+
+				throw error;
 			} );
-
-			throw error;
-		} );
 	};
 }
 
@@ -207,29 +210,39 @@ export function writeComment( commentText, siteId, postId, parentCommentId ) {
  * @returns {Function} think that likes a comment
  */
 export function likeComment( siteId, postId, commentId ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		// optimistic update
 		dispatch( {
 			type: COMMENTS_LIKE,
 			siteId,
 			postId,
-			commentId
+			commentId,
 		} );
 
 		// optimistic revert on error, return here for test more conveniently
-		return wpcom.site( siteId ).comment( commentId ).like().add( { source: 'reader' } ).then( ( data ) => dispatch( {
-			type: COMMENTS_LIKE_UPDATE,
-			siteId,
-			postId,
-			commentId,
-			iLike: data.i_like,
-			likeCount: data.like_count
-		} ) ).catch( () => dispatch( {
-			type: COMMENTS_UNLIKE,
-			siteId,
-			postId,
-			commentId
-		} ) );
+		return wpcom
+			.site( siteId )
+			.comment( commentId )
+			.like()
+			.add( { source: 'reader' } )
+			.then( data =>
+				dispatch( {
+					type: COMMENTS_LIKE_UPDATE,
+					siteId,
+					postId,
+					commentId,
+					iLike: data.i_like,
+					likeCount: data.like_count,
+				} ),
+			 )
+			.catch( () =>
+				dispatch( {
+					type: COMMENTS_UNLIKE,
+					siteId,
+					postId,
+					commentId,
+				} ),
+			 );
 	};
 }
 
@@ -241,29 +254,39 @@ export function likeComment( siteId, postId, commentId ) {
  * @returns {Function} think that unlikes a comment
  */
 export function unlikeComment( siteId, postId, commentId ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		// optimistic update
 		dispatch( {
 			type: COMMENTS_UNLIKE,
 			siteId,
 			postId,
-			commentId
+			commentId,
 		} );
 
 		// optimistic revert on error, return here for test more conveniently
-		return wpcom.site( siteId ).comment( commentId ).like().del( { source: 'reader' } ).then( ( data ) => dispatch( {
-			type: COMMENTS_LIKE_UPDATE,
-			siteId,
-			postId,
-			commentId,
-			iLike: data.i_like,
-			likeCount: data.like_count
-		} ) ).catch( () => dispatch( {
-			type: COMMENTS_LIKE,
-			siteId,
-			postId,
-			commentId
-		} ) );
+		return wpcom
+			.site( siteId )
+			.comment( commentId )
+			.like()
+			.del( { source: 'reader' } )
+			.then( data =>
+				dispatch( {
+					type: COMMENTS_LIKE_UPDATE,
+					siteId,
+					postId,
+					commentId,
+					iLike: data.i_like,
+					likeCount: data.like_count,
+				} ),
+			 )
+			.catch( () =>
+				dispatch( {
+					type: COMMENTS_LIKE,
+					siteId,
+					postId,
+					commentId,
+				} ),
+			 );
 	};
 }
 
@@ -273,21 +296,30 @@ export function changeCommentStatus( siteId, postId, commentId, status ) {
 			type: COMMENTS_CHANGE_STATUS,
 			siteId,
 			postId,
-			commentId
+			commentId,
 		} );
 
-		return wpcom.site( siteId ).comment( commentId ).update( { status } ).then( data => dispatch( {
-			type: COMMENTS_CHANGE_STATUS_SUCESS,
-			siteId,
-			postId,
-			commentId,
-			status: data.status
-		} ) ).catch( () => dispatch( {
-			type: COMMENTS_CHANGE_STATUS_FAILURE,
-			siteId,
-			postId,
-			commentId
-		} ) );
+		return wpcom
+			.site( siteId )
+			.comment( commentId )
+			.update( { status } )
+			.then( data =>
+				dispatch( {
+					type: COMMENTS_CHANGE_STATUS_SUCESS,
+					siteId,
+					postId,
+					commentId,
+					status: data.status,
+				} ),
+			 )
+			.catch( () =>
+				dispatch( {
+					type: COMMENTS_CHANGE_STATUS_FAILURE,
+					siteId,
+					postId,
+					commentId,
+				} ),
+			 );
 	};
 }
 
@@ -297,20 +329,29 @@ export function editComment( siteId, postId, commentId, content ) {
 			type: COMMENTS_EDIT,
 			siteId,
 			postId,
-			content
+			content,
 		} );
 
-		return wpcom.site( siteId ).comment( commentId ).update( { content } ).then( data => dispatch( {
-			type: COMMENTS_EDIT_SUCCESS,
-			siteId,
-			postId,
-			commentId,
-			content: data.content
-		} ) ).catch( () => dispatch( {
-			type: COMMENTS_EDIT_FAILURE,
-			siteId,
-			postId,
-			commentId
-		} ) );
+		return wpcom
+			.site( siteId )
+			.comment( commentId )
+			.update( { content } )
+			.then( data =>
+				dispatch( {
+					type: COMMENTS_EDIT_SUCCESS,
+					siteId,
+					postId,
+					commentId,
+					content: data.content,
+				} ),
+			 )
+			.catch( () =>
+				dispatch( {
+					type: COMMENTS_EDIT_FAILURE,
+					siteId,
+					postId,
+					commentId,
+				} ),
+			 );
 	};
 }

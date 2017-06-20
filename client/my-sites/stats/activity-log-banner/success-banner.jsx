@@ -10,10 +10,7 @@ import { localize } from 'i18n-calypso';
 import ActivityLogBanner from './index';
 import Button from 'components/button';
 
-function SuccessBanner( {
-	translate,
-	moment,
-} ) {
+function SuccessBanner( { translate, moment } ) {
 	// FIXME: real dates
 	const date = 1496400468285;
 	// FIXME: real dismiss
@@ -26,11 +23,13 @@ function SuccessBanner( {
 			status="success"
 			title={ translate( 'Your site has been successfully restored' ) }
 		>
-			<p>{ translate(
-				'We successfully restored your site back to %s!',
-				{ args: moment( date ).format( 'LLLL' ) }
-			) }</p>
-			<Button primary >
+			<p>
+				{ translate(
+					'We successfully restored your site back to %s!',
+					{ args: moment( date ).format( 'LLLL' ) },
+				) }
+			</p>
+			<Button primary>
 				{ translate( 'View site' ) }
 			</Button>
 			{ '  ' }

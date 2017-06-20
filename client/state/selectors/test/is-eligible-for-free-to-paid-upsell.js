@@ -29,7 +29,10 @@ describe( 'isEligibleForFreeToPaidUpsell', () => {
 		mockery.registerMock( 'state/selectors/can-current-user', canCurrentUser );
 		mockery.registerMock( 'state/selectors/is-mapped-domain-site', isMappedDomainSite );
 		mockery.registerMock( 'state/selectors/is-site-on-free-plan', isSiteOnFreePlan );
-		mockery.registerMock( 'state/selectors/is-user-registration-days-within-range', isUserRegistrationDaysWithinRange );
+		mockery.registerMock(
+			'state/selectors/is-user-registration-days-within-range',
+			isUserRegistrationDaysWithinRange,
+		);
 	} );
 
 	before( () => {

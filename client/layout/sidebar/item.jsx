@@ -23,7 +23,7 @@ export default React.createClass( {
 		selected: React.PropTypes.bool,
 		preloadSectionName: React.PropTypes.string,
 		testTarget: React.PropTypes.string,
-		tipTarget: React.PropTypes.string
+		tipTarget: React.PropTypes.string,
 	},
 
 	_preloaded: false,
@@ -58,5 +58,5 @@ export default React.createClass( {
 				{ this.props.children }
 			</li>
 		);
-	}
+	},
 } );

@@ -49,17 +49,19 @@ class SocialSignupForm extends Component {
 				<div className="signup-form__social-buttons">
 					<GoogleLoginButton
 						clientId={ config( 'google_oauth_client_id' ) }
-						responseHandler={ this.handleGoogleResponse } />
+						responseHandler={ this.handleGoogleResponse }
+					/>
 
 					<FacebookLoginButton
 						appId={ config( 'facebook_app_id' ) }
-						responseHandler={ this.handleFacebookResponse } />
+						responseHandler={ this.handleFacebookResponse }
+					/>
 				</div>
 
-        <p>
+				<p>
 					{ this.props.translate(
-            "Connect to your existing social profile to get started faster. We'll never post without your permission."
-          ) }
+						"Connect to your existing social profile to get started faster. We'll never post without your permission.",
+					) }
 				</p>
 			</div>
 		);

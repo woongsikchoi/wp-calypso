@@ -26,7 +26,7 @@ class SiteSelectorAddSite extends Component {
 
 		this.state = {
 			showPopoverMenu: false,
-			popoverPosition: 'top'
+			popoverPosition: 'top',
 		};
 
 		this.handleShowPopover = this.handleShowPopover.bind( this );
@@ -38,8 +38,7 @@ class SiteSelectorAddSite extends Component {
 	}
 
 	getAddNewSiteUrl() {
-		if ( sites.getJetpack().length ||
-			abtest( 'newSiteWithJetpack' ) === 'showNewJetpackSite' ) {
+		if ( sites.getJetpack().length || abtest( 'newSiteWithJetpack' ) === 'showNewJetpackSite' ) {
 			return '/jetpack/new/?ref=calypso-selector';
 		}
 		return config( 'signup_url' ) + '?ref=calypso-selector';
@@ -49,7 +48,7 @@ class SiteSelectorAddSite extends Component {
 		const action = isShowing ? 'show' : 'hide';
 
 		this.setState( {
-			showPopoverMenu: isShowing
+			showPopoverMenu: isShowing,
 		} );
 
 		this.props.recordTracksEvent( 'calypso_add_site_popover', { action } );
@@ -95,8 +94,11 @@ class SiteSelectorAddSite extends Component {
 					onClose={ this.onClosePopover }
 					position={ this.state.popoverPosition }
 					context={ this.refs && this.refs.popoverMenuTarget }
+				>
+					<PopoverMenuItem
+						href={ this.getAddNewSiteUrl() }
+						onClick={ this.recordPopoverAddNewSite }
 					>
-					<PopoverMenuItem href={ this.getAddNewSiteUrl() } onClick={ this.recordPopoverAddNewSite }>
 						{ translate( 'New WordPress.com site' ) }
 					</PopoverMenuItem>
 					<PopoverMenuItem href="/jetpack/connect" onClick={ this.recordPopoverAddJetpackSite }>
@@ -116,9 +118,11 @@ class SiteSelectorAddSite extends Component {
 	}
 }
 
-export default connect(
-	null,
-	dispatch => bindActionCreators( {
-		recordTracksEvent
-	}, dispatch )
-)( localize( SiteSelectorAddSite ) );
+export default connect( null, dispatch =>
+	bindActionCreators(
+		{
+			recordTracksEvent,
+		},
+		dispatch,
+	),
+ )( localize( SiteSelectorAddSite ) );

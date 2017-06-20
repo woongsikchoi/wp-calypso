@@ -18,7 +18,6 @@ import FormTextInput from 'components/forms/form-text-input';
 import TokenField from 'components/token-field';
 
 class ProductFormAdditionalDetailsCard extends Component {
-
 	state = {
 		attributeNames: {},
 	};
@@ -39,37 +38,48 @@ class ProductFormAdditionalDetailsCard extends Component {
 
 	getAttributes() {
 		const { product } = this.props;
-		return product.attributes && product.attributes.filter( attribute => ! attribute.variation ) || [];
+		return (
+			( product.attributes && product.attributes.filter( attribute => ! attribute.variation ) ) || [
+			]
+		);
 	}
 
 	getAttribute( { attributes }, attributeId ) {
-		return attributes && find( attributes, function( a ) {
-			return a.uid === attributeId;
-		} );
+		return (
+			attributes &&
+			find( attributes, function( a ) {
+				return a.uid === attributeId;
+			} )
+		);
 	}
 
 	addAttribute = () => {
 		const { siteId, product, editProductAttribute } = this.props;
 		editProductAttribute( siteId, product, null, { name: '', options: [] } );
-	}
+	};
 
 	cardOpen = () => {
 		const attributes = this.getAttributes();
 		if ( ! attributes.length ) {
 			this.addAttribute();
 		}
-	}
+	};
 
 	cardClose = () => {
 		const attributes = this.getAttributes();
-		if ( attributes.length === 1 && attributes[ 0 ] && ! attributes[ 0 ].name && ! attributes[ 0 ].options.length ) {
+		if (
+			attributes.length === 1 &&
+			attributes[ 0 ] &&
+			! attributes[ 0 ].name &&
+			! attributes[ 0 ].options.length
+		) {
 			this.removeAttribute( attributes[ 0 ].uid );
 		}
-	}
+	};
 
-	removeAttributeHandler = ( e ) => {
+	removeAttributeHandler = e => {
 		this.removeAttribute( e.currentTarget.id );
-	}
+	};
 
 	removeAttribute( uid ) {
 		const { siteId, product, editProduct } = this.props;
@@ -82,14 +92,14 @@ class ProductFormAdditionalDetailsCard extends Component {
 	updateValues = ( values, attribute ) => {
 		const { siteId, product, editProductAttribute } = this.props;
 		editProductAttribute( siteId, product, attribute, { options: values } );
-	}
+	};
 
-	updateNameHandler = ( e ) => {
+	updateNameHandler = e => {
 		const attributeNames = { ...this.state.attributeNames };
 		attributeNames[ e.target.id ] = e.target.value;
 		this.setState( { attributeNames } );
 		this.debouncedUpdateName( e.target.id, e.target.value );
-	}
+	};
 
 	updateName( attributeId, name ) {
 		const { siteId, product, editProductAttribute } = this.props;
@@ -100,22 +110,18 @@ class ProductFormAdditionalDetailsCard extends Component {
 	renderInput( attribute ) {
 		const { translate } = this.props;
 		const { attributeNames } = this.state;
-		const attributeName = attributeNames && attributeNames[ attribute.uid ] || attribute.name;
+		const attributeName = ( attributeNames && attributeNames[ attribute.uid ] ) || attribute.name;
 		const attributes = this.getAttributes();
-		const updateValues = ( values ) => {
+		const updateValues = values => {
 			this.updateValues( values, attribute );
 		};
-		const removeButton = attributes.length > 1 && (
+		const removeButton =
+			attributes.length > 1 &&
 			<div className="products__additional-details-form-remove">
-				<Button
-					borderless
-					onClick={ this.removeAttributeHandler }
-					id={ attribute.uid }
-				>
+				<Button borderless onClick={ this.removeAttributeHandler } id={ attribute.uid }>
 					<Gridicon icon="cross-small" />
 				</Button>
-			</div>
-		);
+			</div>;
 
 		const classes = classNames( {
 			'products__additional-details-form-fieldset': true,
@@ -137,17 +143,17 @@ class ProductFormAdditionalDetailsCard extends Component {
 					name="values"
 					onChange={ updateValues }
 				/>
-				{removeButton}
+				{ removeButton }
 			</div>
 		);
 	}
 
 	renderPreview( attribute ) {
 		const { attributeNames } = this.state;
-		const attributeName = attributeNames && attributeNames[ attribute.uid ] || attribute.name;
+		const attributeName = ( attributeNames && attributeNames[ attribute.uid ] ) || attribute.name;
 
 		if ( ! attributeName && ! attribute.options.length ) {
-			return ( <div key={ attribute.uid }></div> );
+			return <div key={ attribute.uid } />;
 		}
 
 		return (
@@ -173,9 +179,11 @@ class ProductFormAdditionalDetailsCard extends Component {
 				clickableHeader
 			>
 				<FormSettingExplanation>
-					{ translate( 'Display additional details in a formatted list. Examples when selling ' +
-						'apparel include Cut, Type, and Material. This will also allow customers to filter ' +
-						'your store to find Women\'s cut Hoodies in Cotton.' ) }
+					{ translate(
+						'Display additional details in a formatted list. Examples when selling ' +
+							'apparel include Cut, Type, and Material. This will also allow customers to filter ' +
+							"your store to find Women's cut Hoodies in Cotton.",
+					) }
 				</FormSettingExplanation>
 
 				<div className="products__additional-details-container">
@@ -186,7 +194,7 @@ class ProductFormAdditionalDetailsCard extends Component {
 						</div>
 
 						<div className="products__additional-details-form-inputs">
-							{inputs}
+							{ inputs }
 						</div>
 
 						<Button compact onClick={ this.addAttribute }>{ translate( 'Add another' ) }</Button>
@@ -201,7 +209,7 @@ class ProductFormAdditionalDetailsCard extends Component {
 							<div className="products__additional-details-preview-title">
 								{ translate( 'Product details' ) }
 							</div>
-							{previews}
+							{ previews }
 						</div>
 					</div>
 				</div>

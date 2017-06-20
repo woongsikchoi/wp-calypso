@@ -28,16 +28,16 @@ describe( 'abtest', () => {
 				datestamp: '20160627',
 				variations: {
 					hide: 50,
-					show: 50
+					show: 50,
 				},
 				defaultVariation: 'hide',
-				allowExistingUsers: false
+				allowExistingUsers: false,
 			},
 			mockedTestAllowAnyLocale: {
 				datestamp: '20160627',
 				variations: {
 					hide: 50,
-					show: 50
+					show: 50,
 				},
 				defaultVariation: 'hide',
 				localeTargets: 'any',
@@ -46,7 +46,7 @@ describe( 'abtest', () => {
 				datestamp: '20160627',
 				variations: {
 					hide: 50,
-					show: 50
+					show: 50,
 				},
 				defaultVariation: 'hide',
 				localeTargets: [ 'fr', 'de' ],
@@ -55,7 +55,7 @@ describe( 'abtest', () => {
 				datestamp: '20160627',
 				variations: {
 					hide: 50,
-					show: 50
+					show: 50,
 				},
 				defaultVariation: 'hide',
 				localeTargets: [ 'fr' ],
@@ -64,10 +64,10 @@ describe( 'abtest', () => {
 				datestamp: '20160627',
 				variations: {
 					hide: 50,
-					show: 50
+					show: 50,
 				},
 				defaultVariation: 'hide',
-				allowExistingUsers: true
+				allowExistingUsers: true,
 			},
 		} );
 		mockery.registerMock( 'store', {
@@ -79,7 +79,7 @@ describe( 'abtest', () => {
 		} );
 		mockery.registerMock( 'lib/user', () => {
 			return {
-				get: () => mockedUser
+				get: () => mockedUser,
 			};
 		} );
 		abtest = require( 'lib/abtest' ).abtest;
@@ -93,11 +93,11 @@ describe( 'abtest', () => {
 		it( 'should return stored value and skip store.set for existing users', () => {
 			mockedUser = {
 				localeSlug: 'en',
-				date: DATE_BEFORE
+				date: DATE_BEFORE,
 			};
 			navigator = {
 				language: 'en',
-				languages: [ 'en' ]
+				languages: [ 'en' ],
 			};
 			expect( abtest( 'mockedTest' ) ).to.equal( 'show' );
 			expect( setSpy ).not.to.have.been.called;
@@ -105,7 +105,7 @@ describe( 'abtest', () => {
 		it( 'should return stored value and skip store.set for any user, including new, non-English users', () => {
 			mockedUser = {
 				localeSlug: 'de',
-				date: DATE_AFTER
+				date: DATE_AFTER,
 			};
 			expect( abtest( 'mockedTest' ) ).to.equal( 'show' );
 			expect( setSpy ).not.to.have.been.called;
@@ -126,7 +126,7 @@ describe( 'abtest', () => {
 			beforeEach( () => {
 				mockedUser = {
 					localeSlug: 'en',
-					date: DATE_BEFORE
+					date: DATE_BEFORE,
 				};
 			} );
 			it( 'should return default and skip store.set when allowExistingUsers is false', () => {
@@ -143,7 +143,7 @@ describe( 'abtest', () => {
 			beforeEach( () => {
 				mockedUser = {
 					localeSlug: 'en',
-					date: DATE_AFTER
+					date: DATE_AFTER,
 				};
 			} );
 			describe( 'English only users allowed (default)', () => {
@@ -201,7 +201,7 @@ describe( 'abtest', () => {
 			beforeEach( () => {
 				mockedUser = {
 					localeSlug: false,
-					date: DATE_AFTER
+					date: DATE_AFTER,
 				};
 			} );
 			it( 'should call store.set for new users with no locale for en only test', () => {
@@ -220,7 +220,7 @@ describe( 'abtest', () => {
 				setSpy.reset();
 				navigator = {
 					language: 'en',
-					languages: [ 'en' ]
+					languages: [ 'en' ],
 				};
 			} );
 			it( 'should call store.set for logged-out users with English locale', () => {
@@ -239,7 +239,7 @@ describe( 'abtest', () => {
 			} );
 			it( 'should return default and skip store.set for non-English IE10 userLanguage setting', () => {
 				navigator = {
-					userLanguage: 'de'
+					userLanguage: 'de',
 				};
 				expect( abtest( 'mockedTest' ) ).to.equal( 'hide' );
 				expect( setSpy ).not.to.have.been.called;

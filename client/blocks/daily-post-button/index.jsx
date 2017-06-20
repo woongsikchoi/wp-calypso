@@ -171,7 +171,7 @@ class DailyPostButton extends React.Component {
 					<span>{ translate( 'Post about %(title)s', { args: { title } } ) } </span>
 				</Button>,
 				this.state.showingMenu ? this.renderSitesPopover() : null,
-			]
+			],
 		);
 	}
 }

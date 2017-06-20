@@ -47,4 +47,3 @@ export function getStepCountRemaining( actionList ) {
 	const currentIndex = getCurrentStepIndex( actionList );
 	return actionList.steps.length - currentIndex;
 }
-

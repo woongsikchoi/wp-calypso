@@ -64,8 +64,7 @@ const Composing = ( {
 					isRequestingSettings={ isRequestingSettings }
 					isSavingSettings={ isSavingSettings }
 					setFieldValue={ setFieldValue }
-				/>
-			}
+				/> }
 			{ hasDateTimeFormats &&
 				<DateTimeFormat
 					fields={ fields }
@@ -73,8 +72,7 @@ const Composing = ( {
 					isRequestingSettings={ isRequestingSettings }
 					isSavingSettings={ isSavingSettings }
 					updateFields={ updateFields }
-				/>
-			}
+				/> }
 		</div>
 	);
 };
@@ -98,14 +96,12 @@ Composing.propTypes = {
 	updateFields: PropTypes.func.isRequired,
 };
 
-export default connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
-		const siteIsJetpack = isJetpackSite( state, siteId );
+export default connect( state => {
+	const siteId = getSelectedSiteId( state );
+	const siteIsJetpack = isJetpackSite( state, siteId );
 
-		return {
-			hasDateTimeFormats: ! siteIsJetpack || isJetpackMinimumVersion( state, siteId, '4.7' ),
-			jetpackSettingsUISupported: siteIsJetpack && siteSupportsJetpackSettingsUi( state, siteId ),
-		};
-	}
-)( Composing );
+	return {
+		hasDateTimeFormats: ! siteIsJetpack || isJetpackMinimumVersion( state, siteId, '4.7' ),
+		jetpackSettingsUISupported: siteIsJetpack && siteSupportsJetpackSettingsUi( state, siteId ),
+	};
+} )( Composing );

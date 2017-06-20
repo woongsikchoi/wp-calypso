@@ -146,7 +146,7 @@ const receiveSitesChangeListener = ( dispatch, action ) => {
  */
 const fireChangeListeners = () => {
 	debug( 'firing', sitesListeners.length, 'emitters' );
-	sitesListeners.forEach( ( listener ) => listener() );
+	sitesListeners.forEach( listener => listener() );
 	sitesListeners = [];
 };
 
@@ -154,7 +154,6 @@ const handler = ( dispatch, action, getState ) => {
 	switch ( action.type ) {
 		case ANALYTICS_SUPER_PROPS_UPDATE:
 			return updateSelectedSiteForAnalytics( dispatch, action, getState );
-
 		//when the notifications panel is open keyboard events should not fire.
 		case NOTIFICATIONS_PANEL_TOGGLE:
 			return updateNotificationsOpenForKeyboardShortcuts( dispatch, action, getState );
@@ -187,7 +186,7 @@ const handler = ( dispatch, action, getState ) => {
 	}
 };
 
-export const libraryMiddleware = ( { dispatch, getState } ) => ( next ) => ( action ) => {
+export const libraryMiddleware = ( { dispatch, getState } ) => next => action => {
 	handler( dispatch, action, getState );
 
 	return next( action );

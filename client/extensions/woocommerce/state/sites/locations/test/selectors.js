@@ -167,10 +167,9 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return the continents, sorted by name', () => {
-			expect( getContinents( loadedState ) ).to.deep.equal( [
-				{ code: 'AF', name: 'Africa' },
-				{ code: 'NA', name: 'North America' },
-			] );
+			expect( getContinents( loadedState ) ).to.deep.equal(
+				[ { code: 'AF', name: 'Africa' }, { code: 'NA', name: 'North America' } ],
+			);
 		} );
 	} );
 
@@ -188,10 +187,9 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return the countries from a continent, sorted by name', () => {
-			expect( getCountries( loadedState, 'NA' ) ).to.deep.equal( [
-				{ code: 'CA', name: 'Canada' },
-				{ code: 'US', name: 'United States' },
-			] );
+			expect( getCountries( loadedState, 'NA' ) ).to.deep.equal(
+				[ { code: 'CA', name: 'Canada' }, { code: 'US', name: 'United States' } ],
+			);
 		} );
 	} );
 
@@ -213,11 +211,13 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return the states from a country, sorted by name', () => {
-			expect( getStates( loadedState, 'US' ) ).to.deep.equal( [
-				{ code: 'AL', name: 'Alabama' },
-				{ code: 'CA', name: 'California' },
-				{ code: 'UT', name: 'Utah' },
-			] );
+			expect( getStates( loadedState, 'US' ) ).to.deep.equal(
+				[
+					{ code: 'AL', name: 'Alabama' },
+					{ code: 'CA', name: 'California' },
+					{ code: 'UT', name: 'Utah' },
+				],
+			);
 		} );
 	} );
 

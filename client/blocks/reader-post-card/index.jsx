@@ -250,5 +250,5 @@ export default connect(
 	( state, ownProps ) => ( {
 		isExpanded: isReaderCardExpanded( state, ownProps.postKey ),
 	} ),
-	{ expandCard: expandCardAction }
+	{ expandCard: expandCardAction },
 )( ReaderPostCard );

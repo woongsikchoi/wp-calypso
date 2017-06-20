@@ -68,25 +68,28 @@ export const fetchProducts = ( siteId, page ) => ( dispatch, getState ) => {
 	};
 	dispatch( fetchAction );
 
-	return request( siteId ).getWithHeaders( `products?page=${ page }&per_page=10` ).then( ( response ) => {
-		const { headers, data } = response;
-		const totalPages = headers[ 'X-WP-TotalPages' ];
-		const totalProducts = headers[ 'X-WP-Total' ];
-		dispatch( {
-			type: WOOCOMMERCE_PRODUCTS_REQUEST_SUCCESS,
-			siteId,
-			page,
-			totalPages,
-			totalProducts,
-			products: data,
+	return request( siteId )
+		.getWithHeaders( `products?page=${ page }&per_page=10` )
+		.then( response => {
+			const { headers, data } = response;
+			const totalPages = headers[ 'X-WP-TotalPages' ];
+			const totalProducts = headers[ 'X-WP-Total' ];
+			dispatch( {
+				type: WOOCOMMERCE_PRODUCTS_REQUEST_SUCCESS,
+				siteId,
+				page,
+				totalPages,
+				totalProducts,
+				products: data,
+			} );
+		} )
+		.catch( error => {
+			dispatch( setError( siteId, fetchAction, error ) );
+			dispatch( {
+				type: WOOCOMMERCE_PRODUCTS_REQUEST_FAILURE,
+				siteId,
+				page,
+				error,
+			} );
 		} );
-	} ).catch( error => {
-		dispatch( setError( siteId, fetchAction, error ) );
-		dispatch( {
-			type: WOOCOMMERCE_PRODUCTS_REQUEST_FAILURE,
-			siteId,
-			page,
-			error,
-		} );
-	} );
 };

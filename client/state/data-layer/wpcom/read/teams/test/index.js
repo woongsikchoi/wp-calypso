@@ -25,12 +25,13 @@ export const successfulResponse = {
 
 describe( 'wpcom-api', () => {
 	describe( 'teams request', () => {
-		useNock( nock =>
-			nock( 'https://public-api.wordpress.com:443' )
-				.get( '/rest/v1.2/read/teams' )
-				.reply( 200, successfulResponse )
-				.get( '/rest/v1.2/read/teams' )
-				.reply( 500, new Error() )
+		useNock(
+			nock =>
+				nock( 'https://public-api.wordpress.com:443' )
+					.get( '/rest/v1.2/read/teams' )
+					.reply( 200, successfulResponse )
+					.get( '/rest/v1.2/read/teams' )
+					.reply( 500, new Error() ),
 		);
 
 		it( 'should dispatch RECEIVE action when request completes', done => {

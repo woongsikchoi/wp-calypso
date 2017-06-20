@@ -43,9 +43,7 @@ describe( 'selectors', () => {
 		it( 'should NOT overlay the zone currently being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'MyOldMethodTitle' },
 					},
@@ -63,22 +61,22 @@ describe( 'selectors', () => {
 									creates: [],
 									updates: [ { id: 7, title: 'MyNewMethodTitle' } ],
 									deletes: [],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal( [ { id: 7, title: 'MyOldMethodTitle' } ] );
+			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal(
+				[ { id: 7, title: 'MyOldMethodTitle' } ],
+			);
 		} );
 
 		it( 'should overlay method updates', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'MyOldMethodTitle' },
 					},
@@ -88,14 +86,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [ { id: 7, title: 'MyNewMethodTitle' } ],
-									deletes: [],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [ { id: 7, title: 'MyNewMethodTitle' } ],
+										deletes: [],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: null,
 						},
@@ -103,15 +103,15 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal( [ { id: 7, title: 'MyNewMethodTitle' } ] );
+			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal(
+				[ { id: 7, title: 'MyNewMethodTitle' } ],
+			);
 		} );
 
 		it( 'should overlay method deletes', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'Title7' },
 						8: { id: 8, title: 'Title8' },
@@ -122,14 +122,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [],
-									deletes: [ { id: 7 } ],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [],
+										deletes: [ { id: 7 } ],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: null,
 						},
@@ -143,9 +145,7 @@ describe( 'selectors', () => {
 		it( 'should overlay method creates', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [] },
-					],
+					shippingZones: [ { id: 1, methodIds: [] } ],
 					shippingZoneMethods: {},
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
@@ -153,14 +153,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [ { id: { index: 0 }, title: 'NewMethod' } ],
-									updates: [],
-									deletes: [],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [ { id: { index: 0 }, title: 'NewMethod' } ],
+										updates: [],
+										deletes: [],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: null,
 						},
@@ -168,7 +170,9 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal( [ { id: { index: 0 }, title: 'NewMethod' } ] );
+			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal(
+				[ { id: { index: 0 }, title: 'NewMethod' } ],
+			);
 		} );
 
 		it( 'should work for newly-created zones', () => {
@@ -181,14 +185,16 @@ describe( 'selectors', () => {
 				ui: {
 					shipping: {
 						zones: {
-							creates: [ {
-								id: { index: 0 },
-								methods: {
-									creates: [ { id: { index: 0 }, title: 'MyNewMethodTitle' } ],
-									updates: [],
-									deletes: [],
+							creates: [
+								{
+									id: { index: 0 },
+									methods: {
+										creates: [ { id: { index: 0 }, title: 'MyNewMethodTitle' } ],
+										updates: [],
+										deletes: [],
+									},
 								},
-							} ],
+							],
 							updates: [],
 							deletes: [],
 							currentlyEditingId: null,
@@ -197,15 +203,15 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getShippingZoneMethods( state, { index: 0 } ) ).to.deep.equal( [ { id: { index: 0 }, title: 'MyNewMethodTitle' } ] );
+			expect( getShippingZoneMethods( state, { index: 0 } ) ).to.deep.equal(
+				[ { id: { index: 0 }, title: 'MyNewMethodTitle' } ],
+			);
 		} );
 
 		it( 'should sort the shipping methods', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'Title7', order: 1 },
 						8: { id: 8, title: 'Title8', order: 2 },
@@ -216,22 +222,20 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [
-										{ id: { index: 1 }, title: 'ConvertedMethod7', _originalId: 7 },
-										{ id: { index: 2 }, title: 'ConvertedMethod0', _originalId: { index: 0 } },
-										{ id: { index: 3 }, title: 'NewMethod3' },
-									],
-									updates: [
-										{ id: 8, title: 'NewTitle8' },
-									],
-									deletes: [
-										{ id: 7 },
-									],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [
+											{ id: { index: 1 }, title: 'ConvertedMethod7', _originalId: 7 },
+											{ id: { index: 2 }, title: 'ConvertedMethod0', _originalId: { index: 0 } },
+											{ id: { index: 3 }, title: 'NewMethod3' },
+										],
+										updates: [ { id: 8, title: 'NewTitle8' } ],
+										deletes: [ { id: 7 } ],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: null,
 						},
@@ -239,12 +243,14 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal( [
-				{ id: { index: 1 }, title: 'ConvertedMethod7', _originalId: 7 },
-				{ id: 8, title: 'NewTitle8', order: 2 },
-				{ id: { index: 2 }, title: 'ConvertedMethod0', _originalId: { index: 0 } },
-				{ id: { index: 3 }, title: 'NewMethod3' },
-			] );
+			expect( getShippingZoneMethods( state, 1 ) ).to.deep.equal(
+				[
+					{ id: { index: 1 }, title: 'ConvertedMethod7', _originalId: 7 },
+					{ id: 8, title: 'NewTitle8', order: 2 },
+					{ id: { index: 2 }, title: 'ConvertedMethod0', _originalId: { index: 0 } },
+					{ id: { index: 3 }, title: 'NewMethod3' },
+				],
+			);
 		} );
 	} );
 
@@ -263,9 +269,7 @@ describe( 'selectors', () => {
 		it( 'should return an empty list when there is no zone currently being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7 },
 					},
@@ -289,9 +293,7 @@ describe( 'selectors', () => {
 		it( 'should overlay updates in the zone currently being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'MyOldOldMethodTitle' },
 					},
@@ -301,14 +303,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [ { id: 7, title: 'MyOldMethodTitle', foo: 'bar' } ],
-									deletes: [],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [ { id: 7, title: 'MyOldMethodTitle', foo: 'bar' } ],
+										deletes: [],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: 1,
 							currentlyEditingChanges: {
@@ -316,24 +320,22 @@ describe( 'selectors', () => {
 									creates: [],
 									updates: [ { id: 7, title: 'MyNewMethodTitle' } ],
 									deletes: [],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal( [
-				{ id: 7, title: 'MyNewMethodTitle', foo: 'bar' },
-			] );
+			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal(
+				[ { id: 7, title: 'MyNewMethodTitle', foo: 'bar' } ],
+			);
 		} );
 
 		it( 'should overlay deletes in the zone currently being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8, 9 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8, 9 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, title: 'Title7' },
 						8: { id: 8, title: 'Title8' },
@@ -345,14 +347,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [ { id: { index: 0 } } ],
-									updates: [],
-									deletes: [ { id: 8 } ],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [ { id: { index: 0 } } ],
+										updates: [],
+										deletes: [ { id: 8 } ],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: 1,
 							currentlyEditingChanges: {
@@ -360,22 +364,22 @@ describe( 'selectors', () => {
 									creates: [],
 									updates: [],
 									deletes: [ { id: 7 }, { id: { index: 0 } } ],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal( [ { id: 9, title: 'Title9' } ] );
+			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal(
+				[ { id: 9, title: 'Title9' } ],
+			);
 		} );
 
 		it( 'should overlay method creates in the zone currently being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [] },
-					],
+					shippingZones: [ { id: 1, methodIds: [] } ],
 					shippingZoneMethods: {},
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
@@ -383,14 +387,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [],
-									deletes: [],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [],
+										deletes: [],
+									},
 								},
-							} ],
+							],
 							deletes: [],
 							currentlyEditingId: 1,
 							currentlyEditingChanges: {
@@ -398,14 +404,16 @@ describe( 'selectors', () => {
 									creates: [ { id: { index: 0 }, title: 'NewMethod' } ],
 									updates: [],
 									deletes: [],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal( [ { id: { index: 0 }, title: 'NewMethod' } ] );
+			expect( getCurrentlyEditingShippingZoneMethods( state ) ).to.deep.equal(
+				[ { id: { index: 0 }, title: 'NewMethod' } ],
+			);
 		} );
 	} );
 
@@ -413,9 +421,7 @@ describe( 'selectors', () => {
 		it( 'should return all the built-in types when there are no methods in the zone', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [] },
-					],
+					shippingZones: [ { id: 1, methodIds: [] } ],
 					shippingZoneMethods: {},
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
@@ -431,19 +437,15 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getNewMethodTypeOptions( state, 1 ) ).to.deep.equal( [
-				'flat_rate',
-				'free_shipping',
-				'local_pickup',
-			] );
+			expect( getNewMethodTypeOptions( state, 1 ) ).to.deep.equal(
+				[ 'flat_rate', 'free_shipping', 'local_pickup' ],
+			);
 		} );
 
 		it( 'should not allow for repeated methods, except for local_pickup', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8, 9 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8, 9 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, methodType: 'local_pickup' },
 						8: { id: 8, methodType: 'free_shipping' },
@@ -469,9 +471,7 @@ describe( 'selectors', () => {
 		it( 'should overlay committed edits to the zone, but not uncommitted edits to the zone currently edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, methodType: 'free_shipping' },
 						8: { id: 8, methodType: 'flat_rate' },
@@ -482,14 +482,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [],
-									deletes: [ { id: 7 } ],
-								}
-							} ],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [],
+										deletes: [ { id: 7 } ],
+									},
+								},
+							],
 							deletes: [],
 							currentlyEditingId: 1,
 							currentlyEditingChanges: {
@@ -497,22 +499,22 @@ describe( 'selectors', () => {
 									creates: [ { id: { index: 0 }, methodType: 'free_shipping' } ],
 									updates: [],
 									deletes: [],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getNewMethodTypeOptions( state, 1 ) ).to.deep.equal( [ 'free_shipping', 'local_pickup' ] );
+			expect( getNewMethodTypeOptions( state, 1 ) ).to.deep.equal(
+				[ 'free_shipping', 'local_pickup' ],
+			);
 		} );
 
 		it( 'should use the zone currently being edited if the zoneId param is omitted, overlaying all the edits', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [ 7, 8 ] },
-					],
+					shippingZones: [ { id: 1, methodIds: [ 7, 8 ] } ],
 					shippingZoneMethods: {
 						7: { id: 7, methodType: 'free_shipping' },
 					},
@@ -522,14 +524,16 @@ describe( 'selectors', () => {
 					shipping: {
 						zones: {
 							creates: [],
-							updates: [ {
-								id: 1,
-								methods: {
-									creates: [],
-									updates: [],
-									deletes: [ { id: 7 } ],
-								}
-							} ],
+							updates: [
+								{
+									id: 1,
+									methods: {
+										creates: [],
+										updates: [],
+										deletes: [ { id: 7 } ],
+									},
+								},
+							],
 							deletes: [],
 							currentlyEditingId: 1,
 							currentlyEditingChanges: {
@@ -537,14 +541,16 @@ describe( 'selectors', () => {
 									creates: [ { id: { index: 0 }, methodType: 'flat_rate' } ],
 									updates: [],
 									deletes: [],
-								}
+								},
 							},
 						},
 					},
 				},
 			} );
 
-			expect( getNewMethodTypeOptions( state ) ).to.deep.equal( [ 'free_shipping', 'local_pickup' ] );
+			expect( getNewMethodTypeOptions( state ) ).to.deep.equal(
+				[ 'free_shipping', 'local_pickup' ],
+			);
 		} );
 	} );
 } );

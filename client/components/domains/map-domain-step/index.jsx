@@ -30,7 +30,7 @@ const MapDomainStep = React.createClass( {
 		analyticsSection: React.PropTypes.string.isRequired,
 		domainsWithPlansOnly: React.PropTypes.bool.isRequired,
 		onRegisterDomain: React.PropTypes.func.isRequired,
-		onMapDomain: React.PropTypes.func.isRequired
+		onMapDomain: React.PropTypes.func.isRequired,
 	},
 
 	getInitialState: function() {
@@ -49,7 +49,13 @@ const MapDomainStep = React.createClass( {
 
 	notice: function() {
 		if ( this.state.notice ) {
-			return <Notice text={ this.state.notice } status={ `is-${ this.state.noticeSeverity }` } showDismiss={ false } />;
+			return (
+				<Notice
+					text={ this.state.notice }
+					status={ `is-${ this.state.noticeSeverity }` }
+					showDismiss={ false }
+				/>
+			);
 		}
 	},
 
@@ -61,8 +67,11 @@ const MapDomainStep = React.createClass( {
 
 	render: function() {
 		const suggestion = this.props.products.domain_map
-				? { cost: this.props.products.domain_map.cost_display, product_slug: this.props.products.domain_map.product_slug }
-				: { cost: null, product_slug: '' },
+			? {
+					cost: this.props.products.domain_map.cost_display,
+					product_slug: this.props.products.domain_map.product_slug,
+				}
+			: { cost: null, product_slug: '' },
 			{ translate } = this.props;
 
 		return (
@@ -72,9 +81,9 @@ const MapDomainStep = React.createClass( {
 
 					<div className="map-domain-step__domain-description">
 						<p>
-							{ translate( 'Map this domain to use it as your site\'s address.', {
+							{ translate( "Map this domain to use it as your site's address.", {
 								context: 'Upgrades: Description in domain registration',
-								comment: "Explains how you could use a new domain name for your site's address."
+								comment: "Explains how you could use a new domain name for your site's address.",
 							} ) }
 						</p>
 					</div>
@@ -84,9 +93,10 @@ const MapDomainStep = React.createClass( {
 							this.props.domainsWithPlansOnly,
 							this.props.selectedSite,
 							this.props.cart,
-							suggestion
+							suggestion,
 						) }
-						price={ suggestion.cost } />
+						price={ suggestion.cost }
+					/>
 
 					<div className="map-domain-step__add-domain" role="group">
 						<input
@@ -97,11 +107,14 @@ const MapDomainStep = React.createClass( {
 							onBlur={ this.save }
 							onChange={ this.setSearchQuery }
 							onClick={ this.recordInputFocus }
-							autoFocus />
-						<button className="map-domain-step__go button is-primary"
-								onClick={ this.recordGoButtonClick }>
+							autoFocus
+						/>
+						<button
+							className="map-domain-step__go button is-primary"
+							onClick={ this.recordGoButtonClick }
+						>
 							{ translate( 'Add', {
-								context: 'Upgrades: Label for mapping an existing domain'
+								context: 'Upgrades: Label for mapping an existing domain',
 							} ) }
 						</button>
 					</div>
@@ -120,15 +133,11 @@ const MapDomainStep = React.createClass( {
 
 		return (
 			<div className="domain-search-results__domain-availability is-mapping-suggestion">
-				<Notice
-					status="is-success"
-					showDismiss={ false }>
-					{
-						this.props.translate(
-							'%(domain)s is available!',
-							{ args: { domain: suggestion.domain_name } }
-						)
-					}
+				<Notice status="is-success" showDismiss={ false }>
+					{ this.props.translate(
+						'%(domain)s is available!',
+						{ args: { domain: suggestion.domain_name } },
+					) }
 				</Notice>
 				<DomainRegistrationSuggestion
 					suggestion={ suggestion }
@@ -136,7 +145,8 @@ const MapDomainStep = React.createClass( {
 					domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
 					key={ suggestion.domain_name }
 					cart={ this.props.cart }
-					onButtonClick={ this.registerSuggestedDomain } />
+					onButtonClick={ this.registerSuggestedDomain }
+				/>
 			</div>
 		);
 	},
@@ -144,7 +154,10 @@ const MapDomainStep = React.createClass( {
 	registerSuggestedDomain: function( event ) {
 		event.preventDefault();
 
-		this.props.recordAddDomainButtonClickInMapDomain( this.state.suggestion.domain_name, this.props.analyticsSection );
+		this.props.recordAddDomainButtonClickInMapDomain(
+			this.state.suggestion.domain_name,
+			this.props.analyticsSection,
+		);
 
 		return this.props.onRegisterDomain( this.state.suggestion );
 	},
@@ -191,9 +204,9 @@ const MapDomainStep = React.createClass( {
 
 export default connect(
 	state => ( {
-		currentUser: getCurrentUser( state )
+		currentUser: getCurrentUser( state ),
 	} ),
 	{
 		recordAddDomainButtonClickInMapDomain,
-	}
+	},
 )( localize( MapDomainStep ) );

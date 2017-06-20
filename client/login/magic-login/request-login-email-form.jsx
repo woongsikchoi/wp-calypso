@@ -37,7 +37,7 @@ class RequestLoginEmailForm extends React.Component {
 
 	onNoticeDismiss = () => {
 		this.props.hideMagicLoginRequestNotice();
-	}
+	};
 
 	onSubmit = event => {
 		event.preventDefault();
@@ -54,15 +54,11 @@ class RequestLoginEmailForm extends React.Component {
 			translate,
 		} = this.props;
 
-		const submitEnabled = (
-			isValidEmailAddress &&
-			! isFetching &&
-			! emailRequested &&
-			! requestError
-		);
+		const submitEnabled = isValidEmailAddress && ! isFetching && ! emailRequested && ! requestError;
 
 		const errorText = typeof requestError === 'string' && requestError.length
-			? requestError : translate( 'Unable to complete request' );
+			? requestError
+			: translate( 'Unable to complete request' );
 
 		return (
 			<div>
@@ -73,24 +69,27 @@ class RequestLoginEmailForm extends React.Component {
 						className="magic-login__request-login-email-form-notice"
 						showDismiss={ true }
 						onDismissClick={ this.onNoticeDismiss }
-						status="is-error" />
-				}
+						status="is-error"
+					/> }
 				<h1 className="magic-login__form-header">
 					{ translate( 'Email me a login link.' ) }
 				</h1>
 				<LoggedOutForm onSubmit={ this.onSubmit }>
-					<p>{
-						translate( 'Get a link sent to the email address associated ' +
-							'with your account to log in instantly without your password.' )
-					}</p>
-					{ currentUser && currentUser.username &&
-						<p>{
-							translate( 'NOTE: You are already logged in as user: %(user)s', {
+					<p>
+						{ translate(
+							'Get a link sent to the email address associated ' +
+								'with your account to log in instantly without your password.',
+						) }
+					</p>
+					{ currentUser &&
+						currentUser.username &&
+						<p>
+							{ translate( 'NOTE: You are already logged in as user: %(user)s', {
 								args: {
-									user: currentUser.username
-								}
-							} ) }</p>
-					}
+									user: currentUser.username,
+								},
+							} ) }
+						</p> }
 					<FormFieldset>
 						<FormTextInput
 							autoCapitalize="off"

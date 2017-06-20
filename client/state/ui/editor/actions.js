@@ -1,11 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	EDITOR_PASTE_EVENT,
-	EDITOR_START,
-	EDITOR_STOP,
-} from 'state/action-types';
+import { EDITOR_PASTE_EVENT, EDITOR_START, EDITOR_STOP } from 'state/action-types';
 import { ModalViews } from 'state/ui/media-modal/constants';
 import { setMediaModalView } from 'state/ui/media-modal/actions';
 import { withAnalytics, bumpStat } from 'state/analytics/actions';

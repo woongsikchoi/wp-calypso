@@ -18,7 +18,10 @@ import { changeCurrency } from 'woocommerce/state/ui/payments/currency/actions';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
 import { getPaymentCurrencySettings } from 'woocommerce/state/sites/settings/general/selectors';
 import { getCurrencyWithEdits } from 'woocommerce/state/ui/payments/currency/selectors';
-import { fetchSettingsGeneral, saveCurrency } from 'woocommerce/state/sites/settings/general/actions';
+import {
+	fetchSettingsGeneral,
+	saveCurrency,
+} from 'woocommerce/state/sites/settings/general/actions';
 
 class SettingsPaymentsLocationCurrency extends Component {
 	static propTypes = {
@@ -40,18 +43,18 @@ class SettingsPaymentsLocationCurrency extends Component {
 		if ( site && site.ID ) {
 			this.props.fetchSettingsGeneral( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchSettingsGeneral( newSiteId );
 		}
-	}
+	};
 
 	constructor( props ) {
 		super( props );
@@ -62,7 +65,7 @@ class SettingsPaymentsLocationCurrency extends Component {
 				name: 'Octopus Outlet Emporium',
 				street: '27 Main Street',
 				city: 'Ellington, CT 06029',
-				country: 'United States'
+				country: 'United States',
 			},
 		};
 	}
@@ -73,35 +76,24 @@ class SettingsPaymentsLocationCurrency extends Component {
 				{ options[ option ] }
 			</option>
 		);
-	}
+	};
 
-	onChange = ( e ) => {
+	onChange = e => {
 		const { site, translate } = this.props;
 		const newCurrency = e.target.value;
-		this.props.changeCurrency(
-			site.ID,
-			newCurrency
-		);
+		this.props.changeCurrency( site.ID, newCurrency );
 		const successAction = () => {
-			return successNotice(
-				translate( 'Site currency successfully saved.' ),
-				{ duration: 4000 }
-			);
+			return successNotice( translate( 'Site currency successfully saved.' ), { duration: 4000 } );
 		};
 
 		const errorAction = () => {
 			return errorNotice(
-				translate( 'There was a problem saving the currency. Please try again.' )
+				translate( 'There was a problem saving the currency. Please try again.' ),
 			);
 		};
 
-		this.props.saveCurrency(
-			site.ID,
-			newCurrency,
-			successAction,
-			errorAction
-		);
-	}
+		this.props.saveCurrency( site.ID, newCurrency, successAction, errorAction );
+	};
 
 	render() {
 		const { currency, currencySettings, translate } = this.props;
@@ -109,32 +101,28 @@ class SettingsPaymentsLocationCurrency extends Component {
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Store location and currency' ) }
-					description={
-						translate(
-							'Different payment methods may be available based on your store' +
-							'location and currency.'
-						)
-					} />
+					description={ translate(
+						'Different payment methods may be available based on your store' +
+							'location and currency.',
+					) }
+				/>
 				<Card>
-					<AddressView
-						address={ this.state.address } />
+					<AddressView address={ this.state.address } />
 
 					<FormSelect
 						className="payments__currency-select"
 						onChange={ this.onChange }
-						value={ currency }>
-						{
-							currencySettings.options &&
+						value={ currency }
+					>
+						{ currencySettings.options &&
 							Object.keys( currencySettings.options ).map(
-								( o ) => this.renderOption( o, currencySettings.options )
-							)
-						}
+								o => this.renderOption( o, currencySettings.options ),
+							) }
 					</FormSelect>
 				</Card>
 			</div>
 		);
 	}
-
 }
 
 function mapStateToProps( state ) {
@@ -156,8 +144,10 @@ function mapDispatchToProps( dispatch ) {
 			getCurrencyWithEdits,
 			saveCurrency,
 		},
-		dispatch
+		dispatch,
 	);
 }
 
-export default localize( connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsLocationCurrency ) );
+export default localize(
+	connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsLocationCurrency ),
+);

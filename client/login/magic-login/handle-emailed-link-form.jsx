@@ -37,7 +37,11 @@ class HandleEmailedLinkForm extends React.Component {
 			hasSubmitted: true,
 		} );
 
-		this.props.fetchMagicLoginAuthenticate( this.props.emailAddress, this.props.token, this.props.tokenTime );
+		this.props.fetchMagicLoginAuthenticate(
+			this.props.emailAddress,
+			this.props.token,
+			this.props.tokenTime,
+		);
 	};
 
 	componentWillMount() {
@@ -69,41 +73,35 @@ class HandleEmailedLinkForm extends React.Component {
 	}
 
 	render() {
-		const {
-			currentUser,
-			emailAddress,
-			isFetching,
-			translate,
-		} = this.props;
+		const { currentUser, emailAddress, isFetching, translate } = this.props;
 
 		const action = (
 			<Button primary disabled={ this.state.hasSubmitted } onClick={ this.handleSubmit }>
 				{ translate( 'Finish Login' ) }
 			</Button>
 		);
-		const title =
-			this.props.clientId === config( 'wpcom_signup_id' )
-				? translate( 'Continue to WordPress.com' )
-				: translate( 'Continue to WordPress.com on your WordPress app' );
+		const title = this.props.clientId === config( 'wpcom_signup_id' )
+			? translate( 'Continue to WordPress.com' )
+			: translate( 'Continue to WordPress.com on your WordPress app' );
 		const line = [
-			translate(
-				'Logging in as %(emailAddress)s', {
-					args: {
-						emailAddress,
-					}
-				}
-			)
+			translate( 'Logging in as %(emailAddress)s', {
+				args: {
+					emailAddress,
+				},
+			} ),
 		];
 
 		if ( currentUser && currentUser.username ) {
-			line.push( <p>{
-				translate( 'NOTE: You are already logged in as user: %(user)s', {
-					args: {
-						user: currentUser.username,
-					}
-				} ) }<br />
-				{ translate( 'Continuing will switch users.' ) }
-				</p> );
+			line.push(
+				<p>
+					{ translate( 'NOTE: You are already logged in as user: %(user)s', {
+						args: {
+							user: currentUser.username,
+						},
+					} ) }<br />
+					{ translate( 'Continuing will switch users.' ) }
+				</p>,
+			);
 		}
 
 		return (
@@ -116,19 +114,14 @@ class HandleEmailedLinkForm extends React.Component {
 				illustrationWidth={ 500 }
 				line={ line }
 				title={ title }
-				/>
+			/>
 		);
 	}
 }
 
 const mapState = state => {
 	const queryArguments = getCurrentQueryArguments( state );
-	const {
-		client_id: clientId,
-		email: emailAddress,
-		token,
-		tt: tokenTime
-	} = queryArguments;
+	const { client_id: clientId, email: emailAddress, token, tt: tokenTime } = queryArguments;
 
 	return {
 		authError: getMagicLoginRequestAuthError( state ),

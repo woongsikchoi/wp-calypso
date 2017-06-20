@@ -157,7 +157,7 @@ export const ReaderSidebar = createReactClass( {
 								className={ ReaderSidebarHelper.itemLinkClass(
 									'/activities/likes',
 									this.props.path,
-									{ 'sidebar-activity__likes': true }
+									{ 'sidebar-activity__likes': true },
 								) }
 							>
 								<a href="/activities/likes">
@@ -231,7 +231,7 @@ export const shouldRenderAppPromo = ( options = {} ) => {
 			! isUserOnChromeOs,
 			isDesktopPromoConfiguredToRun,
 			! isUserDesktopAppUser,
-		]
+		],
 	);
 };
 
@@ -252,7 +252,7 @@ export default connect(
 				toggleTagsVisibility: toggleReaderSidebarTags,
 				setNextLayoutFocus,
 			},
-			dispatch
+			dispatch,
 		);
-	}
+	},
 )( localize( ReaderSidebar ) );

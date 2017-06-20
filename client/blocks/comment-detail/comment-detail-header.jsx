@@ -60,14 +60,17 @@ export const CommentDetailHeader = ( {
 
 	return (
 		<div
-			className={ classNames( 'comment-detail__header', 'is-preview', { 'is-bulk-edit': isBulkEdit } ) }
+			className={ classNames(
+				'comment-detail__header',
+				'is-preview',
+				{ 'is-bulk-edit': isBulkEdit },
+			) }
 			onClick={ isBulkEdit ? toggleSelected : toggleExpanded }
 		>
 			{ isBulkEdit &&
 				<label className="comment-detail__checkbox">
 					<FormCheckbox checked={ commentIsSelected } onChange={ noop } />
-				</label>
-			}
+				</label> }
 			<div className="comment-detail__author-preview">
 				<div className="comment-detail__author-avatar">
 					<img className="comment-detail__author-avatar-image" src={ authorAvatarUrl } />

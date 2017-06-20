@@ -35,11 +35,10 @@ const loadedListState = {
 							currentPage: 2,
 							requestedPage: 3,
 							productIds: [ 15, 389 ],
-						}
+						},
 					},
 					401: {
-						list: {
-						},
+						list: {},
 					},
 				},
 			},
@@ -47,14 +46,14 @@ const loadedListState = {
 				123: {
 					products: {
 						products,
-					}
+					},
 				},
 				401: {
 					products: {
 						products: {},
 					},
 				},
-			}
+			},
 		},
 	},
 };
@@ -76,10 +75,9 @@ describe( 'selectors', () => {
 					ui: {
 						products: {
 							123: {
-								list: {
-								}
-							}
-						}
+								list: {},
+							},
+						},
 					},
 				},
 			},

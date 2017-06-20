@@ -14,12 +14,14 @@ import Button from 'components/button';
 
 class SetupTask extends Component {
 	static propTypes = {
-		actions: PropTypes.arrayOf( PropTypes.shape( {
-			isSecondary: PropTypes.bool,
-			label: PropTypes.string.isRequired,
-			onClick: PropTypes.func,
-			path: PropTypes.string,
-		} ) ),
+		actions: PropTypes.arrayOf(
+			PropTypes.shape( {
+				isSecondary: PropTypes.bool,
+				label: PropTypes.string.isRequired,
+				onClick: PropTypes.func,
+				path: PropTypes.string,
+			} ),
+		),
 		checked: PropTypes.bool.isRequired,
 		docURL: PropTypes.string,
 		explanation: PropTypes.string,
@@ -28,43 +30,33 @@ class SetupTask extends Component {
 
 	static defaultProps = {
 		isSecondary: false,
-	}
+	};
 
 	renderTaskPrimaryActions = ( actions, taskCompleted ) => {
 		const primaryActions = actions.filter( action => ! action.isSecondary );
 		return (
 			<div className="dashboard__setup-task-primary-actions">
-				{
-					primaryActions.map( ( action, index ) => {
-						// Only the last primary action gets to be a primary button
-						const primary = ( index === primaryActions.length - 1 ) && ! taskCompleted;
-						const target = '/' === action.path.substring( 0, 1 ) ? '_self' : '_blank';
-						return (
-							<Button
-								href={ action.path }
-								key={ index }
-								primary={ primary }
-								target={ target }>
-								{ action.label }
-							</Button>
-						);
-					} )
-				}
+				{ primaryActions.map( ( action, index ) => {
+					// Only the last primary action gets to be a primary button
+					const primary = index === primaryActions.length - 1 && ! taskCompleted;
+					const target = '/' === action.path.substring( 0, 1 ) ? '_self' : '_blank';
+					return (
+						<Button href={ action.path } key={ index } primary={ primary } target={ target }>
+							{ action.label }
+						</Button>
+					);
+				} ) }
 			</div>
 		);
 	};
 
-	renderTaskSecondaryActions = ( actions ) => {
+	renderTaskSecondaryActions = actions => {
 		const secondaryActions = actions.filter( action => action.isSecondary );
 		return (
 			<div className="dashboard__setup-task-secondary-actions">
-				{
-					secondaryActions.map( ( action, index ) => {
-						return (
-							<a key={ index } onClick={ action.onClick }>{ action.label }</a>
-						);
-					} )
-				}
+				{ secondaryActions.map( ( action, index ) => {
+					return <a key={ index } onClick={ action.onClick }>{ action.label }</a>;
+				} ) }
 			</div>
 		);
 	};
@@ -94,7 +86,7 @@ class SetupTask extends Component {
 				</div>
 			</div>
 		);
-	}
+	};
 }
 
 export default localize( SetupTask );

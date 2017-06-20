@@ -28,13 +28,15 @@ describe( 'reducer', () => {
 
 	it( 'should store data from the action', () => {
 		const siteId = 123;
-		const state = { [ siteId ]: {
-			paymentMethods: {},
-			productCategories: 'LOADING',
-			settings: { general: {} },
-			shippingZones: {},
-			products: {},
-		} };
+		const state = {
+			[ siteId ]: {
+				paymentMethods: {},
+				productCategories: 'LOADING',
+				settings: { general: {} },
+				shippingZones: {},
+				products: {},
+			},
+		};
 		const categories = [
 			{ id: 1, name: 'cat1', slug: 'cat-1' },
 			{ id: 2, name: 'cat2', slug: 'cat-2' },
@@ -52,13 +54,15 @@ describe( 'reducer', () => {
 
 	it( 'should not affect other state trees', () => {
 		const siteId = 123;
-		const state = { [ siteId ]: {
-			paymentMethods: {},
-			productCategories: 'LOADING',
-			settings: { general: {}, products: {} },
-			shippingZones: {},
-			products: {},
-		} };
+		const state = {
+			[ siteId ]: {
+				paymentMethods: {},
+				productCategories: 'LOADING',
+				settings: { general: {}, products: {} },
+				shippingZones: {},
+				products: {},
+			},
+		};
 		const action = {
 			type: WOOCOMMERCE_PRODUCT_CATEGORIES_REQUEST_SUCCESS,
 			data: [],

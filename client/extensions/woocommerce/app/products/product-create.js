@@ -15,7 +15,9 @@ import { successNotice, errorNotice } from 'state/notices/actions';
 
 import { editProduct, editProductAttribute } from 'woocommerce/state/ui/products/actions';
 import { getCurrentlyEditingProduct } from 'woocommerce/state/ui/products/selectors';
-import { getProductVariationsWithLocalEdits } from 'woocommerce/state/ui/products/variations/selectors';
+import {
+	getProductVariationsWithLocalEdits,
+} from 'woocommerce/state/ui/products/variations/selectors';
 import { editProductVariation } from 'woocommerce/state/ui/products/variations/actions';
 import { fetchProductCategories } from 'woocommerce/state/sites/product-categories/actions';
 import { getProductCategories } from 'woocommerce/state/sites/product-categories/selectors';
@@ -42,7 +44,7 @@ class ProductCreate extends React.Component {
 		if ( siteId ) {
 			if ( ! product ) {
 				this.props.editProduct( siteId, null, {
-					type: 'simple'
+					type: 'simple',
 				} );
 			}
 			this.props.fetchProductCategories( siteId );
@@ -52,7 +54,7 @@ class ProductCreate extends React.Component {
 	componentWillReceiveProps( newProps ) {
 		if ( newProps.siteId !== this.props.siteId ) {
 			this.props.editProduct( newProps.siteId, null, {
-				type: 'simple'
+				type: 'simple',
 			} );
 			this.props.fetchProductCategories( newProps.siteId );
 		}
@@ -64,7 +66,7 @@ class ProductCreate extends React.Component {
 
 	onTrash = () => {
 		// TODO: Add action dispatch to trash this product.
-	}
+	};
 
 	onSave = () => {
 		const { siteId, product, translate } = this.props;
@@ -73,17 +75,17 @@ class ProductCreate extends React.Component {
 			translate( '%(product)s successfully created.', {
 				args: { product: product.name },
 			} ),
-			{ duration: 4000 }
+			{ duration: 4000 },
 		);
 
 		const errorAction = errorNotice(
 			translate( 'There was a problem saving %(product)s. Please try again.', {
 				args: { product: product.name },
-			} )
+			} ),
 		);
 
 		this.props.createProduct( siteId, product, successAction, errorAction );
-	}
+	};
 
 	render() {
 		const { siteId, product, className, variations, productCategories } = this.props;
@@ -91,10 +93,7 @@ class ProductCreate extends React.Component {
 		return (
 			<Main className={ className }>
 				<SidebarNavigation />
-				<ProductHeader
-					onTrash={ this.onTrash }
-					onSave={ siteId && this.onSave || false }
-				/>
+				<ProductHeader onTrash={ this.onTrash } onSave={ ( siteId && this.onSave ) || false } />
 				<ProductForm
 					siteId={ siteId }
 					product={ product || { type: 'simple' } }
@@ -132,7 +131,7 @@ function mapDispatchToProps( dispatch ) {
 			editProductVariation,
 			fetchProductCategories,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

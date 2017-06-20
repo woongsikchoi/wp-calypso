@@ -51,14 +51,14 @@ const exported = {
 					basePath,
 					fullAnalyticsPageTitle,
 					analyticsPageTitle,
-					mcKey
+					mcKey,
 				) }
 				onUpdatesShown={ trackUpdatesLoaded.bind( null, mcKey ) }
 				showBack={ !! context.lastRoute }
 				showPrimaryFollowButtonOnCards={ true }
 			/>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 };

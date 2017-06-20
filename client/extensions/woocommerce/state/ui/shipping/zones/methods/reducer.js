@@ -40,7 +40,8 @@ reducer[ WOOCOMMERCE_SHIPPING_ZONE_METHOD_ADD ] = ( state, action ) => {
 	if ( builtInShippingMethods[ methodType ] ) {
 		method = { ...method, ...builtInShippingMethods[ methodType ]( undefined, action ) };
 	}
-	return { ...state,
+	return {
+		...state,
 		creates: [ ...state.creates, method ],
 	};
 };
@@ -76,7 +77,8 @@ const editMethodSetting = ( state, methodId, setting, value ) => {
 	const index = findIndex( state[ bucket ], { id: methodId } );
 
 	if ( -1 === index ) {
-		return { ...state,
+		return {
+			...state,
 			[ bucket ]: [
 				...state[ bucket ],
 				{
@@ -87,10 +89,12 @@ const editMethodSetting = ( state, methodId, setting, value ) => {
 		};
 	}
 
-	const methodState = { ...state[ bucket ][ index ],
+	const methodState = {
+		...state[ bucket ][ index ],
 		[ setting ]: value,
 	};
-	return { ...state,
+	return {
+		...state,
 		[ bucket ]: [
 			...state[ bucket ].slice( 0, index ),
 			methodState,
@@ -125,13 +129,15 @@ export default ( state, action ) => {
 		const newMethodState = builtInShippingMethods[ methodType ]( methodState, action );
 
 		if ( -1 === index ) {
-			return { ...state,
-				[ bucket ]: [ ...state[ bucket ], newMethodState ]
+			return {
+				...state,
+				[ bucket ]: [ ...state[ bucket ], newMethodState ],
 			};
 		}
 
 		if ( newMethodState !== methodState ) {
-			return { ...state,
+			return {
+				...state,
 				[ bucket ]: [
 					...state[ bucket ].slice( 0, index ),
 					newMethodState,

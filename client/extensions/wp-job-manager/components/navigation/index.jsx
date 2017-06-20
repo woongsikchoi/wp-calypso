@@ -26,7 +26,7 @@ class Navigation extends Component {
 
 	getSettingsPath() {
 		const sections = sectionsModule.get();
-		const section = find( sections, ( value => value.name === 'wp-job-manager' ) );
+		const section = find( sections, value => value.name === 'wp-job-manager' );
 
 		return get( section, 'settings_path' );
 	}
@@ -46,10 +46,7 @@ class Navigation extends Component {
 		}
 
 		return (
-			<SectionNavTabItem
-				key={ slug }
-				path={ path }
-				selected={ activeTab === slug }>
+			<SectionNavTabItem key={ slug } path={ path } selected={ activeTab === slug }>
 				{ label }
 			</SectionNavTabItem>
 		);

@@ -80,4 +80,3 @@ export default {
 	[ WOOCOMMERCE_ACTION_LIST_STEP_SUCCESS ]: [ handleStepSuccess ],
 	[ WOOCOMMERCE_ACTION_LIST_STEP_FAILURE ]: [ handleStepFailure ],
 };
-

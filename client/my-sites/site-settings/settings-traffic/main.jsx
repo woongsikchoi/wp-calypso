@@ -52,8 +52,7 @@ const SiteSettingsTraffic = ( {
 				isSavingSettings={ isSavingSettings }
 				isRequestingSettings={ isRequestingSettings }
 				fields={ fields }
-			/>
-		}
+			/> }
 		<RelatedPosts
 			onSubmitForm={ handleSubmitForm }
 			handleAutosavingToggle={ handleAutosavingToggle }
@@ -64,14 +63,13 @@ const SiteSettingsTraffic = ( {
 		{ isJetpack
 			? <AmpJetpack />
 			: <AmpWpcom
-				submitForm={ submitForm }
-				trackEvent={ trackEvent }
-				updateFields={ updateFields }
-				isSavingSettings={ isSavingSettings }
-				isRequestingSettings={ isRequestingSettings }
-				fields={ fields }
-			/>
-		}
+					submitForm={ submitForm }
+					trackEvent={ trackEvent }
+					updateFields={ updateFields }
+					isSavingSettings={ isSavingSettings }
+					isRequestingSettings={ isRequestingSettings }
+					fields={ fields }
+				/> }
 		<AnalyticsSettings />
 		<SeoSettingsHelpCard />
 		<SeoSettingsMain />
@@ -83,38 +81,37 @@ const SiteSettingsTraffic = ( {
 	</Main>
 );
 
-const connectComponent = connect(
-	( state ) => {
-		const site = getSelectedSite( state );
-		const siteId = getSelectedSiteId( state );
-		const isJetpack = isJetpackSite( state, siteId );
-		const jetpackSettingsUiSupported = isJetpack && siteSupportsJetpackSettingsUi( state, siteId );
+const connectComponent = connect( state => {
+	const site = getSelectedSite( state );
+	const siteId = getSelectedSiteId( state );
+	const isJetpack = isJetpackSite( state, siteId );
+	const jetpackSettingsUiSupported = isJetpack && siteSupportsJetpackSettingsUi( state, siteId );
 
-		return {
-			site,
-			isJetpack,
-			jetpackSettingsUiSupported,
-		};
-	}
+	return {
+		site,
+		isJetpack,
+		jetpackSettingsUiSupported,
+	};
+} );
+
+const getFormSettings = partialRight(
+	pick,
+	[
+		'stats',
+		'admin_bar',
+		'hide_smile',
+		'count_roles',
+		'roles',
+		'jetpack_relatedposts_allowed',
+		'jetpack_relatedposts_enabled',
+		'jetpack_relatedposts_show_headline',
+		'jetpack_relatedposts_show_thumbnails',
+		'amp_is_supported',
+		'amp_is_enabled',
+		'blog_public',
+	],
 );
 
-const getFormSettings = partialRight( pick, [
-	'stats',
-	'admin_bar',
-	'hide_smile',
-	'count_roles',
-	'roles',
-	'jetpack_relatedposts_allowed',
-	'jetpack_relatedposts_enabled',
-	'jetpack_relatedposts_show_headline',
-	'jetpack_relatedposts_show_thumbnails',
-	'amp_is_supported',
-	'amp_is_enabled',
-	'blog_public',
-] );
-
-export default flowRight(
-	connectComponent,
-	localize,
-	wrapSettingsForm( getFormSettings )
-)( SiteSettingsTraffic );
+export default flowRight( connectComponent, localize, wrapSettingsForm( getFormSettings ) )(
+	SiteSettingsTraffic,
+);

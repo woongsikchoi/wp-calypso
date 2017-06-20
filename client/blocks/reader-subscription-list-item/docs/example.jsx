@@ -32,7 +32,7 @@ export default class ReaderSubscriptionListItemExample extends PureComponent {
 					sites,
 					site => (
 						<ConnectedReaderSubscriptionListItem key={ site.feedId || site.siteId } { ...site } />
-					)
+					),
 				) }
 				<ReaderSubscriptionListItemPlaceholder />
 			</Card>

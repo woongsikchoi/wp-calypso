@@ -38,7 +38,7 @@ module.exports = React.createClass( {
 		fullScreenDropZone: React.PropTypes.bool,
 		containerWidth: React.PropTypes.number,
 		single: React.PropTypes.bool,
-		scrollable: React.PropTypes.bool
+		scrollable: React.PropTypes.bool,
 	},
 
 	getDefaultProps: function() {
@@ -75,7 +75,7 @@ module.exports = React.createClass( {
 			// the current filter
 			filteredItems = MediaUtils.filterItemsByMimePrefix(
 				filteredItems,
-				filterToMimePrefix( this.props.filter )
+				filterToMimePrefix( this.props.filter ),
 			);
 		}
 
@@ -96,10 +96,10 @@ module.exports = React.createClass( {
 		const { filter, site } = this.props;
 		switch ( filter ) {
 			case 'audio':
-				return ! ( site && site.options.upgraded_filetypes_enabled || site.jetpack );
+				return ! ( ( site && site.options.upgraded_filetypes_enabled ) || site.jetpack );
 
 			case 'videos':
-				return ! ( site && site.options.videopress_enabled || site.jetpack );
+				return ! ( ( site && site.options.videopress_enabled ) || site.jetpack );
 		}
 
 		return false;
@@ -111,7 +111,8 @@ module.exports = React.createClass( {
 				site={ this.props.site }
 				filter={ this.props.filter }
 				fullScreen={ this.props.fullScreenDropZone }
-				onAddMedia={ this.onAddMedia } />
+				onAddMedia={ this.onAddMedia }
+			/>
 		);
 	},
 
@@ -133,7 +134,8 @@ module.exports = React.createClass( {
 				selectedItems={ this.props.mediaLibrarySelectedItems }
 				onDeleteItem={ this.props.onDeleteItem }
 				onEditItem={ this.props.onEditItem }
-				onViewDetails={ this.props.onViewDetails } />
+				onViewDetails={ this.props.onViewDetails }
+			/>
 		);
 
 		if ( this.props.site ) {
@@ -161,9 +163,10 @@ module.exports = React.createClass( {
 					enabledFilters={ this.props.enabledFilters }
 					search={ this.props.search }
 					onFilterChange={ this.props.onFilterChange }
-					onSearch={ this.doSearch } />
+					onSearch={ this.doSearch }
+				/>
 				{ content }
 			</div>
 		);
-	}
+	},
 } );

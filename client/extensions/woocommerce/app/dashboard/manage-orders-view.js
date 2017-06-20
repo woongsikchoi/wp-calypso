@@ -22,10 +22,8 @@ class ManageOrdersView extends Component {
 	};
 
 	renderProcessOrdersWidget = () => {
-		return (
-			<ProcessOrdersWidget className="dashboard__process-orders-widget" />
-		);
-	}
+		return <ProcessOrdersWidget className="dashboard__process-orders-widget" />;
+	};
 
 	possiblyRenderShareWidget = () => {
 		// TODO - connect to display preferences in a follow-on PR
@@ -37,20 +35,22 @@ class ManageOrdersView extends Component {
 				urlToShare={ site.URL }
 			/>
 		);
-	}
+	};
 
 	possiblyRenderReadingWidget = () => {
 		// TODO - connect to display preferences in a follow-on PR
 		const { translate } = this.props;
 		return (
 			<ReadingWidget
-				text={ translate( 'You’re not alone! Get tips from seasoned merchants,' +
-					' learn best practices to keep your store ship-shape,' +
-					' and find how to boost your sales and drive traffic.' ) }
+				text={ translate(
+					'You’re not alone! Get tips from seasoned merchants,' +
+						' learn best practices to keep your store ship-shape,' +
+						' and find how to boost your sales and drive traffic.',
+				) }
 				title={ translate( 'Recommended reading' ) }
 			/>
 		);
-	}
+	};
 
 	render = () => {
 		const { site, translate } = this.props;
@@ -74,7 +74,7 @@ class ManageOrdersView extends Component {
 				{ this.possiblyRenderReadingWidget() }
 			</div>
 		);
-	}
+	};
 }
 
 export default localize( ManageOrdersView );

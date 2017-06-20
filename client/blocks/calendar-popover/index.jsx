@@ -8,10 +8,7 @@ import { noop, pick } from 'lodash';
 /**
  * Internal dependencies
  */
-import {
-	getSiteGmtOffset,
-	getSiteTimezoneValue,
-} from 'state/selectors';
+import { getSiteGmtOffset, getSiteTimezoneValue } from 'state/selectors';
 import Popover from 'components/popover';
 import PostSchedule from 'components/post-schedule';
 
@@ -61,13 +58,10 @@ class CalendarPopover extends Component {
 	};
 
 	renderScheduler() {
-		const schedulerProps = Object.assign( {}, pick( this.props, [
-			'events',
-			'posts',
-			'site',
-			'onDateChange',
-			'onMonthChange',
-		] ) );
+		const schedulerProps = Object.assign(
+			{},
+			pick( this.props, [ 'events', 'posts', 'site', 'onDateChange', 'onMonthChange' ] ),
+		);
 
 		return (
 			<PostSchedule
@@ -82,25 +76,28 @@ class CalendarPopover extends Component {
 	}
 
 	render() {
-		const popoverProps = Object.assign( {}, pick( this.props, [
-			'autoPosition',
-			'closeOnEsc',
-			'context',
-			'ignoreContext',
-			'isVisible',
-			'position',
-			'rootClassName',
-			'showDelay',
-			'onClose',
-			'onShow',
-		] ) );
+		const popoverProps = Object.assign(
+			{},
+			pick(
+				this.props,
+				[
+					'autoPosition',
+					'closeOnEsc',
+					'context',
+					'ignoreContext',
+					'isVisible',
+					'position',
+					'rootClassName',
+					'showDelay',
+					'onClose',
+					'onShow',
+				],
+			),
+		);
 
 		return (
 			<div className="calendar-popover">
-				<Popover
-					{ ...popoverProps }
-					className="calendar-popover__popover"
-				>
+				<Popover { ...popoverProps } className="calendar-popover__popover">
 					{ this.renderScheduler() }
 				</Popover>
 			</div>
@@ -108,9 +105,7 @@ class CalendarPopover extends Component {
 	}
 }
 
-export default connect(
-	( state, { siteId } ) => ( {
-		gmtOffset: getSiteGmtOffset( state, siteId ),
-		timezoneValue: getSiteTimezoneValue( state, siteId ),
-	} )
- )( CalendarPopover );
+export default connect( ( state, { siteId } ) => ( {
+	gmtOffset: getSiteGmtOffset( state, siteId ),
+	timezoneValue: getSiteTimezoneValue( state, siteId ),
+} ) )( CalendarPopover );

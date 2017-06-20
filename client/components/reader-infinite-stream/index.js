@@ -49,13 +49,17 @@ class ReaderInfiniteStream extends Component {
 
 	rowRenderer = rowRendererProps => {
 		const railcar = get( this.props.items[ rowRendererProps.index ], 'railcar', undefined );
-		if ( railcar && this.props.renderEventName && ! this.recordedRender.has( rowRendererProps.index ) ) {
+		if (
+			railcar && this.props.renderEventName && ! this.recordedRender.has( rowRendererProps.index )
+		) {
 			this.recordedRender.add( rowRendererProps.index );
-			this.recordTraintrackForRowRender( pickBy( {
-				index: rowRendererProps.index,
-				railcar,
-				eventName: this.props.renderEventName,
-			} ) );
+			this.recordTraintrackForRowRender(
+				pickBy( {
+					index: rowRendererProps.index,
+					railcar,
+					eventName: this.props.renderEventName,
+				} ),
+			);
 		}
 
 		return this.props.rowRenderer( {

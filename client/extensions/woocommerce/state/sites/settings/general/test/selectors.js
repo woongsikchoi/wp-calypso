@@ -25,7 +25,7 @@ const loadingState = {
 				123: {
 					settings: {
 						general: LOADING,
-					}
+					},
 				},
 			},
 		},
@@ -35,7 +35,7 @@ const currencySetting = {
 	id: 'woocommerce_currency',
 	label: 'Currency',
 	type: 'select',
-	'default': 'GBP',
+	default: 'GBP',
 	value: 'USD',
 };
 const loadedState = {
@@ -45,7 +45,7 @@ const loadedState = {
 				123: {
 					settings: {
 						general: [ currencySetting ],
-					}
+					},
 				},
 			},
 		},

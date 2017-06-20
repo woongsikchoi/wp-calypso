@@ -44,7 +44,7 @@ class LoggedOutForm extends Component {
 	handleSubmitSignup = ( form, userData ) => {
 		debug( 'submiting new account', form, userData );
 		this.props.createAccount( userData );
-	}
+	};
 
 	renderLoginUser() {
 		const { queryObject, userData, bearerToken } = this.props.jetpackConnectAuthorize;
@@ -53,7 +53,8 @@ class LoggedOutForm extends Component {
 			<WpcomLoginForm
 				log={ userData.username }
 				authorization={ 'Bearer ' + bearerToken }
-				redirectTo={ redirectTo } />
+				redirectTo={ redirectTo }
+			/>
 		);
 	}
 
@@ -68,9 +69,7 @@ class LoggedOutForm extends Component {
 
 		return (
 			<div>
-				<FormattedHeader
-					headerText={ headerText }
-					subHeaderText={ subHeaderText } />
+				<FormattedHeader headerText={ headerText } subHeaderText={ subHeaderText } />
 				{ siteCard }
 			</div>
 		);
@@ -97,10 +96,7 @@ class LoggedOutForm extends Component {
 	}
 
 	render() {
-		const {
-			isAuthorizing,
-			userData,
-		} = this.props.jetpackConnectAuthorize;
+		const { isAuthorizing, userData } = this.props.jetpackConnectAuthorize;
 
 		return (
 			<div>

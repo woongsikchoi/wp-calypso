@@ -19,7 +19,7 @@ import { getSite } from 'state/sites/selectors';
  * @param  {Function} createStore Original store creator
  * @return {Function}             Modified store creator
  */
-export default ( createStore ) => ( ...args ) => {
+export default createStore => ( ...args ) => {
 	const store = createStore( ...args );
 
 	// Ugly hack by which we hook into the sites sync mechanism, since a change
@@ -27,7 +27,7 @@ export default ( createStore ) => ( ...args ) => {
 	const sites = require( 'lib/sites-list' )();
 	sites.sync = flow(
 		sites.sync.bind( sites ),
-		() => store.dispatch( receiveSiteUpdates( sites.get() ) )
+		() => store.dispatch( receiveSiteUpdates( sites.get() ) ),
 	);
 
 	// To sync changes made to an individual site in sites-list, override the

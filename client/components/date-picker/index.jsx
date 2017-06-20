@@ -88,7 +88,7 @@ class DatePicker extends PureComponent {
 
 			getFirstDayOfWeek: function() {
 				return Number( localeData.firstDayOfWeek() );
-			}
+			},
 		};
 
 		return merge( locale, this.props.locale );
@@ -100,7 +100,7 @@ class DatePicker extends PureComponent {
 		const modifiers = {
 			year: clickedDay.year(),
 			month: clickedDay.month(),
-			date: clickedDay.date()
+			date: clickedDay.date(),
 		};
 
 		const date = ( this.props.timeReference || clickedDay ).set( modifiers );
@@ -117,10 +117,7 @@ class DatePicker extends PureComponent {
 		const isSelected = this.props.selectedDay && this.isSameDay( this.props.selectedDay, day );
 
 		return (
-			<DayItem
-				selected={ isSelected }
-				events={ this.filterEventsByDay( day ) }
-				date={ day } />
+			<DayItem selected={ isSelected } events={ this.filterEventsByDay( day ) } date={ day } />
 		);
 	};
 
@@ -135,10 +132,10 @@ class DatePicker extends PureComponent {
 				onDayClick={ this.setCalendarDay }
 				onMonthChange={ this.props.onMonthChange }
 				enableOutsideDays={ this.props.enableOutsideDays }
-				onCaptionClick={ this.setCalendarMonth } />
+				onCaptionClick={ this.setCalendarMonth }
+			/>
 		);
 	}
 }
 
 export default localize( DatePicker );
-

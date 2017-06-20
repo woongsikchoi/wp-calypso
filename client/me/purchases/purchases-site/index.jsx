@@ -40,7 +40,7 @@ const PurchasesSite = ( {
 					isDisconnectedSite={ ! site }
 					purchase={ purchase }
 				/>
-			)
+			),
 		);
 	}
 

@@ -21,7 +21,9 @@ describe( 'mergeMethodEdits', () => {
 			deletes: [ { id: 2 } ],
 		};
 
-		expect( mergeMethodEdits( zoneMethodEdits, currentMethodEdits ) ).to.deep.equal( currentMethodEdits );
+		expect( mergeMethodEdits( zoneMethodEdits, currentMethodEdits ) ).to.deep.equal(
+			currentMethodEdits,
+		);
 	} );
 
 	it( 'should return the saved edits when there are no current edits', () => {
@@ -36,7 +38,9 @@ describe( 'mergeMethodEdits', () => {
 			deletes: [],
 		};
 
-		expect( mergeMethodEdits( zoneMethodEdits, currentMethodEdits ) ).to.deep.equal( zoneMethodEdits );
+		expect( mergeMethodEdits( zoneMethodEdits, currentMethodEdits ) ).to.deep.equal(
+			zoneMethodEdits,
+		);
 	} );
 
 	it( 'should return the union of all the edits', () => {

@@ -8,11 +8,7 @@ import { expect } from 'chai';
  */
 import reducer from '../reducer';
 
-import {
-	actionListCreate,
-	actionListClear,
-	actionListStepAnnotate,
-} from '../actions';
+import { actionListCreate, actionListClear, actionListStepAnnotate } from '../actions';
 
 describe( 'reducer', () => {
 	it( 'should initialize to null', () => {
@@ -48,7 +44,10 @@ describe( 'reducer', () => {
 
 		const state1 = reducer( undefined, actionListCreate( actionList ) );
 		const state2 = reducer( state1, actionListStepAnnotate( 0, { startTime: step0Start } ) );
-		const state3 = reducer( state2, actionListStepAnnotate( 0, { endTime: step0End, error: step0Error } ) );
+		const state3 = reducer(
+			state2,
+			actionListStepAnnotate( 0, { endTime: step0End, error: step0Error } ),
+		);
 
 		expect( state1 ).to.equal( actionList );
 		expect( state2.steps[ 0 ].startTime ).to.equal( step0Start );
@@ -76,4 +75,3 @@ describe( 'reducer', () => {
 		expect( state2 ).to.equal( null );
 	} );
 } );
-

@@ -89,7 +89,10 @@ describe( 'reducer', () => {
 				deletes: [],
 			};
 
-			const newState = reducer( state, changeShippingZoneMethodType( siteId, { index: 0 }, 'flat_rate' ) );
+			const newState = reducer(
+				state,
+				changeShippingZoneMethodType( siteId, { index: 0 }, 'flat_rate' ),
+			);
 			expect( newState.updates ).to.be.empty;
 			expect( newState.deletes ).to.be.empty;
 			expect( newState.creates.length ).to.equal( 1 );
@@ -107,7 +110,10 @@ describe( 'reducer', () => {
 				deletes: [],
 			};
 
-			const newState = reducer( state, changeShippingZoneMethodType( siteId, { index: 0 }, 'flat_rate' ) );
+			const newState = reducer(
+				state,
+				changeShippingZoneMethodType( siteId, { index: 0 }, 'flat_rate' ),
+			);
 			expect( newState.updates ).to.be.empty;
 			expect( newState.deletes ).to.be.empty;
 			expect( newState.creates.length ).to.equal( 1 );
@@ -151,7 +157,10 @@ describe( 'reducer', () => {
 				deletes: [],
 			};
 
-			const newState = reducer( state, changeShippingZoneMethodTitle( siteId, { index: 0 }, 'New Title' ) );
+			const newState = reducer(
+				state,
+				changeShippingZoneMethodTitle( siteId, { index: 0 }, 'New Title' ),
+			);
 			expect( newState.updates ).to.be.empty;
 			expect( newState.deletes ).to.be.empty;
 			expect( newState.creates ).to.deep.equal( [ { id: { index: 0 }, title: 'New Title' } ] );
@@ -192,7 +201,10 @@ describe( 'reducer', () => {
 				deletes: [],
 			};
 
-			const newState = reducer( state, toggleShippingZoneMethodEnabled( siteId, { index: 0 }, true ) );
+			const newState = reducer(
+				state,
+				toggleShippingZoneMethodEnabled( siteId, { index: 0 }, true ),
+			);
 			expect( newState.updates ).to.be.empty;
 			expect( newState.deletes ).to.be.empty;
 			expect( newState.creates ).to.deep.equal( [ { id: { index: 0 }, enabled: true } ] );

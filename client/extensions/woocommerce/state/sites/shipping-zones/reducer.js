@@ -27,14 +27,11 @@ export default createReducer( null, {
 			return state;
 		}
 
-		const zone = { ...state[ zoneIndex ],
+		const zone = {
+			...state[ zoneIndex ],
 			methodIds: LOADING,
 		};
-		return [
-			...state.slice( 0, zoneIndex ),
-			zone,
-			...state.slice( zoneIndex + 1 ),
-		];
+		return [ ...state.slice( 0, zoneIndex ), zone, ...state.slice( zoneIndex + 1 ) ];
 	},
 
 	[ WOOCOMMERCE_SHIPPING_ZONE_METHODS_REQUEST_SUCCESS ]: ( state, { zoneId, data } ) => {
@@ -46,15 +43,12 @@ export default createReducer( null, {
 			return state;
 		}
 
-		const zone = { ...state[ zoneIndex ],
+		const zone = {
+			...state[ zoneIndex ],
 			methodIds: data.map( method => method.id ),
 		};
 
-		return [
-			...state.slice( 0, zoneIndex ),
-			zone,
-			...state.slice( zoneIndex + 1 ),
-		];
+		return [ ...state.slice( 0, zoneIndex ), zone, ...state.slice( zoneIndex + 1 ) ];
 	},
 
 	[ WOOCOMMERCE_SHIPPING_ZONES_REQUEST ]: () => {

@@ -33,9 +33,9 @@ export default class ProductForm extends Component {
 		const { className } = this.props;
 		return (
 			<div className={ classNames( 'products__form', 'is-placeholder', className ) }>
-				<div></div>
-				<div></div>
-				<div></div>
+				<div />
+				<div />
+				<div />
 			</div>
 		);
 	}
@@ -50,11 +50,7 @@ export default class ProductForm extends Component {
 
 		return (
 			<div className={ classNames( 'products__form', this.props.className ) }>
-				<ProductFormDetailsCard
-					siteId={ siteId }
-					product={ product }
-					editProduct={ editProduct }
-				/>
+				<ProductFormDetailsCard siteId={ siteId } product={ product } editProduct={ editProduct } />
 				<ProductFormAdditionalDetailsCard
 					siteId={ siteId }
 					product={ product }
@@ -76,17 +72,15 @@ export default class ProductForm extends Component {
 					editProductVariation={ editProductVariation }
 				/>
 
-				{ 'simple' === product.type && (
+				{ 'simple' === product.type &&
 					<div className="products__product-simple-cards">
 						<ProductFormSimpleCard
 							siteId={ siteId }
 							product={ product }
 							editProduct={ this.props.editProduct }
 						/>
-					</div>
-				) }
+					</div> }
 			</div>
 		);
 	}
-
 }

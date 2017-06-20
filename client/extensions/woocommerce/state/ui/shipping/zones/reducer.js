@@ -28,27 +28,32 @@ export const initialState = {
 
 const reducer = {};
 
-reducer[ WOOCOMMERCE_SHIPPING_ZONE_ADD ] = ( state ) => {
+reducer[ WOOCOMMERCE_SHIPPING_ZONE_ADD ] = state => {
 	const id = nextBucketIndex( state.creates );
 	// The action of "adding" a zone must not alter the edits, since the user can cancel the zone edit later
 	return reducer[ WOOCOMMERCE_SHIPPING_ZONE_OPEN ]( state, { id } );
 };
 
-reducer[ WOOCOMMERCE_SHIPPING_ZONE_CANCEL ] = ( state ) => {
+reducer[ WOOCOMMERCE_SHIPPING_ZONE_CANCEL ] = state => {
 	// "Canceling" editing a zone is equivalent at "closing" it without any changes
-	return reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ]( { ...state,
+	return reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ]( {
+		...state,
 		currentlyEditingChanges: {},
 	} );
 };
 
-reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ] = ( state ) => {
+reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ] = state => {
 	const { currentlyEditingChanges, currentlyEditingId } = state;
 	if ( null === currentlyEditingId ) {
 		return state;
 	}
-	if ( isEmpty( omit( currentlyEditingChanges, 'methods' ) ) && every( currentlyEditingChanges.methods, isEmpty ) ) {
+	if (
+		isEmpty( omit( currentlyEditingChanges, 'methods' ) ) &&
+		every( currentlyEditingChanges.methods, isEmpty )
+	) {
 		// Nothing to save, no need to go through the rest of the algorithm
-		return { ...state,
+		return {
+			...state,
 			currentlyEditingId: null,
 		};
 	}
@@ -62,7 +67,7 @@ reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ] = ( state ) => {
 			return {
 				...zone,
 				...currentlyEditingChanges,
-				methods: mergeMethodEdits( zone.methods, currentlyEditingChanges.methods )
+				methods: mergeMethodEdits( zone.methods, currentlyEditingChanges.methods ),
 			};
 		}
 		return zone;
@@ -73,7 +78,8 @@ reducer[ WOOCOMMERCE_SHIPPING_ZONE_CLOSE ] = ( state ) => {
 		newBucket.push( { id: currentlyEditingId, ...currentlyEditingChanges } );
 	}
 
-	return { ...state,
+	return {
+		...state,
 		currentlyEditingId: null,
 		[ bucket ]: newBucket,
 	};
@@ -83,24 +89,29 @@ reducer[ WOOCOMMERCE_SHIPPING_ZONE_EDIT_NAME ] = ( state, { name } ) => {
 	if ( null === state.currentlyEditingId ) {
 		return state;
 	}
-	return { ...state,
-		currentlyEditingChanges: { ...state.currentlyEditingChanges,
+	return {
+		...state,
+		currentlyEditingChanges: {
+			...state.currentlyEditingChanges,
 			name,
 		},
 	};
 };
 
 reducer[ WOOCOMMERCE_SHIPPING_ZONE_OPEN ] = ( state, { id } ) => {
-	return { ...state,
+	return {
+		...state,
 		currentlyEditingId: id,
-		currentlyEditingChanges: { // Always reset the current changes
+		currentlyEditingChanges: {
+			// Always reset the current changes
 			methods: methodsInitialState,
 		},
 	};
 };
 
 reducer[ WOOCOMMERCE_SHIPPING_ZONE_REMOVE ] = ( state, { id } ) => {
-	const newState = { ...state,
+	const newState = {
+		...state,
 		currentlyEditingId: null,
 	};
 
@@ -124,8 +135,10 @@ export default ( state, action ) => {
 		const methodsState = newState.currentlyEditingChanges.methods;
 		const newMethodsState = methodsReducer( methodsState, action );
 		if ( methodsState !== newMethodsState ) {
-			return { ...newState,
-				currentlyEditingChanges: { ...newState.currentlyEditingChanges,
+			return {
+				...newState,
+				currentlyEditingChanges: {
+					...newState.currentlyEditingChanges,
 					methods: newMethodsState,
 				},
 			};

@@ -7,9 +7,4 @@ import automatedTransfer from './automated-transfer';
 import comments from './comments';
 import media from './media';
 
-export default mergeHandlers(
-	activity,
-	automatedTransfer,
-	comments,
-	media
-);
+export default mergeHandlers( activity, automatedTransfer, comments, media );

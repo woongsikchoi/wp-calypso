@@ -22,7 +22,12 @@ const isEligibleForFreeToPaidUpsell = ( state, siteId, moment ) => {
 	const siteIsOnFreePlan = isSiteOnFreePlan( state, siteId );
 	const registrationDaysIsWithinRange = isUserRegistrationDaysWithinRange( state, moment, 0, 180 );
 
-	return userCanManageOptions && ! siteHasMappedDomain && siteIsOnFreePlan && registrationDaysIsWithinRange;
+	return (
+		userCanManageOptions &&
+		! siteHasMappedDomain &&
+		siteIsOnFreePlan &&
+		registrationDaysIsWithinRange
+	);
 };
 
 export default isEligibleForFreeToPaidUpsell;

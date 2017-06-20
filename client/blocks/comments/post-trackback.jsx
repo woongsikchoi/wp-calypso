@@ -27,7 +27,14 @@ export default class PostTrackback extends React.Component {
 					</div>
 
 					{ comment.author.URL
-						? <a href={ comment.author.URL } target="_blank" rel="noopener noreferrer" className="comments__comment-username">{ unescapedAuthorName }</a>
+						? <a
+								href={ comment.author.URL }
+								target="_blank"
+								rel="noopener noreferrer"
+								className="comments__comment-username"
+							>
+								{ unescapedAuthorName }
+							</a>
 						: <strong className="comments__comment-username">{ unescapedAuthorName }</strong> }
 
 					<div className="comments__comment-timestamp">
@@ -43,5 +50,5 @@ export default class PostTrackback extends React.Component {
 }
 
 PostTrackback.propTypes = {
-	commentId: React.PropTypes.number
+	commentId: React.PropTypes.number,
 };

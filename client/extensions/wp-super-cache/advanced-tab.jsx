@@ -24,10 +24,7 @@ import { getSelectedSiteId } from 'state/ui/selectors';
 import { getNotices } from './state/notices/selectors';
 
 const AdvancedTab = ( {
-	fields: {
-		is_cache_enabled,
-		is_super_cache_enabled,
-	},
+	fields: { is_cache_enabled, is_super_cache_enabled },
 	isReadOnly,
 	notices,
 	siteId,
@@ -43,31 +40,21 @@ const AdvancedTab = ( {
 			<AcceptedFilenames isReadOnly={ isReadOnly } />
 			<RejectedUserAgents isReadOnly={ isReadOnly } />
 			<LockDown isReadOnly={ isReadOnly } />
-			{ is_cache_enabled && is_super_cache_enabled &&
-				<DirectlyCachedFiles notices={ notices } />
-			}
+			{ is_cache_enabled && is_super_cache_enabled && <DirectlyCachedFiles notices={ notices } /> }
 			<FixConfig isReadOnly={ isReadOnly } />
 		</div>
 	);
 };
 
-const connectComponent = connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
-		const notices = getNotices( state, siteId );
+const connectComponent = connect( state => {
+	const siteId = getSelectedSiteId( state );
+	const notices = getNotices( state, siteId );
 
-		return { notices };
-	}
-);
+	return { notices };
+} );
 
 const getFormSettings = settings => {
-	return pick( settings, [
-		'is_cache_enabled',
-		'is_super_cache_enabled',
-	] );
+	return pick( settings, [ 'is_cache_enabled', 'is_super_cache_enabled' ] );
 };
 
-export default flowRight(
-	connectComponent,
-	WrapSettingsForm( getFormSettings )
-)( AdvancedTab );
+export default flowRight( connectComponent, WrapSettingsForm( getFormSettings ) )( AdvancedTab );

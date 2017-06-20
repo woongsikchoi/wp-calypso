@@ -14,12 +14,7 @@ import Main from 'components/main';
 import Navigation from '../components/navigation';
 import { getSelectedSite } from 'state/ui/selectors';
 
-const WPJobManager = ( {
-	children,
-	site,
-	tab,
-	translate
-} ) => {
+const WPJobManager = ( { children, site, tab, translate } ) => {
 	const mainClassName = 'wp-job-manager__main';
 
 	return (
@@ -40,11 +35,6 @@ WPJobManager.defaultProps = {
 	tab: '',
 };
 
-const connectComponent = connect(
-	( state ) => ( { site: getSelectedSite( state ) } )
-);
+const connectComponent = connect( state => ( { site: getSelectedSite( state ) } ) );
 
-export default flowRight(
-	connectComponent,
-	localize
-)( WPJobManager );
+export default flowRight( connectComponent, localize )( WPJobManager );

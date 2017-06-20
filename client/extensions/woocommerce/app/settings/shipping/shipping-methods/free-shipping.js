@@ -19,7 +19,7 @@ class FreeShippingMethod extends Component {
 		this.state = {
 			everyone: props.everyone,
 			currencySymbolPrefix: '$',
-			currencySymbolSuffix: ''
+			currencySymbolSuffix: '',
 		};
 	}
 
@@ -28,14 +28,15 @@ class FreeShippingMethod extends Component {
 			<FormCurrencyInput
 				currencySymbolPrefix={ this.state.currencySymbolPrefix }
 				currencySymbolSuffix={ this.state.currencySymbolSuffix }
-				value={ this.state.minSpend } />
+				value={ this.state.minSpend }
+			/>
 		);
 	}
 
 	render() {
 		const { translate } = this.props;
 
-		const onOptionChange = ( event ) => {
+		const onOptionChange = event => {
 			this.setState( { everyone: 'everyone' === event.currentTarget.value } );
 		};
 
@@ -43,17 +44,15 @@ class FreeShippingMethod extends Component {
 			<div className="shipping-methods__method-container">
 				<FormLabel>{ translate( 'Who gets free shipping?' ) }</FormLabel>
 				<div className="shipping-methods__free-shipping-option">
-					<FormRadio value="everyone"
-						checked={ this.state.everyone }
-						onChange={ onOptionChange } />
+					<FormRadio value="everyone" checked={ this.state.everyone } onChange={ onOptionChange } />
 					{ translate( 'Everyone!' ) }
 				</div>
 				<div className="shipping-methods__free-shipping-option">
 					<FormRadio value="paying" checked={ ! this.state.everyone } onChange={ onOptionChange } />
 					{ translate( 'Customers that spend {{priceInput/}} or more per order', {
 						components: {
-							priceInput: this.renderMinSpendBox()
-						}
+							priceInput: this.renderMinSpendBox(),
+						},
 					} ) }
 				</div>
 			</div>

@@ -11,29 +11,30 @@ import Card from 'components/card';
 import i18n from 'i18n-calypso';
 import SectionHeader from 'components/section-header';
 import { getThemeDetailsUrl } from 'state/themes/selectors';
-import { getSelectedSiteId } from 'state/ui/selectors';
+import { getSelectedSiteId } from 'state/ui/selectors';
 
 const THEME_THUMBNAIL_WIDTH = 660;
 
 const ThemesRelatedCard = React.createClass( {
-
 	propTypes: {
-		currentTheme: React.PropTypes.string.isRequired
+		currentTheme: React.PropTypes.string.isRequired,
 	},
 
 	getRelatedThemes() {
-		let themes = new Set( [
-			'twentysixteen',
-			'rowling',
-			'hemingway-rewritten',
-			'gazette',
-			'intergalactic',
-			'isola',
-			'edin',
-			'sela',
-			'pique',
-			'harmonic'
-		] );
+		let themes = new Set(
+			[
+				'twentysixteen',
+				'rowling',
+				'hemingway-rewritten',
+				'gazette',
+				'intergalactic',
+				'isola',
+				'edin',
+				'sela',
+				'pique',
+				'harmonic',
+			],
+		);
 
 		//Remove current theme so we will not show it as related
 		themes.delete( this.props.currentTheme );
@@ -50,7 +51,7 @@ const ThemesRelatedCard = React.createClass( {
 	render() {
 		const themes = this.getRelatedThemes().map( slug => ( {
 			id: slug,
-			screenshot: `https://i1.wp.com/s0.wp.com/wp-content/themes/pub/${ slug }/screenshot.png`
+			screenshot: `https://i1.wp.com/s0.wp.com/wp-content/themes/pub/${ slug }/screenshot.png`,
 		} ) );
 
 		return (
@@ -69,11 +70,9 @@ const ThemesRelatedCard = React.createClass( {
 				</ul>
 			</div>
 		);
-	}
+	},
 } );
 
-export default connect(
-	state => ( {
-		getDetailsUrl: themeId => getThemeDetailsUrl( state, themeId, getSelectedSiteId( state ) )
-	} )
-)( ThemesRelatedCard );
+export default connect( state => ( {
+	getDetailsUrl: themeId => getThemeDetailsUrl( state, themeId, getSelectedSiteId( state ) ),
+} ) )( ThemesRelatedCard );

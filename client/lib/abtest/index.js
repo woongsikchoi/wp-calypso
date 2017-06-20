@@ -32,7 +32,7 @@ function ABTest( name ) {
  * @param {String} name - The name of the A/B test
  * @returns {String} - The user's variation
  */
-export const abtest = ( name ) => new ABTest( name ).getVariationAndSetAsNeeded();
+export const abtest = name => new ABTest( name ).getVariationAndSetAsNeeded();
 
 /**
  * Returns a user's variation
@@ -40,20 +40,20 @@ export const abtest = ( name ) => new ABTest( name ).getVariationAndSetAsNeeded(
  * @param {String} name - The name of the A/B test
  * @returns {String} - The user's variation or null if the user is not a participant
  */
-export const getABTestVariation = ( name ) => new ABTest( name ).getVariation();
+export const getABTestVariation = name => new ABTest( name ).getVariation();
 
 /**
  * Returns a user's variations from localStorage.
  *
  * @returns {Object} - The user's variations, or an empty object if the user is not a participant
  */
-export const getSavedVariations = () => ( store.get( 'ABTests' ) || {} );
+export const getSavedVariations = () => store.get( 'ABTests' ) || {};
 
 export const getAllTests = () => keys( activeTests ).map( ABTest );
 
 const isUserSignedIn = () => user.get() !== false;
 
-const parseDateStamp = ( datestamp ) => {
+const parseDateStamp = datestamp => {
 	const date = i18n.moment( datestamp, 'YYYYMMDD' );
 
 	if ( ! date.isValid() ) {
@@ -64,7 +64,7 @@ const parseDateStamp = ( datestamp ) => {
 };
 
 const languageSlugs = map( config( 'languages' ), 'langSlug' );
-const langSlugIsValid = ( slug ) => languageSlugs.indexOf( slug ) !== -1;
+const langSlugIsValid = slug => languageSlugs.indexOf( slug ) !== -1;
 
 ABTest.prototype.init = function( name ) {
 	if ( ! /^[A-Za-z\d]+$/.test( name ) ) {
@@ -88,7 +88,9 @@ ABTest.prototype.init = function( name ) {
 	}
 
 	if ( ! includes( variationNames, testConfig.defaultVariation ) ) {
-		throw new Error( 'A default variation is specified for ' + name + ' but it is not part of the variations' );
+		throw new Error(
+			'A default variation is specified for ' + name + ' but it is not part of the variations',
+		);
 	}
 
 	// Default: only run for 'en' locale.
@@ -97,11 +99,15 @@ ABTest.prototype.init = function( name ) {
 		if ( 'any' === testConfig.localeTargets ) {
 			// Allow any locales.
 			this.localeTargets = false;
-		} else if ( isArray( testConfig.localeTargets ) && every( testConfig.localeTargets, langSlugIsValid ) ) {
+		} else if (
+			isArray( testConfig.localeTargets ) && every( testConfig.localeTargets, langSlugIsValid )
+		) {
 			// Allow specific locales.
 			this.localeTargets = testConfig.localeTargets;
 		} else {
-			throw new Error( 'localeTargets can be either "any" or an array of one or more valid language slugs' );
+			throw new Error(
+				'localeTargets can be either "any" or an array of one or more valid language slugs',
+			);
 		}
 	}
 
@@ -147,9 +153,11 @@ ABTest.prototype.getVariation = function() {
 };
 
 ABTest.prototype.isEligibleForAbTest = function() {
-	const client = ( typeof navigator !== 'undefined' ) ? navigator : {};
+	const client = typeof navigator !== 'undefined' ? navigator : {};
 	const clientLanguage = client.language || client.userLanguage || 'en';
-	const clientLanguagesPrimary = ( client.languages && client.languages.length ) ? client.languages[ 0 ] : 'en';
+	const clientLanguagesPrimary = client.languages && client.languages.length
+		? client.languages[ 0 ]
+		: 'en';
 	const localeFromSession = i18n.getLocaleSlug() || 'en';
 
 	if ( ! store.enabled ) {
@@ -166,11 +174,19 @@ ABTest.prototype.isEligibleForAbTest = function() {
 			return false;
 		}
 		if ( ! isUserSignedIn() && ! clientLanguage.match( localeMatcher ) ) {
-			debug( '%s: Logged-out user has a %s navigator.language preference', this.experimentId, userLocale );
+			debug(
+				'%s: Logged-out user has a %s navigator.language preference',
+				this.experimentId,
+				userLocale,
+			);
 			return false;
 		}
 		if ( ! isUserSignedIn() && ! clientLanguagesPrimary.match( localeMatcher ) ) {
-			debug( '%s: Logged-out user has a %s navigator.languages primary preference', this.experimentId, userLocale );
+			debug(
+				'%s: Logged-out user has a %s navigator.languages primary preference',
+				this.experimentId,
+				userLocale,
+			);
 			return false;
 		}
 		if ( ! isUserSignedIn() && ! localeFromSession.match( localeMatcher ) ) {
@@ -194,17 +210,23 @@ ABTest.prototype.isEligibleForAbTest = function() {
 };
 
 ABTest.prototype.hasTestStartedYet = function() {
-	return ( i18n.moment().isAfter( this.startDate ) );
+	return i18n.moment().isAfter( this.startDate );
 };
 
 ABTest.prototype.hasBeenInPreviousSeriesTest = function() {
 	const previousExperimentIds = keys( getSavedVariations() );
 	let previousName;
 
-	return some( previousExperimentIds, function( previousExperimentId ) {
-		previousName = previousExperimentId.substring( 0, previousExperimentId.length - '_YYYYMMDD'.length );
-		return ( previousExperimentId !== this.experimentId ) && ( previousName === this.name );
-	}.bind( this ) );
+	return some(
+		previousExperimentIds,
+		function( previousExperimentId ) {
+			previousName = previousExperimentId.substring(
+				0,
+				previousExperimentId.length - '_YYYYMMDD'.length,
+			);
+			return previousExperimentId !== this.experimentId && previousName === this.name;
+		}.bind( this ),
+	);
 };
 
 ABTest.prototype.hasRegisteredBeforeTestBegan = function() {
@@ -219,9 +241,13 @@ ABTest.prototype.assignVariation = function() {
 	let variationName;
 	let sum = 0;
 
-	const allocationsTotal = reduce( this.variationDetails, ( allocations, allocation ) => {
-		return allocations + allocation;
-	}, 0 );
+	const allocationsTotal = reduce(
+		this.variationDetails,
+		( allocations, allocation ) => {
+			return allocations + allocation;
+		},
+		0,
+	);
 
 	const randomAllocationAmount = Math.random() * allocationsTotal;
 
@@ -234,7 +260,10 @@ ABTest.prototype.assignVariation = function() {
 };
 
 ABTest.prototype.recordVariation = function( variation ) {
-	analytics.tracks.recordEvent( 'calypso_abtest_start', { abtest_name: this.experimentId, abtest_variation: variation } );
+	analytics.tracks.recordEvent(
+		'calypso_abtest_start',
+		{ abtest_name: this.experimentId, abtest_variation: variation },
+	);
 };
 
 ABTest.prototype.saveVariation = function( variation ) {
@@ -249,13 +278,17 @@ ABTest.prototype.saveVariation = function( variation ) {
 };
 
 ABTest.prototype.saveVariationOnBackend = function( variation ) {
-	wpcom.undocumented().saveABTestData( this.experimentId, variation, function( error ) {
-		if ( error ) {
-			debug( '%s: Error saving variation %s: %s', this.experimentId, variation, error );
-		} else {
-			debug( '%s: Variation saved successfully: %s.', this.experimentId, variation );
-		}
-	}.bind( this ) );
+	wpcom.undocumented().saveABTestData(
+		this.experimentId,
+		variation,
+		function( error ) {
+			if ( error ) {
+				debug( '%s: Error saving variation %s: %s', this.experimentId, variation, error );
+			} else {
+				debug( '%s: Variation saved successfully: %s.', this.experimentId, variation );
+			}
+		}.bind( this ),
+	);
 };
 
 ABTest.prototype.saveVariationInLocalStorage = function( variation ) {

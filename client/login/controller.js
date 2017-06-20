@@ -21,5 +21,5 @@ export default {
 	magicLogin( context, next ) {
 		context.primary = <MagicLogin />;
 		next();
-	}
+	},
 };

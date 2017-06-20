@@ -30,10 +30,10 @@ class PurchaseNotice extends Component {
 		handleRenew: React.PropTypes.func,
 		selectedPurchase: React.PropTypes.object,
 		selectedSite: React.PropTypes.oneOfType(
-			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ]
+			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ],
 		),
 		editCardDetailsPath: React.PropTypes.oneOfType(
-			[ React.PropTypes.string, React.PropTypes.bool ]
+			[ React.PropTypes.string, React.PropTypes.bool ],
 		),
 	};
 
@@ -48,7 +48,7 @@ class PurchaseNotice extends Component {
 						purchaseName: getName( purchase ),
 						expiry: moment( purchase.expiryMoment ).fromNow(),
 					},
-				}
+				},
 			);
 		}
 		if ( isMonthly( purchase.productSlug ) ) {
@@ -62,7 +62,7 @@ class PurchaseNotice extends Component {
 						purchaseName: getName( purchase ),
 						expiry: daysToExpiry,
 					},
-				}
+				},
 			);
 		}
 
@@ -143,7 +143,7 @@ class PurchaseNotice extends Component {
 							components: {
 								a: editCardDetailsPath ? <a href={ editCardDetailsPath } /> : <span />,
 							},
-						}
+						},
 					) }
 				</Notice>
 			);

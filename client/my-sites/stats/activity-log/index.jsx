@@ -12,11 +12,7 @@ import { groupBy, map, get, filter } from 'lodash';
  */
 import Main from 'components/main';
 import { getSelectedSiteId } from 'state/ui/selectors';
-import {
-	getSiteSlug,
-	getSiteTitle,
-	isJetpackSite,
-} from 'state/sites/selectors';
+import { getSiteSlug, getSiteTitle, isJetpackSite } from 'state/sites/selectors';
 import { getRewindStatusError } from 'state/selectors';
 import { getActivityLogs } from 'state/selectors';
 import StatsFirstView from '../stats-first-view';
@@ -31,7 +27,7 @@ import QueryRewindStatus from 'components/data/query-rewind-status';
 import QueryActivityLog from 'components/data/query-activity-log';
 import DatePicker from 'my-sites/stats/stats-date-picker';
 import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
-import { recordGoogleEvent } from 'state/analytics/actions';
+import { recordGoogleEvent } from 'state/analytics/actions';
 import ActivityLogRewindToggle from './activity-log-rewind-toggle';
 import { isRewindActive as isRewindActiveSelector } from 'state/selectors';
 import { rewindRestore as rewindRestoreAction } from 'state/activity-log/actions';
@@ -65,7 +61,7 @@ class ActivityLog extends Component {
 		window.scrollTo( 0, 0 );
 	}
 
-	handleRequestRestore = ( requestedRestoreTimestamp ) => {
+	handleRequestRestore = requestedRestoreTimestamp => {
 		this.setState( {
 			requestedRestoreTimestamp,
 			showRestoreConfirmDialog: true,
@@ -75,14 +71,15 @@ class ActivityLog extends Component {
 	handleRestoreDialogClose = () => this.setState( { showRestoreConfirmDialog: false } );
 
 	handleRestoreDialogConfirm = () => {
-		const {
-			rewindRestore,
-			siteId,
-		} = this.props;
+		const { rewindRestore, siteId } = this.props;
 
 		const { requestedRestoreTimestamp } = this.state;
 
-		debug( 'Restore requested for site %d to time %d', this.props.siteId, requestedRestoreTimestamp );
+		debug(
+			'Restore requested for site %d to time %d',
+			this.props.siteId,
+			requestedRestoreTimestamp,
+		);
 		this.setState( { showRestoreConfirmDialog: false } );
 		rewindRestore( siteId, requestedRestoreTimestamp );
 	};
@@ -138,7 +135,6 @@ class ActivityLog extends Component {
 				log.icon = 'plugins';
 				log.actionText = 'Revert';
 				break;
-
 			// Themes
 			case 'theme_switched':
 				log.subTitle = translate( 'Theme Activated' );
@@ -178,20 +174,18 @@ class ActivityLog extends Component {
 
 	renderBanner() {
 		// FIXME: Logic to select/show 1 banner
-		return <div>
-			<ErrorBanner />
-			<ProgressBanner />
-			<SuccessBanner />
-		</div>;
+		return (
+			<div>
+				<ErrorBanner />
+				<ProgressBanner />
+				<SuccessBanner />
+			</div>
+		);
 	}
 
 	// FIXME: This is for internal testing
 	renderErrorMessage() {
-		const {
-			isPressable,
-			rewindStatusError,
-			translate,
-		} = this.props;
+		const { isPressable, rewindStatusError, translate } = this.props;
 
 		// FIXME: Do something nicer with the error
 		if ( rewindStatusError ) {
@@ -209,21 +203,18 @@ class ActivityLog extends Component {
 	}
 
 	renderContent() {
-		const {
-			siteId,
-			slug,
-			moment,
-			startDate,
-			isRewindActive,
-		} = this.props;
+		const { siteId, slug, moment, startDate, isRewindActive } = this.props;
 		const startOfMonth = moment( startDate ).startOf( 'month' ),
 			startOfMonthMs = startOfMonth.valueOf(),
 			endOfMonthMs = moment( startDate ).endOf( 'month' ).valueOf();
-		const logs = filter( this.props.logs, obj => startOfMonthMs <= obj.ts_site && obj.ts_site <= endOfMonthMs );
+		const logs = filter(
+			this.props.logs,
+			obj => startOfMonthMs <= obj.ts_site && obj.ts_site <= endOfMonthMs,
+		);
 		const logsGroupedByDate = map(
 			groupBy(
 				logs.map( this.update_logs, this ),
-				log => moment( log.ts_site ).startOf( 'day' ).format( 'x' )
+				log => moment( log.ts_site ).startOf( 'day' ).format( 'x' ),
 			),
 			( daily_logs, timestamp ) => (
 				<ActivityLogDay
@@ -234,11 +225,11 @@ class ActivityLog extends Component {
 					siteId={ siteId }
 					timestamp={ +timestamp }
 				/>
-			)
+			),
 		);
 		const query = {
 			period: 'month',
-			date: startOfMonth.format( 'YYYY-MM-DD' )
+			date: startOfMonth.format( 'YYYY-MM-DD' ),
 		};
 
 		return (
@@ -249,12 +240,7 @@ class ActivityLog extends Component {
 					url={ `/stats/activity/${ slug }` }
 					recordGoogleEvent={ this.changePeriod }
 				>
-					<DatePicker
-						isActivity={ true }
-						period="month"
-						date={ startOfMonth }
-						query={ query }
-					/>
+					<DatePicker isActivity={ true } period="month" date={ startOfMonth } query={ query } />
 				</StatsPeriodNavigation>
 				{ this.renderBanner() }
 				{ ! isRewindActive && <ActivityLogRewindToggle siteId={ siteId } /> }
@@ -266,16 +252,8 @@ class ActivityLog extends Component {
 	}
 
 	render() {
-		const {
-			isJetpack,
-			siteId,
-			siteTitle,
-			slug,
-		} = this.props;
-		const {
-			requestedRestoreTimestamp,
-			showRestoreConfirmDialog,
-		} = this.state;
+		const { isJetpack, siteId, siteTitle, slug } = this.props;
+		const { requestedRestoreTimestamp, showRestoreConfirmDialog } = this.state;
 
 		return (
 			<Main wideLayout={ true }>
@@ -283,11 +261,7 @@ class ActivityLog extends Component {
 				<QueryActivityLog siteId={ siteId } />
 				<StatsFirstView />
 				<SidebarNavigation />
-				<StatsNavigation
-					isJetpack={ isJetpack }
-					slug={ slug }
-					section="activity"
-				/>
+				<StatsNavigation isJetpack={ isJetpack } slug={ slug } section="activity" />
 				{ this.renderErrorMessage() || this.renderContent() }
 				<ActivityLogConfirmDialog
 					isVisible={ showRestoreConfirmDialog }
@@ -302,7 +276,7 @@ class ActivityLog extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		return {
 			isJetpack: isJetpackSite( state, siteId ),
@@ -316,8 +290,9 @@ export default connect(
 			// FIXME: Testing only
 			isPressable: get( state.activityLog.rewindStatus, [ siteId, 'isPressable' ], false ),
 		};
-	}, {
+	},
+	{
 		recordGoogleEvent,
 		rewindRestore: rewindRestoreAction,
-	}
+	},
 )( localize( ActivityLog ) );

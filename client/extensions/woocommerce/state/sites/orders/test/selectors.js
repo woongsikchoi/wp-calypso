@@ -7,12 +7,7 @@ import { keyBy } from 'lodash';
 /**
  * Internal dependencies
  */
-import {
-	areOrdersLoaded,
-	areOrdersLoading,
-	getOrders,
-	getTotalOrdersPages,
-} from '../selectors';
+import { areOrdersLoaded, areOrdersLoading, getOrders, getTotalOrdersPages } from '../selectors';
 import orders from './fixtures/orders';
 
 const preInitializedState = {
@@ -31,7 +26,7 @@ const loadingState = {
 						},
 						items: {},
 						pages: {},
-						totalPages: 1
+						totalPages: 1,
 					},
 				},
 			},
@@ -49,10 +44,10 @@ const loadedState = {
 						},
 						items: keyBy( orders, 'id' ),
 						pages: {
-							1: [ 35, 26 ]
+							1: [ 35, 26 ],
 						},
-						totalPages: 4
-					}
+						totalPages: 4,
+					},
 				},
 				401: {
 					orders: {
@@ -61,7 +56,7 @@ const loadedState = {
 						},
 						items: {},
 						pages: {},
-						totalPages: 1
+						totalPages: 1,
 					},
 				},
 			},

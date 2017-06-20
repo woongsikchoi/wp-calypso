@@ -46,7 +46,9 @@ export const getContinents = ( state, siteId = getSelectedSiteId( state ) ) => {
 	if ( ! areLocationsLoaded( state, siteId ) ) {
 		return [];
 	}
-	const continents = getRawLocations( state, siteId ).map( continent => omit( continent, 'countries' ) );
+	const continents = getRawLocations( state, siteId ).map(
+		continent => omit( continent, 'countries' ),
+	);
 	return sortBy( continents, 'name' );
 };
 
@@ -78,7 +80,10 @@ export const getStates = ( state, countryCode, siteId = getSelectedSiteId( state
 	if ( ! areLocationsLoaded( state, siteId ) ) {
 		return [];
 	}
-	const country = find( flatMap( getRawLocations( state, siteId ), 'countries' ), { code: countryCode } );
+	const country = find(
+		flatMap( getRawLocations( state, siteId ), 'countries' ),
+		{ code: countryCode },
+	);
 	if ( ! country ) {
 		return [];
 	}

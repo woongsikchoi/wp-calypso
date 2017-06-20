@@ -31,8 +31,11 @@ const MappedDomain = React.createClass( {
 			);
 		}
 
-		const expirationMessage = domain.expirationMoment && domain.expirationMoment.format( 'LL' ) ||
-			<em>{ translate( 'Never Expires', { context: 'Expiration detail for a mapped domain' } ) }</em>;
+		const expirationMessage =
+			( domain.expirationMoment && domain.expirationMoment.format( 'LL' ) ) ||
+			<em>
+				{ translate( 'Never Expires', { context: 'Expiration detail for a mapped domain' } ) }
+			</em>;
 
 		return (
 			<Property label={ translate( 'Mapping expires on' ) }>
@@ -46,10 +49,13 @@ const MappedDomain = React.createClass( {
 	},
 
 	domainWarnings() {
-		return <DomainWarnings
-			domain={ this.props.domain }
-			selectedSite={ this.props.selectedSite }
-			ruleWhiteList={ [ 'wrongNSMappedDomains' ] } />;
+		return (
+			<DomainWarnings
+				domain={ this.props.domain }
+				selectedSite={ this.props.selectedSite }
+				ruleWhiteList={ [ 'wrongNSMappedDomains' ] }
+			/>
+		);
 	},
 
 	render() {
@@ -74,8 +80,7 @@ const MappedDomain = React.createClass( {
 
 					{ this.getAutoRenewalOrExpirationDate() }
 
-					<SubscriptionSettings
-						onClick={ this.handlePaymentSettingsClick } />
+					<SubscriptionSettings onClick={ this.handlePaymentSettingsClick } />
 				</Card>
 			</div>
 		);
@@ -93,7 +98,7 @@ const MappedDomain = React.createClass( {
 	emailNavItem() {
 		const path = paths.domainManagementEmail(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -104,17 +109,14 @@ const MappedDomain = React.createClass( {
 	},
 
 	dnsRecordsNavItem() {
-		const path = paths.domainManagementDns(
-			this.props.selectedSite.slug,
-			this.props.domain.name
-		);
+		const path = paths.domainManagementDns( this.props.selectedSite.slug, this.props.domain.name );
 
 		return (
 			<VerticalNavItem path={ path }>
 				{ this.props.translate( 'DNS Records' ) }
 			</VerticalNavItem>
 		);
-	}
+	},
 } );
 
 export { MappedDomain };

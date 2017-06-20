@@ -16,18 +16,16 @@ import {
 	COMMENTS_REQUEST,
 	COMMENTS_LIKE,
 	COMMENTS_LIKE_UPDATE,
-	COMMENTS_UNLIKE
+	COMMENTS_UNLIKE,
 } from '../../action-types';
 import {
 	requestPostComments,
 	writeComment,
 	removeComment,
 	likeComment,
-	unlikeComment
+	unlikeComment,
 } from '../actions';
-import {
-	NUMBER_OF_COMMENTS_PER_FETCH
-} from '../constants';
+import { NUMBER_OF_COMMENTS_PER_FETCH } from '../constants';
 
 const SITE_ID = 91750058;
 const POST_ID = 287;
@@ -39,7 +37,7 @@ describe( 'actions', () => {
 	} );
 
 	describe( '#requestPostComments()', () => {
-		useSandbox( ( sandbox ) => {
+		useSandbox( sandbox => {
 			sandbox.stub( config, 'isEnabled' ).withArgs( 'comments/filters-in-posts' ).returns( true );
 		} );
 
@@ -53,8 +51,8 @@ describe( 'actions', () => {
 				query: {
 					order: 'DESC',
 					number: NUMBER_OF_COMMENTS_PER_FETCH,
-					status: 'trash'
-				}
+					status: 'trash',
+				},
 			} );
 		} );
 
@@ -68,8 +66,8 @@ describe( 'actions', () => {
 				query: {
 					order: 'DESC',
 					number: NUMBER_OF_COMMENTS_PER_FETCH,
-					status: 'approved'
-				}
+					status: 'approved',
+				},
 			} );
 		} );
 	} );
@@ -78,8 +76,7 @@ describe( 'actions', () => {
 		before( () => {
 			nock( API_DOMAIN )
 				.post( `/rest/v1.1/sites/${ SITE_ID }/posts/${ POST_ID }/replies/new`, { content: 'hi' } )
-				.reply( 200,
-				{
+				.reply( 200, {
 					ID: 13,
 					post: {
 						ID: POST_ID,
@@ -91,7 +88,7 @@ describe( 'actions', () => {
 					content: '<p>hi<\/p>\n',
 					status: 'approved',
 					parent: false,
-					type: 'comment'
+					type: 'comment',
 				} );
 		} );
 
@@ -106,7 +103,7 @@ describe( 'actions', () => {
 			expect( firstSpyCallArg.type ).to.eql( COMMENTS_RECEIVE );
 			expect( firstSpyCallArg.comments[ 0 ].ID.indexOf( 'placeholder-' ) ).to.equal( 0 );
 
-			return reqPromise.then( ( comment ) => {
+			return reqPromise.then( comment => {
 				expect( comment ).to.be.object;
 				expect( comment ).to.not.equal( undefined );
 				expect( comment ).to.not.equal( null );
@@ -144,7 +141,7 @@ describe( 'actions', () => {
 				type: COMMENTS_LIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -154,7 +151,7 @@ describe( 'actions', () => {
 					type: COMMENTS_UNLIKE,
 					siteId: 1,
 					postId: 1,
-					commentId: 1
+					commentId: 1,
 				} );
 			} );
 		} );
@@ -164,12 +161,12 @@ describe( 'actions', () => {
 
 			nock( API_DOMAIN )
 				.post( '/rest/v1.1/sites/1/comments/1/likes/new', {
-					source: 'reader'
+					source: 'reader',
 				} )
 				.reply( 200, {
 					success: true,
 					i_like: true,
-					like_count: 123
+					like_count: 123,
 				} );
 
 			const likeThunk = likeComment( 1, 1, 1 );
@@ -179,7 +176,7 @@ describe( 'actions', () => {
 				type: COMMENTS_LIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -191,7 +188,7 @@ describe( 'actions', () => {
 					postId: 1,
 					commentId: 1,
 					iLike: true,
-					likeCount: 123
+					likeCount: 123,
 				} );
 			} );
 		} );
@@ -208,7 +205,7 @@ describe( 'actions', () => {
 				type: COMMENTS_UNLIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -218,7 +215,7 @@ describe( 'actions', () => {
 					type: COMMENTS_LIKE,
 					siteId: 1,
 					postId: 1,
-					commentId: 1
+					commentId: 1,
 				} );
 			} );
 		} );
@@ -232,7 +229,7 @@ describe( 'actions', () => {
 				.reply( 200, {
 					success: true,
 					i_like: false,
-					like_count: 122
+					like_count: 122,
 				} );
 
 			const unlikeThunk = unlikeComment( 1, 1, 1 );
@@ -242,7 +239,7 @@ describe( 'actions', () => {
 				type: COMMENTS_UNLIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -254,7 +251,7 @@ describe( 'actions', () => {
 					postId: 1,
 					commentId: 1,
 					iLike: false,
-					likeCount: 122
+					likeCount: 122,
 				} );
 			} );
 		} );

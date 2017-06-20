@@ -29,31 +29,43 @@ import {
 	TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_SUCCESS,
 	TWO_FACTOR_AUTHENTICATION_UPDATE_NONCE,
 } from 'state/action-types';
-import {
-	getRememberMe,
-	getTwoFactorAuthNonce,
-	getTwoFactorUserId,
-} from 'state/login/selectors';
+import { getRememberMe, getTwoFactorAuthNonce, getTwoFactorUserId } from 'state/login/selectors';
 import wpcom from 'lib/wp';
 
 const errorMessages = {
-	account_unactivated: translate( "This account hasn't been activated yet — check your email for a message from " +
-		"WordPress.com and click the activation link. You'll be able to log in after that." ),
+	account_unactivated: translate(
+		"This account hasn't been activated yet — check your email for a message from " +
+			"WordPress.com and click the activation link. You'll be able to log in after that.",
+	),
 	empty_password: translate( "Don't forget to enter your password." ),
 	empty_two_step_code: translate( 'Please enter a verification code.' ),
 	empty_username: translate( 'Please enter a username or email address.' ),
 	forbidden_for_automattician: 'Cannot use social login with an Automattician account',
 	incorrect_password: translate( "Oops, that's not the right password. Please try again!" ),
 	invalid_email: translate( "Oops, looks like that's not the right address. Please try again!" ),
-	invalid_two_step_code: translate( "Hmm, that's not a valid verification code. Please double-check your app and try again." ),
-	invalid_two_step_nonce: translate( 'Your session has expired, please go back to the login screen.' ),
-	invalid_username: translate( "We don't seem to have an account with that name. Double-check the spelling and try again!" ),
-	push_authentication_throttled: translate( 'You can only request a code via the WordPress mobile app once every ' +
-		'two minutes. Please wait and try again.' ),
-	sms_code_throttled: translate( 'You can only request a code via SMS once per minute. Please wait and try again.' ),
-	sms_recovery_code_throttled: translate( 'You can only request a recovery code via SMS once per minute. Please wait and try again.' ),
-	unknown: translate( "Hmm, we can't find a WordPress.com account with this username and password combo. " +
-		'Please double check your information and try again.' ),
+	invalid_two_step_code: translate(
+		"Hmm, that's not a valid verification code. Please double-check your app and try again.",
+	),
+	invalid_two_step_nonce: translate(
+		'Your session has expired, please go back to the login screen.',
+	),
+	invalid_username: translate(
+		"We don't seem to have an account with that name. Double-check the spelling and try again!",
+	),
+	push_authentication_throttled: translate(
+		'You can only request a code via the WordPress mobile app once every ' +
+			'two minutes. Please wait and try again.',
+	),
+	sms_code_throttled: translate(
+		'You can only request a code via SMS once per minute. Please wait and try again.',
+	),
+	sms_recovery_code_throttled: translate(
+		'You can only request a recovery code via SMS once per minute. Please wait and try again.',
+	),
+	unknown: translate(
+		"Hmm, we can't find a WordPress.com account with this username and password combo. " +
+			'Please double check your information and try again.',
+	),
 };
 
 const errorFields = {
@@ -109,7 +121,8 @@ export const loginUser = ( usernameOrEmail, password, rememberMe, redirectTo ) =
 		type: LOGIN_REQUEST,
 	} );
 
-	return request.post( 'https://wordpress.com/wp-login.php?action=login-endpoint' )
+	return request
+		.post( 'https://wordpress.com/wp-login.php?action=login-endpoint' )
 		.withCredentials()
 		.set( 'Content-Type', 'application/x-www-form-urlencoded' )
 		.accept( 'application/json' )
@@ -120,13 +133,15 @@ export const loginUser = ( usernameOrEmail, password, rememberMe, redirectTo ) =
 			redirect_to: redirectTo,
 			client_id: config( 'wpcom_signup_id' ),
 			client_secret: config( 'wpcom_signup_key' ),
-		} ).then( ( response ) => {
+		} )
+		.then( response => {
 			dispatch( {
 				type: LOGIN_REQUEST_SUCCESS,
 				rememberMe,
 				data: response.body && response.body.data,
 			} );
-		} ).catch( ( httpError ) => {
+		} )
+		.catch( httpError => {
 			const error = getErrorFromHTTPError( httpError );
 
 			dispatch( {
@@ -145,10 +160,14 @@ export const loginUser = ( usernameOrEmail, password, rememberMe, redirectTo ) =
  * @param {String}     twoFactorAuthType Two factor authentication method
  * @return {Function}                 Action thunk to trigger the login process.
  */
-export const loginUserWithTwoFactorVerificationCode = ( twoStepCode, twoFactorAuthType ) => ( dispatch, getState ) => {
+export const loginUserWithTwoFactorVerificationCode = ( twoStepCode, twoFactorAuthType ) => (
+	dispatch,
+	getState,
+ ) => {
 	dispatch( { type: TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST } );
 
-	return request.post( 'https://wordpress.com/wp-login.php?action=two-step-authentication-endpoint' )
+	return request
+		.post( 'https://wordpress.com/wp-login.php?action=two-step-authentication-endpoint' )
 		.withCredentials()
 		.set( 'Content-Type', 'application/x-www-form-urlencoded' )
 		.accept( 'application/json' )
@@ -163,7 +182,7 @@ export const loginUserWithTwoFactorVerificationCode = ( twoStepCode, twoFactorAu
 		.then( () => {
 			dispatch( { type: TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST_SUCCESS } );
 		} )
-		.catch( ( httpError ) => {
+		.catch( httpError => {
 			const error = getErrorFromHTTPError( httpError );
 
 			dispatch( {
@@ -192,7 +211,8 @@ export const loginUserWithTwoFactorVerificationCode = ( twoStepCode, twoFactorAu
 export const loginSocialUser = ( service, token, redirectTo ) => dispatch => {
 	dispatch( { type: SOCIAL_LOGIN_REQUEST } );
 
-	return request.post( 'https://wordpress.com/wp-login.php?action=social-login-endpoint' )
+	return request
+		.post( 'https://wordpress.com/wp-login.php?action=social-login-endpoint' )
 		.withCredentials()
 		.set( 'Content-Type', 'application/x-www-form-urlencoded' )
 		.accept( 'application/json' )
@@ -203,13 +223,13 @@ export const loginSocialUser = ( service, token, redirectTo ) => dispatch => {
 			client_id: config( 'wpcom_signup_id' ),
 			client_secret: config( 'wpcom_signup_key' ),
 		} )
-		.then( ( response ) => {
+		.then( response => {
 			dispatch( {
 				type: SOCIAL_LOGIN_REQUEST_SUCCESS,
 				redirectTo: get( response, 'body.data.redirect_to' ),
 			} );
 		} )
-		.catch( ( httpError ) => {
+		.catch( httpError => {
 			const error = getErrorFromHTTPError( httpError );
 
 			dispatch( {
@@ -234,23 +254,27 @@ export const createSocialUser = ( service, token, flowName ) => dispatch => {
 	dispatch( {
 		type: SOCIAL_CREATE_ACCOUNT_REQUEST,
 		notice: {
-			message: translate( 'Creating your account' )
+			message: translate( 'Creating your account' ),
 		},
 	} );
 
-	return wpcom.undocumented().usersSocialNew( service, token, flowName ).then( wpcomResponse => {
-		dispatch( { type: SOCIAL_CREATE_ACCOUNT_REQUEST_SUCCESS } );
-		return Promise.resolve( wpcomResponse );
-	} ).catch( wpcomError => {
-		const error = { ...wpcomError, field: 'global' };
+	return wpcom
+		.undocumented()
+		.usersSocialNew( service, token, flowName )
+		.then( wpcomResponse => {
+			dispatch( { type: SOCIAL_CREATE_ACCOUNT_REQUEST_SUCCESS } );
+			return Promise.resolve( wpcomResponse );
+		} )
+		.catch( wpcomError => {
+			const error = { ...wpcomError, field: 'global' };
 
-		dispatch( {
-			type: SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE,
-			error,
+			dispatch( {
+				type: SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE,
+				error,
+			} );
+
+			return Promise.reject( wpcomError );
 		} );
-
-		return Promise.reject( wpcomError );
-	} );
 };
 
 /**
@@ -262,11 +286,12 @@ export const sendSmsCode = () => ( dispatch, getState ) => {
 	dispatch( {
 		type: TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST,
 		notice: {
-			message: translate( 'Sending you a text message…' )
+			message: translate( 'Sending you a text message…' ),
 		},
 	} );
 
-	return request.post( 'https://wordpress.com/wp-login.php?action=send-sms-code-endpoint' )
+	return request
+		.post( 'https://wordpress.com/wp-login.php?action=send-sms-code-endpoint' )
 		.set( 'Content-Type', 'application/x-www-form-urlencoded' )
 		.accept( 'application/json' )
 		.send( {
@@ -275,29 +300,30 @@ export const sendSmsCode = () => ( dispatch, getState ) => {
 			client_id: config( 'wpcom_signup_id' ),
 			client_secret: config( 'wpcom_signup_key' ),
 		} )
-		.then( ( response ) => {
+		.then( response => {
 			const phoneNumber = get( response, 'body.data.phone_number' );
 			const message = translate( 'Message sent to phone number ending in %(phoneNumber)s', {
 				args: {
-					phoneNumber
-				}
+					phoneNumber,
+				},
 			} );
 
 			dispatch( {
 				type: TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_SUCCESS,
 				notice: {
 					message,
-					status: 'is-success'
+					status: 'is-success',
 				},
 				twoStepNonce: get( response, 'body.data.two_step_nonce' ),
 			} );
-		} ).catch( ( httpError ) => {
+		} )
+		.catch( httpError => {
 			const error = getErrorFromHTTPError( httpError );
 
 			dispatch( {
 				type: TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_FAILURE,
 				error,
-				twoStepNonce: get( httpError, 'response.body.data.two_step_nonce' )
+				twoStepNonce: get( httpError, 'response.body.data.two_step_nonce' ),
 			} );
 		} );
 };

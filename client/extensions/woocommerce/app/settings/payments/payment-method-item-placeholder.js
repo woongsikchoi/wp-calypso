@@ -13,15 +13,15 @@ const PaymentMethodItemPlaceHolder = () => {
 	return (
 		<ListItem>
 			<ListItemField>
-				<span className="payments__method-loading-suggested"></span>
-				<span className="payments__method-loading-title"></span>
+				<span className="payments__method-loading-suggested" />
+				<span className="payments__method-loading-title" />
 			</ListItemField>
 			<ListItemField>
-				<span className="payments__method-loading-fee"></span>
-				<span className="payments__method-loading-feelink"></span>
+				<span className="payments__method-loading-fee" />
+				<span className="payments__method-loading-feelink" />
 			</ListItemField>
 			<ListItemField>
-				<span className="payments__method-loading-settings"></span>
+				<span className="payments__method-loading-settings" />
 			</ListItemField>
 		</ListItem>
 	);

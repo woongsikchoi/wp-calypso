@@ -14,16 +14,16 @@ import { localize } from 'i18n-calypso';
 import PlanFeaturesHeader from './header';
 import PlanFeaturesItem from './item';
 import PlanFeaturesActions from './actions';
-import { isCurrentPlanPaid, isCurrentSitePlan, getSitePlan, getSiteSlug } from 'state/sites/selectors';
+import {
+	isCurrentPlanPaid,
+	isCurrentSitePlan,
+	getSitePlan,
+	getSiteSlug,
+} from 'state/sites/selectors';
 import { isCurrentUserCurrentPlanOwner, getPlansBySiteId } from 'state/sites/plans/selectors';
 import { getCurrentUserCurrencyCode } from 'state/current-user/selectors';
 import { getPlanDiscountedRawPrice } from 'state/sites/plans/selectors';
-import {
-	getPlanRawPrice,
-	getPlan,
-	getPlanSlug,
-	getPlanBySlug
-} from 'state/plans/selectors';
+import { getPlanRawPrice, getPlan, getPlanSlug, getPlanBySlug } from 'state/plans/selectors';
 import {
 	isPopular,
 	isNew,
@@ -36,11 +36,7 @@ import {
 	PLAN_BUSINESS,
 } from 'lib/plans/constants';
 import { isFreePlan } from 'lib/plans';
-import {
-	getPlanPath,
-	canUpgradeToPlan,
-	applyTestFiltersToPlansList
-} from 'lib/plans';
+import { getPlanPath, canUpgradeToPlan, applyTestFiltersToPlansList } from 'lib/plans';
 import { planItem as getCartItemForPlan } from 'lib/cart-values/cart-items';
 import Notice from 'components/notice';
 import SpinnerLine from 'components/spinner-line';
@@ -50,12 +46,13 @@ import { retargetViewPlans } from 'lib/analytics/ad-tracking';
 import { abtest } from 'lib/abtest';
 
 class PlanFeatures extends Component {
-
 	render() {
 		const { planProperties } = this.props;
 
-		const tableClasses = classNames( 'plan-features__table',
-			`has-${ planProperties.length }-cols` );
+		const tableClasses = classNames(
+			'plan-features__table',
+			`has-${ planProperties.length }-cols`,
+		);
 
 		return (
 			<div>
@@ -75,7 +72,7 @@ class PlanFeatures extends Component {
 							<tr>
 								{ this.renderTopButtons() }
 							</tr>
-								{ this.renderPlanFeatureRows() }
+							{ this.renderPlanFeatureRows() }
 							<tr>
 								{ this.renderBottomButtons() }
 							</tr>
@@ -94,10 +91,7 @@ class PlanFeatures extends Component {
 		}
 
 		return (
-			<Notice
-				className="plan-features__notice"
-				showDismiss={ false }
-				status="is-info">
+			<Notice className="plan-features__notice" showDismiss={ false } status="is-info">
 				{ translate( 'You need to be the plan owner to manage this site.' ) }
 			</Notice>
 		);
@@ -105,12 +99,19 @@ class PlanFeatures extends Component {
 
 	renderMobileView() {
 		const {
-			canPurchase, translate, planProperties, isInSignup, isLandingPage, intervalType, site, basePlansPath
+			canPurchase,
+			translate,
+			planProperties,
+			isInSignup,
+			isLandingPage,
+			intervalType,
+			site,
+			basePlansPath,
 		} = this.props;
 
 		// move any free plan to last place in mobile view
 		let freePlanProperties;
-		const reorderedPlans = planProperties.filter( ( properties ) => {
+		const reorderedPlans = planProperties.filter( properties => {
 			if ( isFreePlan( properties.planName ) ) {
 				freePlanProperties = properties;
 				return false;
@@ -122,7 +123,7 @@ class PlanFeatures extends Component {
 			reorderedPlans.push( freePlanProperties );
 		}
 
-		return map( reorderedPlans, ( properties ) => {
+		return map( reorderedPlans, properties => {
 			const {
 				available,
 				currencyCode,
@@ -136,7 +137,7 @@ class PlanFeatures extends Component {
 				relatedMonthlyPlan,
 				primaryUpgrade,
 				isPlaceholder,
-				hideMonthly
+				hideMonthly,
 			} = properties;
 			const { rawPrice, discountPrice } = properties;
 			return (
@@ -167,19 +168,16 @@ class PlanFeatures extends Component {
 						className={ getPlanClass( planName ) }
 						current={ current }
 						primaryUpgrade={ primaryUpgrade }
-						available = { available }
+						available={ available }
 						onUpgradeClick={ onUpgradeClick }
 						freePlan={ isFreePlan( planName ) }
 						isPlaceholder={ isPlaceholder }
 						isInSignup={ isInSignup }
 						isLandingPage={ isLandingPage }
-						isPopular = { popular }
-						planName ={ planConstantObj.getTitle() }
+						isPopular={ popular }
+						planName={ planConstantObj.getTitle() }
 					/>
-					<FoldableCard
-						header={ translate( 'Show features' ) }
-						clickableHeader
-						compact>
+					<FoldableCard header={ translate( 'Show features' ) } clickableHeader compact>
 						{ this.renderMobileFeatures( features ) }
 					</FoldableCard>
 				</div>
@@ -196,7 +194,7 @@ class PlanFeatures extends Component {
 	renderPlanHeaders() {
 		const { planProperties, intervalType, site, basePlansPath, isInSignup } = this.props;
 
-		return map( planProperties, ( properties ) => {
+		return map( planProperties, properties => {
 			const {
 				currencyCode,
 				current,
@@ -206,7 +204,7 @@ class PlanFeatures extends Component {
 				newPlan,
 				relatedMonthlyPlan,
 				isPlaceholder,
-				hideMonthly
+				hideMonthly,
 			} = properties;
 			const { rawPrice, discountPrice } = properties;
 			const classes = classNames( 'plan-features__table-item', 'has-border-top' );
@@ -239,24 +237,16 @@ class PlanFeatures extends Component {
 	renderPlanDescriptions() {
 		const { planProperties } = this.props;
 
-		return map( planProperties, ( properties ) => {
-			const {
-				planName,
-				planConstantObj,
-				isPlaceholder
-			} = properties;
+		return map( planProperties, properties => {
+			const { planName, planConstantObj, isPlaceholder } = properties;
 
 			const classes = classNames( 'plan-features__table-item', {
-				'is-placeholder': isPlaceholder
+				'is-placeholder': isPlaceholder,
 			} );
 
 			return (
 				<td key={ planName } className={ classes }>
-					{
-						isPlaceholder
-							? <SpinnerLine />
-							: null
-					}
+					{ isPlaceholder ? <SpinnerLine /> : null }
 
 					<p className="plan-features__description">
 						{ planConstantObj.getDescription( abtest ) }
@@ -269,7 +259,7 @@ class PlanFeatures extends Component {
 	renderTopButtons() {
 		const { canPurchase, isLandingPage, planProperties, isInSignup, site } = this.props;
 
-		return map( planProperties, ( properties ) => {
+		return map( planProperties, properties => {
 			const {
 				available,
 				current,
@@ -284,7 +274,7 @@ class PlanFeatures extends Component {
 			const classes = classNames(
 				'plan-features__table-item',
 				'has-border-bottom',
-				'is-top-buttons'
+				'is-top-buttons',
 			);
 
 			return (
@@ -293,13 +283,13 @@ class PlanFeatures extends Component {
 						canPurchase={ canPurchase }
 						className={ getPlanClass( planName ) }
 						current={ current }
-						available = { available }
+						available={ available }
 						primaryUpgrade={ primaryUpgrade }
-						planName ={ planConstantObj.getTitle() }
+						planName={ planConstantObj.getTitle() }
 						onUpgradeClick={ onUpgradeClick }
 						freePlan={ isFreePlan( planName ) }
 						isPlaceholder={ isPlaceholder }
-						isPopular = { popular }
+						isPopular={ popular }
 						isInSignup={ isInSignup }
 						isLandingPage={ isLandingPage }
 						manageHref={ `/plans/my-plan/${ site.slug }` }
@@ -312,12 +302,14 @@ class PlanFeatures extends Component {
 	getLongestFeaturesList() {
 		const { planProperties } = this.props;
 
-		return reduce( planProperties, ( longest, properties ) => {
-			const currentFeatures = Object.keys( properties.features );
-			return currentFeatures.length > longest.length
-				? currentFeatures
-				: longest;
-		}, [] );
+		return reduce(
+			planProperties,
+			( longest, properties ) => {
+				const currentFeatures = Object.keys( properties.features );
+				return currentFeatures.length > longest.length ? currentFeatures : longest;
+			},
+			[],
+		);
 	}
 
 	renderPlanFeatureRows() {
@@ -333,14 +325,10 @@ class PlanFeatures extends Component {
 
 	renderFeatureItem( feature, index ) {
 		const description = feature.getDescription
-					? feature.getDescription( abtest, this.props.domainName )
-					: null;
+			? feature.getDescription( abtest, this.props.domainName )
+			: null;
 		return (
-			<PlanFeaturesItem
-				key={ index }
-				description={ description }
-				hideInfoPopover={ false }
-			>
+			<PlanFeaturesItem key={ index } description={ description } hideInfoPopover={ false }>
 				<span className="plan-features__item-info">
 					<span className="plan-features__item-title">{ feature.getTitle() }</span>
 				</span>
@@ -349,16 +337,10 @@ class PlanFeatures extends Component {
 	}
 
 	renderPlanFeatureColumns( rowIndex ) {
-		const {
-			planProperties,
-			selectedFeature
-		} = this.props;
+		const { planProperties, selectedFeature } = this.props;
 
-		return map( planProperties, ( properties ) => {
-			const {
-				features,
-				planName
-			} = properties;
+		return map( planProperties, properties => {
+			const { features, planName } = properties;
 
 			const featureKeys = Object.keys( features ),
 				key = featureKeys[ rowIndex ],
@@ -366,24 +348,23 @@ class PlanFeatures extends Component {
 
 			const classes = classNames( 'plan-features__table-item', getPlanClass( planName ), {
 				'has-partial-border': rowIndex + 1 < featureKeys.length,
-				'is-highlighted': selectedFeature && currentFeature &&
-					selectedFeature === currentFeature.getSlug()
+				'is-highlighted': selectedFeature &&
+					currentFeature &&
+					selectedFeature === currentFeature.getSlug(),
 			} );
 
-			return (
-				currentFeature
-					? <td key={ `${ planName }-${ key }` } className={ classes }>
+			return currentFeature
+				? <td key={ `${ planName }-${ key }` } className={ classes }>
 						{ this.renderFeatureItem( currentFeature ) }
 					</td>
-					: <td key={ `${ planName }-none` } className="plan-features__table-item"></td>
-			);
+				: <td key={ `${ planName }-none` } className="plan-features__table-item" />;
 		} );
 	}
 
 	renderBottomButtons() {
 		const { canPurchase, planProperties, isInSignup, isLandingPage, site } = this.props;
 
-		return map( planProperties, ( properties ) => {
+		return map( planProperties, properties => {
 			const {
 				available,
 				current,
@@ -397,7 +378,7 @@ class PlanFeatures extends Component {
 			const classes = classNames(
 				'plan-features__table-item',
 				'has-border-bottom',
-				'is-bottom-buttons'
+				'is-bottom-buttons',
 			);
 			return (
 				<td key={ planName } className={ classes }>
@@ -405,15 +386,15 @@ class PlanFeatures extends Component {
 						canPurchase={ canPurchase }
 						className={ getPlanClass( planName ) }
 						current={ current }
-						available = { available }
+						available={ available }
 						primaryUpgrade={ primaryUpgrade }
-						planName ={ planConstantObj.getTitle() }
+						planName={ planConstantObj.getTitle() }
 						onUpgradeClick={ onUpgradeClick }
 						freePlan={ isFreePlan( planName ) }
 						isPlaceholder={ isPlaceholder }
 						isInSignup={ isInSignup }
 						isLandingPage={ isLandingPage }
-						isPopular = { popular }
+						isPopular={ popular }
 						manageHref={ `/plans/my-plan/${ site.slug }` }
 					/>
 				</td>
@@ -437,7 +418,7 @@ PlanFeatures.propTypes = {
 	basePlansPath: PropTypes.string,
 	selectedFeature: PropTypes.string,
 	intervalType: PropTypes.string,
-	site: PropTypes.object
+	site: PropTypes.object,
 };
 
 PlanFeatures.defaultProps = {
@@ -445,7 +426,7 @@ PlanFeatures.defaultProps = {
 	isInSignup: false,
 	basePlansPath: null,
 	intervalType: 'yearly',
-	site: {}
+	site: {},
 };
 
 export default connect(
@@ -457,7 +438,7 @@ export default connect(
 		const isPaid = isCurrentPlanPaid( state, selectedSiteId );
 		const canPurchase = ! isPaid || isCurrentUserCurrentPlanOwner( state, selectedSiteId );
 		const planProperties = compact(
-			map( plans, ( plan ) => {
+			map( plans, plan => {
 				let isPlaceholder = false;
 				const planConstantObj = applyTestFiltersToPlansList( plan, abtest );
 				const planProductId = planConstantObj.getProductId();
@@ -465,7 +446,9 @@ export default connect(
 				const isLoadingSitePlans = selectedSiteId && ! sitePlans.hasLoadedFromServer;
 				const showMonthly = ! isMonthly( plan );
 				const available = isInSignup ? true : canUpgradeToPlan( plan, site ) && canPurchase;
-				const relatedMonthlyPlan = showMonthly ? getPlanBySlug( state, getMonthlyPlanByYearly( plan ) ) : null;
+				const relatedMonthlyPlan = showMonthly
+					? getPlanBySlug( state, getMonthlyPlanByYearly( plan ) )
+					: null;
 				const popular = isPopular( plan ) && ! isPaid;
 				const newPlan = isNew( plan ) && ! isPaid;
 				const currentPlan = sitePlan && sitePlan.product_slug;
@@ -480,51 +463,45 @@ export default connect(
 					available: available,
 					currencyCode: getCurrentUserCurrencyCode( state ),
 					current: isCurrentSitePlan( state, selectedSiteId, planProductId ),
-					discountPrice: getPlanDiscountedRawPrice( state,
-						selectedSiteId,
-						plan,
-						{
-							isMonthly: showMonthlyPrice
-						} ),
+					discountPrice: getPlanDiscountedRawPrice( state, selectedSiteId, plan, {
+						isMonthly: showMonthlyPrice,
+					} ),
 					features: getPlanFeaturesObject( planConstantObj.getFeatures( abtest ) ),
 					onUpgradeClick: onUpgradeClick
 						? () => {
-							const planSlug = getPlanSlug( state, planProductId );
+								const planSlug = getPlanSlug( state, planProductId );
 
-							onUpgradeClick( getCartItemForPlan( planSlug ) );
-						}
-						: () => {
-							if ( ! available ) {
-								return;
+								onUpgradeClick( getCartItemForPlan( planSlug ) );
 							}
+						: () => {
+								if ( ! available ) {
+									return;
+								}
 
-							const selectedSiteSlug = getSiteSlug( state, selectedSiteId );
-							page( `/checkout/${ selectedSiteSlug }/${ getPlanPath( plan ) || '' }` );
-						},
+								const selectedSiteSlug = getSiteSlug( state, selectedSiteId );
+								page( `/checkout/${ selectedSiteSlug }/${ getPlanPath( plan ) || '' }` );
+							},
 					planConstantObj,
 					planName: plan,
 					planObject: planObject,
 					popular: popular,
 					newPlan: newPlan,
 					hideMonthly: false,
-					primaryUpgrade: (
-						( currentPlan === PLAN_PERSONAL && plan === PLAN_PREMIUM ) ||
+					primaryUpgrade: ( ( currentPlan === PLAN_PERSONAL && plan === PLAN_PREMIUM ) ||
 						( currentPlan === PLAN_PREMIUM && plan === PLAN_BUSINESS ) ||
-						popular,
-						newPlan
-					),
+						popular, newPlan ),
 					rawPrice: getPlanRawPrice( state, planProductId, showMonthlyPrice ),
-					relatedMonthlyPlan: relatedMonthlyPlan
+					relatedMonthlyPlan: relatedMonthlyPlan,
 				};
-			} )
+			} ),
 		);
 
 		return {
 			canPurchase,
-			planProperties
+			planProperties,
 		};
 	},
 	{
-		recordTracksEvent
-	}
+		recordTracksEvent,
+	},
 )( localize( PlanFeatures ) );

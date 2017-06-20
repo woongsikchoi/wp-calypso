@@ -6,11 +6,7 @@ import { expect } from 'chai';
 /**
  * Internal dependencies
  */
-import {
-	productsRequest,
-	productsRequestSuccess,
-	productsRequestFailure,
-} from '../reducer';
+import { productsRequest, productsRequestSuccess, productsRequestFailure } from '../reducer';
 
 import {
 	WOOCOMMERCE_PRODUCTS_REQUEST,
@@ -103,7 +99,7 @@ describe( 'reducer', () => {
 				type: WOOCOMMERCE_PRODUCTS_REQUEST_FAILURE,
 				siteId: 123,
 				page: 1,
-				error: {}
+				error: {},
 			};
 
 			const newState = productsRequestFailure( { isLoading: { 1: true } }, action );

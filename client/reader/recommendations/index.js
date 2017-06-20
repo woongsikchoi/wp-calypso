@@ -32,9 +32,9 @@ export default function() {
 			path => {
 				page.apply(
 					page,
-					[ path, preloadReaderBundle, updateLastRoute, sidebar, recommendedPosts ]
+					[ path, preloadReaderBundle, updateLastRoute, sidebar, recommendedPosts ],
 				);
-			}
+			},
 		);
 	}
 }

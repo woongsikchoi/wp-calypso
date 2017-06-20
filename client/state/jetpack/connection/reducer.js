@@ -12,10 +12,10 @@ import {
 } from 'state/action-types';
 import { combineReducers, createReducer } from 'state/utils';
 
-const createRequestReducer = ( requesting ) => {
+const createRequestReducer = requesting => {
 	return ( state, { siteId } ) => ( {
 		...state,
-		[ siteId ]: requesting
+		[ siteId ]: requesting,
 	} );
 };
 
@@ -27,9 +27,13 @@ const createRequestReducer = ( requesting ) => {
  * @param  {Object} action action
  * @return {Array}         Updated state
  */
-export const items = createReducer( {}, {
-	[ JETPACK_CONNECTION_STATUS_RECEIVE ]: ( state, { siteId, status } ) => Object.assign( {}, state, { [ siteId ]: status } )
-} );
+export const items = createReducer(
+	{},
+	{
+		[ JETPACK_CONNECTION_STATUS_RECEIVE ]: ( state, { siteId, status } ) =>
+			Object.assign( {}, state, { [ siteId ]: status } ),
+	},
+);
 
 /**
  * `Reducer` function which handles request/response actions
@@ -39,20 +43,26 @@ export const items = createReducer( {}, {
  * @param {Object} action - action
  * @return {Object} updated state
  */
-export const requests = createReducer( {}, {
-	[ JETPACK_CONNECTION_STATUS_REQUEST ]: createRequestReducer( true ),
-	[ JETPACK_CONNECTION_STATUS_REQUEST_FAILURE ]: createRequestReducer( false ),
-	[ JETPACK_CONNECTION_STATUS_REQUEST_SUCCESS ]: createRequestReducer( false )
-} );
+export const requests = createReducer(
+	{},
+	{
+		[ JETPACK_CONNECTION_STATUS_REQUEST ]: createRequestReducer( true ),
+		[ JETPACK_CONNECTION_STATUS_REQUEST_FAILURE ]: createRequestReducer( false ),
+		[ JETPACK_CONNECTION_STATUS_REQUEST_SUCCESS ]: createRequestReducer( false ),
+	},
+);
 
-export const disconnectRequests = createReducer( {}, {
-	[ JETPACK_DISCONNECT_REQUEST ]: createRequestReducer( true ),
-	[ JETPACK_DISCONNECT_REQUEST_FAILURE ]: createRequestReducer( false ),
-	[ JETPACK_DISCONNECT_REQUEST_SUCCESS ]: createRequestReducer( false )
-} );
+export const disconnectRequests = createReducer(
+	{},
+	{
+		[ JETPACK_DISCONNECT_REQUEST ]: createRequestReducer( true ),
+		[ JETPACK_DISCONNECT_REQUEST_FAILURE ]: createRequestReducer( false ),
+		[ JETPACK_DISCONNECT_REQUEST_SUCCESS ]: createRequestReducer( false ),
+	},
+);
 
 export const reducer = combineReducers( {
 	items,
 	requests,
-	disconnectRequests
+	disconnectRequests,
 } );

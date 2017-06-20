@@ -25,10 +25,10 @@ class QueryContactDetailsCache extends Component {
 
 QueryContactDetailsCache.propTypes = {
 	requesting: PropTypes.bool,
-	requestContactDetailsCache: PropTypes.func
+	requestContactDetailsCache: PropTypes.func,
 };
 
 export default connect(
-	( state ) => ( { requesting: isRequestingContactDetailsCache( state ) } ),
-	{ requestContactDetailsCache }
+	state => ( { requesting: isRequestingContactDetailsCache( state ) } ),
+	{ requestContactDetailsCache },
 )( QueryContactDetailsCache );

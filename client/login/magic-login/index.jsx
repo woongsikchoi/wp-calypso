@@ -18,10 +18,7 @@ import {
 	LINK_EXPIRED_PAGE,
 	REQUEST_FORM,
 } from 'state/login/magic-login/constants';
-import {
-	getMagicLoginEmailAddressFormInput,
-	getMagicLoginCurrentView,
-} from 'state/selectors';
+import { getMagicLoginEmailAddressFormInput, getMagicLoginCurrentView } from 'state/selectors';
 import { getCurrentQueryArguments } from 'state/ui/selectors';
 import {
 	hideMagicLoginRequestForm,
@@ -55,10 +52,7 @@ class MagicLogin extends React.Component {
 	};
 
 	magicLoginMainContent() {
-		const {
-			magicLoginView,
-			magicLoginEmailAddress,
-		} = this.props;
+		const { magicLoginView, magicLoginEmailAddress } = this.props;
 
 		switch ( magicLoginView ) {
 			case LINK_EXPIRED_PAGE:
@@ -74,10 +68,7 @@ class MagicLogin extends React.Component {
 	}
 
 	componentWillMount() {
-		const {
-			magicLoginEnabled,
-			queryArguments,
-		} = this.props;
+		const { magicLoginEnabled, queryArguments } = this.props;
 
 		if ( magicLoginEnabled && queryArguments && queryArguments.action === 'handleLoginEmail' ) {
 			this.props.showMagicLoginInterstitialPage();
@@ -85,31 +76,27 @@ class MagicLogin extends React.Component {
 	}
 
 	render() {
-		const {
-			magicLoginView,
-			translate,
-		} = this.props;
+		const { magicLoginView, translate } = this.props;
 		return (
-			<Main className={ {
-				'magic-login': true,
-				'magic-login__request_link': ! magicLoginView || magicLoginView === REQUEST_FORM,
-			} }>
+			<Main
+				className={ {
+					'magic-login': true,
+					'magic-login__request_link': ! magicLoginView || magicLoginView === REQUEST_FORM,
+				} }
+			>
 				<PageViewTracker path="/log-in/link" title="Login > Link" />
 
 				<GlobalNotices id="notices" notices={ notices.list } />
 
-				{ this.magicLoginMainContent() || (
+				{ this.magicLoginMainContent() ||
 					<div>
 						<RequestLoginEmailForm />
 						<div className="magic-login__footer">
-							<a href="#"
-								key="enter-password-link"
-								onClick={ this.onClickEnterPasswordInstead }>
+							<a href="#" key="enter-password-link" onClick={ this.onClickEnterPasswordInstead }>
 								{ translate( 'Enter a password instead' ) }
 							</a>
 						</div>
-					</div>
-				) }
+					</div> }
 			</Main>
 		);
 	}

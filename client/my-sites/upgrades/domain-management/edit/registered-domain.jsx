@@ -17,7 +17,8 @@ import Property from './card/property';
 import SubscriptionSettings from './card/subscription-settings';
 import VerticalNav from 'components/vertical-nav';
 import VerticalNavItem from 'components/vertical-nav/item';
-import IcannVerificationCard from 'my-sites/upgrades/domain-management/components/icann-verification/icann-verification-card';
+import IcannVerificationCard
+	from 'my-sites/upgrades/domain-management/components/icann-verification/icann-verification-card';
 
 const RegisteredDomain = React.createClass( {
 	mixins: [ analyticsMixin( 'domainManagement', 'edit' ) ],
@@ -43,10 +44,8 @@ const RegisteredDomain = React.createClass( {
 	getLabel( { status, icon, message, href } ) {
 		return (
 			<a href={ href }>
-				<Notice
-					isCompact
-					status={ status }
-					icon={ icon }>{ message }
+				<Notice isCompact status={ status } icon={ icon }>
+					{ message }
 				</Notice>
 			</a>
 		);
@@ -64,8 +63,8 @@ const RegisteredDomain = React.createClass( {
 				status: 'is-warning',
 				icon: 'notice',
 				message: translate( 'Pending Transfer', {
-					context: 'An icon label when domain is pending transfer.'
-				} )
+					context: 'An icon label when domain is pending transfer.',
+				} ),
 			} );
 		}
 
@@ -76,8 +75,8 @@ const RegisteredDomain = React.createClass( {
 					icon: 'lock',
 					href: privacyPath,
 					message: translate( 'On', {
-						context: 'An icon label when Privacy Protection is enabled.'
-					} )
+						context: 'An icon label when Privacy Protection is enabled.',
+					} ),
 				} );
 			}
 
@@ -86,8 +85,8 @@ const RegisteredDomain = React.createClass( {
 				icon: 'notice',
 				href: transferPath,
 				message: translate( 'Disabled for Transfer', {
-					context: 'An icon label when Privacy Protection is temporarily disabled for transfer.'
-				} )
+					context: 'An icon label when Privacy Protection is temporarily disabled for transfer.',
+				} ),
 			} );
 		}
 
@@ -96,8 +95,8 @@ const RegisteredDomain = React.createClass( {
 			icon: 'notice',
 			href: privacyPath,
 			message: translate( 'None', {
-				context: 'An icon label when Privacy Protection is not purchased by the user.'
-			} )
+				context: 'An icon label when Privacy Protection is not purchased by the user.',
+			} ),
 		} );
 	},
 
@@ -106,19 +105,22 @@ const RegisteredDomain = React.createClass( {
 	},
 
 	domainWarnings() {
-		return <DomainWarnings
-			domain={ this.props.domain }
-			selectedSite={ this.props.selectedSite }
-			ruleWhiteList={ [
-				'expiredDomainsCanManage',
-				'expiringDomainsCanManage',
-				'newDomainsWithPrimary',
-				'newDomains',
-				'pendingGappsTosAcceptanceDomains',
-				'expiredDomainsCannotManage',
-				'expiringDomainsCannotManage',
-				'pendingTransfer'
-			] } />;
+		return (
+			<DomainWarnings
+				domain={ this.props.domain }
+				selectedSite={ this.props.selectedSite }
+				ruleWhiteList={ [
+					'expiredDomainsCanManage',
+					'expiringDomainsCanManage',
+					'newDomainsWithPrimary',
+					'newDomains',
+					'pendingGappsTosAcceptanceDomains',
+					'expiredDomainsCannotManage',
+					'expiringDomainsCannotManage',
+					'pendingTransfer',
+				] }
+			/>
+		);
 	},
 
 	getVerticalNav() {
@@ -139,7 +141,7 @@ const RegisteredDomain = React.createClass( {
 	emailNavItem() {
 		const path = paths.domainManagementEmail(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -152,7 +154,7 @@ const RegisteredDomain = React.createClass( {
 	nameServersNavItem() {
 		const path = paths.domainManagementNameServers(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -165,7 +167,7 @@ const RegisteredDomain = React.createClass( {
 	contactsPrivacyNavItem() {
 		const path = paths.domainManagementContactsPrivacy(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -178,7 +180,7 @@ const RegisteredDomain = React.createClass( {
 	transferNavItem() {
 		const path = paths.domainManagementTransfer(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -212,17 +214,21 @@ const RegisteredDomain = React.createClass( {
 							{ this.getPrivacyProtection() }
 						</Property>
 
-						<SubscriptionSettings
-							onClick={ this.handlePaymentSettingsClick } />
+						<SubscriptionSettings onClick={ this.handlePaymentSettingsClick } />
 					</Card>
 
-					{ domain.isPendingIcannVerification && domain.currentUserCanManage && <IcannVerificationCard selectedDomainName={ domain.name } selectedSite={ this.props.selectedSite } /> }
+					{ domain.isPendingIcannVerification &&
+						domain.currentUserCanManage &&
+						<IcannVerificationCard
+							selectedDomainName={ domain.name }
+							selectedSite={ this.props.selectedSite }
+						/> }
 				</div>
 
 				{ this.getVerticalNav() }
 			</div>
 		);
-	}
+	},
 } );
 
 export default localize( RegisteredDomain );

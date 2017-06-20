@@ -4,14 +4,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
-import {
-	camelCase,
-	difference,
-	isEmpty,
-	keys,
-	map,
-	pick,
-} from 'lodash';
+import { camelCase, difference, isEmpty, keys, map, pick } from 'lodash';
 
 /**
  * Internal dependencies
@@ -33,18 +26,18 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 	static propTypes = {
 		contactDetailsExtra: PropTypes.object.isRequired,
 		translate: PropTypes.func.isRequired,
-	}
+	};
 
 	constructor( props ) {
 		super( props );
 		const { translate } = props;
 		const legalTypes = {
 			ABO: translate( 'Aboriginal', {
-				comment: 'Refers to indigenous peoples, specifically of Canada.'
+				comment: 'Refers to indigenous peoples, specifically of Canada.',
 			} ),
 			ASS: translate( 'Association (Unincorporated)', {
 				comment: 'Refers to Canadian legal concept -- encompasses entities ' +
-					'like religious congregations, social clubs, community groups, etc'
+					'like religious congregations, social clubs, community groups, etc',
 			} ),
 			CCO: translate( 'Canadian Corporation' ),
 			CCT: translate( 'Canadian Citizen' ),
@@ -54,13 +47,13 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 			INB: translate( 'Indian Band', {
 				comment: 'Refers to Canadian legal concept -- Indian meaning the ' +
 					'indigeonous people of North America and band meaning a small ' +
-					'group or community'
+					'group or community',
 			} ),
 			LAM: translate( 'Library, Archive, or Museum' ),
 			LGR: translate( 'Legal Representative' ),
 			MAJ: translate( 'Her Majesty the Queen' ),
 			OMK: translate( 'Official Mark', {
-				comment: 'Refers to a Canadian legal concept -- similar to a trademark'
+				comment: 'Refers to a Canadian legal concept -- similar to a trademark',
 			} ),
 			PLT: translate( 'Political Party' ),
 			PRT: translate( 'Partnership' ),
@@ -68,11 +61,12 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 			TDM: translate( 'Trademark Owner' ),
 			TRD: translate( 'Trade Union' ),
 			TRS: translate( 'Trust', {
-				comment: 'Refers to the legal concept of trust (noun)'
+				comment: 'Refers to the legal concept of trust (noun)',
 			} ),
 		};
-		const legalTypeOptions = map( legalTypes, ( text, optionValue ) =>
-			<option value={ optionValue } key={ optionValue }>{ text }</option>
+		const legalTypeOptions = map(
+			legalTypes,
+			( text, optionValue ) => <option value={ optionValue } key={ optionValue }>{ text }</option>,
 		);
 
 		this.state = {
@@ -95,28 +89,28 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 		}
 	}
 
-	handleChangeEvent = ( event ) => {
+	handleChangeEvent = event => {
 		const { target } = event;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		this.props.updateContactDetailsCache( {
 			extra: { [ camelCase( event.target.id ) ]: value },
 		} );
-	}
+	};
 
 	render() {
 		const { translate } = this.props;
 		const { legalTypeOptions } = this.state;
-		const {
-			legalType,
-			ciraAgreementAccepted,
-		} = { ...defaultValues, ...this.props.contactDetailsExtra };
+		const { legalType, ciraAgreementAccepted } = {
+			...defaultValues,
+			...this.props.contactDetailsExtra,
+		};
 
 		return (
 			<form className="registrant-extra-info__form">
 				<p className="registrant-extra-info__form-desciption">
 					{ translate(
 						'Almost done! We need some extra details to register your %(tld)s domain.',
-						{ args: { tld: '.ca' } }
+						{ args: { tld: '.ca' } },
 					) }
 				</p>
 				<FormFieldset>
@@ -127,7 +121,8 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 						id="legal-type"
 						value={ legalType }
 						className="registrant-extra-info__form-legal-type"
-						onChange={ this.handleChangeEvent }>
+						onChange={ this.handleChangeEvent }
+					>
 						{ legalTypeOptions }
 					</FormSelect>
 				</FormFieldset>
@@ -139,16 +134,15 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 						<FormCheckbox
 							id="cira-agreement-accepted"
 							value={ ciraAgreementAccepted }
-							onChange={ this.handleChangeEvent } />
-						<span>{
-							translate( 'I have read and agree to the {{a}}CIRA Registrant Agreement{{/a}}',
-								{
-									components: {
-										a: <a href={ ciraAgreementUrl } />,
-									},
-								}
-							)
-						}</span>
+							onChange={ this.handleChangeEvent }
+						/>
+						<span>
+							{ translate( 'I have read and agree to the {{a}}CIRA Registrant Agreement{{/a}}', {
+								components: {
+									a: <a href={ ciraAgreementUrl } />,
+								},
+							} ) }
+						</span>
 					</FormLabel>
 				</FormFieldset>
 
@@ -160,5 +154,5 @@ class RegistrantExtraInfoCaForm extends React.PureComponent {
 
 export default connect(
 	state => ( { contactDetailsExtra: getContactDetailsExtraCache( state ) } ),
-	{ updateContactDetailsCache }
+	{ updateContactDetailsCache },
 )( localize( RegistrantExtraInfoCaForm ) );

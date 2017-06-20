@@ -40,6 +40,6 @@ export const areSettingsGeneralLoading = ( state, siteId = getSelectedSiteId( st
  */
 export function getPaymentCurrencySettings( state, siteId = getSelectedSiteId( state ) ) {
 	const generalSettings = getRawGeneralSettings( state, siteId );
-	const currency = find( generalSettings, ( item ) => item.id === 'woocommerce_currency' );
+	const currency = find( generalSettings, item => item.id === 'woocommerce_currency' );
 	return currency || {};
 }

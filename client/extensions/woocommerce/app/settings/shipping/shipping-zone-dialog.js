@@ -24,18 +24,18 @@ class ShippingZoneDialog extends Component {
 		this.freeShippingDefaults = {
 			methodId: 'free',
 			everyone: true,
-			minSpend: 0
+			minSpend: 0,
 		};
 
 		this.localPickupDefaults = {
 			methodId: 'local',
 			price: 0,
-			taxable: false
+			taxable: false,
 		};
 
 		this.state = {
 			location: [],
-			shippingMethods: [ { ...this.freeShippingDefaults } ]
+			shippingMethods: [ { ...this.freeShippingDefaults } ],
 		};
 	}
 
@@ -57,7 +57,7 @@ class ShippingZoneDialog extends Component {
 			{ action: 'add', label: translate( 'Add zone' ), isPrimary: true },
 		];
 
-		const onLocationChange = ( location ) => {
+		const onLocationChange = location => {
 			this.setState( { location } );
 		};
 
@@ -70,15 +70,13 @@ class ShippingZoneDialog extends Component {
 		const renderShippingMethod = ( method, index ) => {
 			const { methodId } = method;
 
-			const onMethodChange = ( event ) => {
+			const onMethodChange = event => {
 				this.changeShippingMethod( index, event.target.value );
 			};
 
 			return (
 				<div key={ index }>
-					<FormSelect
-						value={ methodId }
-						onChange={ onMethodChange } >
+					<FormSelect value={ methodId } onChange={ onMethodChange }>
 						<option value="free">{ translate( 'Free shipping' ) }</option>
 						<option value="local">{ translate( 'Local pickup' ) }</option>
 					</FormSelect>
@@ -94,26 +92,28 @@ class ShippingZoneDialog extends Component {
 				additionalClassNames="shipping__zone-dialog woocommerce"
 				isVisible={ isVisible }
 				buttons={ buttons }
-				onClose={ onClose } >
+				onClose={ onClose }
+			>
 				<div className="shipping__zone-dialog-header">{ translate( 'Add new shipping zone' ) }</div>
 				<FormFieldSet>
 					<FormLabel htmlFor="zone-name">{ translate( 'Shipping zone name' ) }</FormLabel>
 					<FormTextInput
 						name="zone-name"
-						placeholder={ translate( 'For your reference only, the customer will not see this' ) } />
+						placeholder={ translate( 'For your reference only, the customer will not see this' ) }
+					/>
 				</FormFieldSet>
 				<FormFieldSet>
 					<FormLabel>{ translate( 'Shipping location' ) }</FormLabel>
-					<TokenField
-						value={ this.state.location }
-						onChange={ onLocationChange } />
+					<TokenField value={ this.state.location } onChange={ onLocationChange } />
 				</FormFieldSet>
 				<div>
 					<FormLabel>{ translate( 'Shipping method' ) }</FormLabel>
 					{ this.state.shippingMethods.map( renderShippingMethod ) }
 				</div>
 				<FormFieldSet>
-					<Button compact onClick={ addMethod }>{ translate( 'Add another shipping method' ) }</Button>
+					<Button compact onClick={ addMethod }>
+						{ translate( 'Add another shipping method' ) }
+					</Button>
 				</FormFieldSet>
 			</Dialog>
 		);
@@ -122,7 +122,7 @@ class ShippingZoneDialog extends Component {
 
 ShippingZoneDialog.propTypes = {
 	isVisible: PropTypes.bool,
-	onClose: PropTypes.func
+	onClose: PropTypes.func,
 };
 
 export default localize( ShippingZoneDialog );

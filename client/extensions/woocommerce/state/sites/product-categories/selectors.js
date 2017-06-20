@@ -11,7 +11,11 @@ import { get, isArray } from 'lodash';
  * @return {Array} List of product categories
  */
 export function getProductCategories( state, siteId ) {
-	const categories = get( state, [ 'extensions', 'woocommerce', 'sites', siteId, 'productCategories' ], [] );
+	const categories = get(
+		state,
+		[ 'extensions', 'woocommerce', 'sites', siteId, 'productCategories' ],
+		[],
+	);
 	if ( ! isArray( categories ) ) {
 		return [];
 	}

@@ -9,9 +9,7 @@ import { spy, match } from 'sinon';
  */
 import { createProduct } from 'woocommerce/state/sites/products/actions';
 import { handleProductCreate } from '../';
-import {
-	WOOCOMMERCE_API_REQUEST,
-} from 'woocommerce/state/action-types';
+import { WOOCOMMERCE_API_REQUEST } from 'woocommerce/state/action-types';
 
 describe( 'handlers', () => {
 	describe( '#handleProductCreate', () => {
@@ -35,9 +33,8 @@ describe( 'handlers', () => {
 					onSuccessAction: successAction,
 					onFailureAction: failureAction,
 					body: { name: 'Product #1', type: 'simple' },
-				} )
+				} ),
 			);
 		} );
 	} );
 } );
-

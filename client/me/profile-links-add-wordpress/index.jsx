@@ -16,7 +16,6 @@ import eventRecorder from 'me/event-recorder';
 const sites = sitesFactory();
 
 export default React.createClass( {
-
 	displayName: 'ProfileLinksAddWordPress',
 
 	mixins: [ eventRecorder ],
@@ -63,7 +62,7 @@ export default React.createClass( {
 				site = sites.getSite( siteID );
 				links.push( {
 					title: site.name,
-					value: site.URL
+					value: site.URL,
 				} );
 			}
 		}
@@ -90,18 +89,14 @@ export default React.createClass( {
 
 	onSubmitResponse( error, data ) {
 		if ( error ) {
-			this.setState(
-				{
-					lastError: this.translate( 'Unable to add any links right now. Please try again later.' )
-				}
-			);
+			this.setState( {
+				lastError: this.translate( 'Unable to add any links right now. Please try again later.' ),
+			} );
 			return;
 		} else if ( data.malformed ) {
-			this.setState(
-				{
-					lastError: this.translate( 'An unexpected error occurred. Please try again later.' )
-				}
-			);
+			this.setState( {
+				lastError: this.translate( 'An unexpected error occurred. Please try again later.' ),
+			} );
 			return;
 		} else if ( data.duplicate ) {
 			// our links are probably out of date, let's initiate a refresh of our parent
@@ -113,7 +108,7 @@ export default React.createClass( {
 
 	clearLastError() {
 		this.setState( {
-			lastError: false
+			lastError: false,
 		} );
 	},
 
@@ -126,42 +121,43 @@ export default React.createClass( {
 			<Notice
 				className="profile-links-add-wordpress__error"
 				status="is-error"
-				onDismissClick={ this.clearLastError }>
+				onDismissClick={ this.clearLastError }
+			>
 				{ this.state.lastError }
 			</Notice>
 		);
 	},
 
 	renderAddableSites() {
-		return (
-			sites.getPublic().map( ( site ) => {
-				const inputName = 'site-' + site.ID;
-				const checkedState = this.state[ inputName ];
+		return sites.getPublic().map( site => {
+			const inputName = 'site-' + site.ID;
+			const checkedState = this.state[ inputName ];
 
-				if ( this.props.userProfileLinks.isSiteInProfileLinks( site ) ) {
-					return null;
-				}
+			if ( this.props.userProfileLinks.isSiteInProfileLinks( site ) ) {
+				return null;
+			}
 
-				return (
-					<li
-						key={ site.ID }
-						className="profile-links-add-wordpress__item"
-						onClick={ this.recordCheckboxEvent( 'Add WordPress Site' ) }
-					>
-						<input
-							className="profile-links-add-wordpress__checkbox"
-							type="checkbox"
-							name={ inputName }
-							onChange={ this.handleCheckedChanged }
-							checked={ checkedState } />
-						<Site
-							site={ site }
-							indicator={ false }
-							onSelect={ this.onSelect.bind( this, inputName ) } />
-					</li>
-				);
-			} )
-		);
+			return (
+				<li
+					key={ site.ID }
+					className="profile-links-add-wordpress__item"
+					onClick={ this.recordCheckboxEvent( 'Add WordPress Site' ) }
+				>
+					<input
+						className="profile-links-add-wordpress__checkbox"
+						type="checkbox"
+						name={ inputName }
+						onChange={ this.handleCheckedChanged }
+						checked={ checkedState }
+					/>
+					<Site
+						site={ site }
+						indicator={ false }
+						onSelect={ this.onSelect.bind( this, inputName ) }
+					/>
+				</li>
+			);
+		} );
 	},
 
 	renderAddableSitesForm() {
@@ -177,7 +173,7 @@ export default React.createClass( {
 				</ul>
 				{ this.possiblyRenderError() }
 				<FormButton
-					disabled={ ( 0 === checkedCount ) ? true : false }
+					disabled={ 0 === checkedCount ? true : false }
 					onClick={ this.recordClickEvent( 'Add WordPress Sites Button' ) }
 				>
 					{ this.translate( 'Add Site', 'Add Sites', { count: checkedCount } ) }
@@ -197,26 +193,32 @@ export default React.createClass( {
 		return (
 			<form>
 				<p>
-					{
-						this.translate(
-							'You have no public sites on WordPress.com yet, but if you like you ' +
+					{ this.translate(
+						'You have no public sites on WordPress.com yet, but if you like you ' +
 							'can create one now.  You may also add self-hosted WordPress ' +
 							'sites here after installing {{jetpackLink}}Jetpack{{/jetpackLink}} on them.',
-							{
-								components: {
-									jetpackLink: <a
-													href="#"
-													className="profile-links-add-wordpress__jetpack-link"
-													onClick={ this.recordClickEvent( 'Jetpack Link in Profile Links', this.onJetpackMe ) }
-												/>
-								}
-							}
-						)
-					}
+						{
+							components: {
+								jetpackLink: (
+									<a
+										href="#"
+										className="profile-links-add-wordpress__jetpack-link"
+										onClick={ this.recordClickEvent(
+											'Jetpack Link in Profile Links',
+											this.onJetpackMe,
+										) }
+									/>
+								),
+							},
+						},
+					) }
 				</p>
 				<FormButton
-					onClick={ this.recordClickEvent( 'Create Sites Button in Profile Links', this.onCreateSite ) }
-					>
+					onClick={ this.recordClickEvent(
+						'Create Sites Button in Profile Links',
+						this.onCreateSite,
+					) }
+				>
 					{ this.translate( 'Create Site' ) }
 				</FormButton>
 				<FormButton
@@ -233,8 +235,10 @@ export default React.createClass( {
 	render() {
 		return (
 			<div>
-				{ 0 === sites.getPublic().length ? this.renderInvitationForm() : this.renderAddableSitesForm() }
+				{ 0 === sites.getPublic().length
+					? this.renderInvitationForm()
+					: this.renderAddableSitesForm() }
 			</div>
 		);
-	}
+	},
 } );

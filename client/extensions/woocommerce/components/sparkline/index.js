@@ -13,7 +13,6 @@ import { line as d3Line } from 'd3-shape';
  */
 
 export default class Sparkline extends Component {
-
 	static propTypes = {
 		aspectRatio: PropTypes.number,
 		className: PropTypes.string,
@@ -54,7 +53,7 @@ export default class Sparkline extends Component {
 		delete this.node;
 	}
 
-	setNodeRef = ( node ) => {
+	setNodeRef = node => {
 		this.node = node;
 	};
 
@@ -62,16 +61,19 @@ export default class Sparkline extends Component {
 		const { aspectRatio, data, margin } = this.props;
 		const newWidth = this.node.offsetWidth;
 		const newHeight = newWidth / aspectRatio;
-		this.setState( {
-			width: newWidth,
-			height: newHeight,
-			xScale: d3ScaleLinear()
-				.domain( d3Extent( data, ( d, i ) => i ) )
-				.range( [ margin.left, newWidth - margin.right ] ),
-			yScale: d3ScaleLinear()
-				.domain( d3Extent( data, ( d ) => d ) )
-				.range( [ newHeight - margin.bottom, margin.top ] ),
-		}, this.redrawChart );
+		this.setState(
+			{
+				width: newWidth,
+				height: newHeight,
+				xScale: d3ScaleLinear()
+					.domain( d3Extent( data, ( d, i ) => i ) )
+					.range( [ margin.left, newWidth - margin.right ] ),
+				yScale: d3ScaleLinear()
+					.domain( d3Extent( data, d => d ) )
+					.range( [ newHeight - margin.bottom, margin.top ] ),
+			},
+			this.redrawChart,
+		);
 	};
 
 	redrawChart = () => {
@@ -89,20 +91,20 @@ export default class Sparkline extends Component {
 		}
 	};
 
-	drawSparkline = ( context ) => {
+	drawSparkline = context => {
 		const { xScale, yScale } = this.state;
-		const sparkline = d3Line()
-			.x( ( d, i ) => xScale( i ) )
-			.y( ( d ) => yScale( d ) );
-		return context.append( 'path' )
+		const sparkline = d3Line().x( ( d, i ) => xScale( i ) ).y( d => yScale( d ) );
+		return context
+			.append( 'path' )
 			.attr( 'class', 'sparkline__line' )
 			.attr( 'd', sparkline( this.props.data ) );
 	};
 
-	drawHighlight = ( context ) => {
+	drawHighlight = context => {
 		const { xScale, yScale } = this.state;
 		const { data, highlightIndex, highlightRadius } = this.props;
-		return context.append( 'circle' )
+		return context
+			.append( 'circle' )
 			.attr( 'class', 'sparkline__highlight' )
 			.attr( 'r', highlightRadius )
 			.attr( 'cx', xScale( highlightIndex ) )
@@ -111,11 +113,6 @@ export default class Sparkline extends Component {
 
 	render() {
 		const sparkClass = classNames( 'sparkline', this.props.className );
-		return (
-			<div
-				className={ sparkClass }
-				ref={ this.setNodeRef }
-			/>
-		);
+		return <div className={ sparkClass } ref={ this.setNodeRef } />;
 	}
 }

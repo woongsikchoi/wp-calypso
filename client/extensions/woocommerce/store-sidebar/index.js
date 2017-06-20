@@ -21,28 +21,32 @@ import StoreGroundControl from './store-ground-control';
 class StoreSidebar extends Component {
 	static propTypes = {
 		path: PropTypes.string.isRequired,
-		sidebarItems: PropTypes.arrayOf( PropTypes.shape( {
-			icon: PropTypes.string,
-			isPrimary: PropTypes.bool.isRequired,
-			label: PropTypes.string.isRequired,
-			parentSlug: PropTypes.string,
-			path: PropTypes.string.isRequired,
-			slug: PropTypes.string.isRequired,
-		} ) ),
-		sidebarItemButtons: PropTypes.arrayOf( PropTypes.shape( {
-			label: PropTypes.string.isRequired,
-			parentSlug: PropTypes.string.isRequired,
-			path: PropTypes.string.isRequired,
-			slug: PropTypes.string.isRequired,
-		} ) ),
+		sidebarItems: PropTypes.arrayOf(
+			PropTypes.shape( {
+				icon: PropTypes.string,
+				isPrimary: PropTypes.bool.isRequired,
+				label: PropTypes.string.isRequired,
+				parentSlug: PropTypes.string,
+				path: PropTypes.string.isRequired,
+				slug: PropTypes.string.isRequired,
+			} ),
+		),
+		sidebarItemButtons: PropTypes.arrayOf(
+			PropTypes.shape( {
+				label: PropTypes.string.isRequired,
+				parentSlug: PropTypes.string.isRequired,
+				path: PropTypes.string.isRequired,
+				slug: PropTypes.string.isRequired,
+			} ),
+		),
 		site: PropTypes.object,
-	}
+	};
 
 	onNavigate = () => {
 		window.scrollTo( 0, 0 );
-	}
+	};
 
-	isItemLinkSelected = ( paths ) => {
+	isItemLinkSelected = paths => {
 		if ( ! Array.isArray( paths ) ) {
 			paths = [ paths ];
 		}
@@ -50,25 +54,27 @@ class StoreSidebar extends Component {
 		return paths.some( function( path ) {
 			return path === this.props.path || 0 === this.props.path.indexOf( path + '/' );
 		}, this );
-	}
+	};
 
 	renderSidebarMenuItems = ( items, buttons, isDisabled ) => {
 		const { site } = this.props;
 
 		return items.map( function( item, index ) {
-			const isChild = ( 'undefined' !== typeof item.parentSlug );
+			const isChild = 'undefined' !== typeof item.parentSlug;
 			const itemLink = getLink( item.path, site );
-			const itemButton = buttons.filter( button => button.parentSlug === item.slug ).map( button => {
-				return (
-					<SidebarButton
-						disabled={ isDisabled }
-						href={ getLink( button.path, site ) }
-						key={ button.slug }
-					>
-						{ button.label }
-					</SidebarButton>
-				);
-			} );
+			const itemButton = buttons
+				.filter( button => button.parentSlug === item.slug )
+				.map( button => {
+					return (
+						<SidebarButton
+							disabled={ isDisabled }
+							href={ getLink( button.path, site ) }
+							key={ button.slug }
+						>
+							{ button.label }
+						</SidebarButton>
+					);
+				} );
 
 			// If this item has a parentSlug, only render it if 1) the parent is
 			// currently selected, 2) it is currently selected, or 3) any of its
@@ -95,14 +101,12 @@ class StoreSidebar extends Component {
 			} );
 
 			// Build the classnames for the item
-			const itemClasses = classNames( item.slug,
-				{
-					'has-selected-child': this.isItemLinkSelected( childLinks ),
-					'is-child-item': isChild,
-					'is-placeholder': isDisabled,
-					selected: this.isItemLinkSelected( itemLink ),
-				}
-			);
+			const itemClasses = classNames( item.slug, {
+				'has-selected-child': this.isItemLinkSelected( childLinks ),
+				'is-child-item': isChild,
+				'is-placeholder': isDisabled,
+				selected: this.isItemLinkSelected( itemLink ),
+			} );
 
 			// Render the item
 			return (
@@ -115,11 +119,11 @@ class StoreSidebar extends Component {
 					onNavigate={ this.onNavigate }
 					preloadSectionName={ item.slug }
 				>
-				{ itemButton }
+					{ itemButton }
 				</SidebarItem>
 			);
 		}, this );
-	}
+	};
 
 	render = () => {
 		const { sidebarItems, sidebarItemButtons, site } = this.props;
@@ -129,19 +133,27 @@ class StoreSidebar extends Component {
 				<StoreGroundControl site={ site } />
 				<SidebarMenu>
 					<ul>
-						{ this.renderSidebarMenuItems( sidebarItems.filter( item => item.isPrimary ), sidebarItemButtons, ! site ) }
+						{ this.renderSidebarMenuItems(
+							sidebarItems.filter( item => item.isPrimary ),
+							sidebarItemButtons,
+							! site,
+						) }
 						<SidebarSeparator />
-						{ this.renderSidebarMenuItems( sidebarItems.filter( item => ! item.isPrimary ), sidebarItemButtons, ! site ) }
+						{ this.renderSidebarMenuItems(
+							sidebarItems.filter( item => ! item.isPrimary ),
+							sidebarItemButtons,
+							! site,
+						) }
 					</ul>
 				</SidebarMenu>
 			</Sidebar>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
 	return {
-		site: getSelectedSiteWithFallback( state )
+		site: getSelectedSiteWithFallback( state ),
 	};
 }
 

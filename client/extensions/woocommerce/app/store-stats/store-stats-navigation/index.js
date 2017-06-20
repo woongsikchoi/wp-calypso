@@ -47,7 +47,7 @@ const StoreStatsNavigation = props => {
 };
 
 StoreStatsNavigation.propTypes = {
-	slug: PropTypes.string
+	slug: PropTypes.string,
 };
 
 export default localize( StoreStatsNavigation );

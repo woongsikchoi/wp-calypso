@@ -1,4 +1,3 @@
-
 /**
  * Internal dependencies
  */
@@ -44,7 +43,7 @@ export function actionListStepAnnotate( stepIndex, annotations ) {
 	return {
 		type: WOOCOMMERCE_ACTION_LIST_ANNOTATE,
 		stepIndex,
-		annotations
+		annotations,
 	};
 }
 
@@ -92,4 +91,3 @@ export function actionListStepFailure( stepIndex, error, time ) {
 		time,
 	};
 }
-

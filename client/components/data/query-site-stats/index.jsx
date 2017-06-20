@@ -18,9 +18,11 @@ class QuerySiteStats extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( this.props.siteId === prevProps.siteId &&
-				this.props.statType === prevProps.statType &&
-				shallowEqual( this.props.query, prevProps.query ) ) {
+		if (
+			this.props.siteId === prevProps.siteId &&
+			this.props.statType === prevProps.statType &&
+			shallowEqual( this.props.query, prevProps.query )
+		) {
 			return;
 		}
 		this.request();
@@ -38,7 +40,7 @@ class QuerySiteStats extends Component {
 
 		this.props.requestSiteStats( siteId, statType, query );
 		this.clearInterval();
-		if ( heartbeat, isAutoRefreshAllowedForQuery( query ) ) {
+		if ( ( heartbeat, isAutoRefreshAllowedForQuery( query ) ) ) {
 			this.interval = setInterval( () => {
 				if ( ! this.props.requesting ) {
 					this.props.requestSiteStats( siteId, statType, query );
@@ -64,21 +66,26 @@ QuerySiteStats.propTypes = {
 	query: PropTypes.object,
 	requesting: PropTypes.bool.isRequired,
 	requestSiteStats: PropTypes.func.isRequired,
-	heartbeat: PropTypes.number
+	heartbeat: PropTypes.number,
 };
 
 QuerySiteStats.defaultProps = {
 	query: {},
-	heartbeat: 3 * 60 * 1000 // 3 minutes
+	heartbeat: 3 * 60 * 1000, // 3 minutes
 };
 
 export default connect(
 	( state, ownProps ) => {
 		return {
-			requesting: isRequestingSiteStatsForQuery( state, ownProps.siteId, ownProps.statType, ownProps.query )
+			requesting: isRequestingSiteStatsForQuery(
+				state,
+				ownProps.siteId,
+				ownProps.statType,
+				ownProps.query,
+			),
 		};
 	},
 	{
-		requestSiteStats
-	}
+		requestSiteStats,
+	},
 )( QuerySiteStats );

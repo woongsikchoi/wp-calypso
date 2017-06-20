@@ -10,9 +10,10 @@ import map from 'lodash/map';
 import ReaderSidebarTeamsListItem from './list-item';
 
 const renderItems = ( teams, path ) =>
-	map( teams, team => (
-		<ReaderSidebarTeamsListItem key={ team.slug } team={ team } path={ path } />
-	) );
+	map(
+		teams,
+		team => <ReaderSidebarTeamsListItem key={ team.slug } team={ team } path={ path } />,
+	);
 
 export class ReaderSidebarTeams extends Component {
 	static propTypes = {

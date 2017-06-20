@@ -51,12 +51,7 @@ class WPSuperCache extends Component {
 	}
 
 	render() {
-		const {
-			notices,
-			site,
-			siteId,
-			tab,
-		} = this.props;
+		const { notices, site, siteId, tab } = this.props;
 		const mainClassName = 'wp-super-cache__main';
 		const cacheDisabled = get( notices, 'cache_disabled' );
 		const cacheDisabledMessage = get( notices.cache_disabled, 'message' );
@@ -66,11 +61,7 @@ class WPSuperCache extends Component {
 				<QueryNotices siteId={ siteId } />
 
 				{ cacheDisabled &&
-				<Notice
-					showDismiss={ false }
-					status="is-error"
-					text={ cacheDisabledMessage } />
-				}
+					<Notice showDismiss={ false } status="is-error" text={ cacheDisabledMessage } /> }
 
 				<Navigation activeTab={ tab } site={ site } />
 				{ this.renderTab( !! cacheDisabled ) }
@@ -79,15 +70,13 @@ class WPSuperCache extends Component {
 	}
 }
 
-const connectComponent = connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
+const connectComponent = connect( state => {
+	const siteId = getSelectedSiteId( state );
 
-		return {
-			notices: getNotices( state, siteId ),
-			siteId,
-		};
-	}
-);
+	return {
+		notices: getNotices( state, siteId ),
+		siteId,
+	};
+} );
 
 export default connectComponent( WPSuperCache );

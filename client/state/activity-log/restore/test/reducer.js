@@ -7,15 +7,8 @@ import deepFreeze from 'deep-freeze';
 /**
  * Internal dependencies
  */
-import {
-	restoreError,
-	restoreProgress,
-} from '../reducer';
-import {
-    rewindCompleteRestore,
-    rewindRestore,
-    rewindRestoreUpdateError,
-} from '../../actions';
+import { restoreError, restoreProgress } from '../reducer';
+import { rewindCompleteRestore, rewindRestore, rewindRestoreUpdateError } from '../../actions';
 
 /**
  * Constants
@@ -54,7 +47,10 @@ describe( '#restoreProgress()', () => {
 			},
 		} );
 
-		const state = restoreProgress( prevState, rewindRestoreUpdateError( SITE_ID, TIMESTAMP, ERROR ) );
+		const state = restoreProgress(
+			prevState,
+			rewindRestoreUpdateError( SITE_ID, TIMESTAMP, ERROR ),
+		);
 		expect( state[ SITE_ID ] ).to.be.null;
 	} );
 
@@ -73,9 +69,7 @@ describe( '#restoreProgress()', () => {
 			restoreProgress( prevState, rewindRestore( SITE_ID, TIMESTAMP ) ),
 			restoreProgress( prevState, rewindCompleteRestore( SITE_ID, TIMESTAMP ) ),
 			restoreProgress( prevState, rewindRestoreUpdateError( SITE_ID, TIMESTAMP, ERROR ) ),
-		].forEach(
-			state => expect( state[ otherSiteId ] ).to.deep.equal( prevState[ otherSiteId ] )
-		);
+		].forEach( state => expect( state[ otherSiteId ] ).to.deep.equal( prevState[ otherSiteId ] ) );
 	} );
 } );
 
@@ -116,4 +110,3 @@ describe( '#restoreError()', () => {
 		expect( state[ otherSiteId ] ).to.deep.equal( prevState[ otherSiteId ] );
 	} );
 } );
-

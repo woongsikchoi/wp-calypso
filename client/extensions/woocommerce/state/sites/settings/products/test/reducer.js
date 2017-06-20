@@ -27,10 +27,7 @@ describe( 'reducer', () => {
 
 	it( 'should store data from the action', () => {
 		const siteId = 123;
-		const settings = [
-			{},
-			{},
-		];
+		const settings = [ {}, {} ];
 		const action = {
 			type: WOOCOMMERCE_SETTINGS_PRODUCTS_REQUEST_SUCCESS,
 			siteId,

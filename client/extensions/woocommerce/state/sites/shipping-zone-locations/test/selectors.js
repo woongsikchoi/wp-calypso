@@ -6,10 +6,7 @@ import { expect } from 'chai';
 /**
  * Internal dependencies
  */
-import {
-	areShippingZoneLocationsLoaded,
-	areShippingZoneLocationsLoading,
-} from '../selectors';
+import { areShippingZoneLocationsLoaded, areShippingZoneLocationsLoading } from '../selectors';
 import { LOADING } from 'woocommerce/state/constants';
 
 const zoneId = 7;

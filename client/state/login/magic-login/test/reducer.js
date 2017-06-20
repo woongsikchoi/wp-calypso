@@ -43,15 +43,17 @@ import reducer, {
 
 describe( 'reducer', () => {
 	it( 'should include expected keys in return value', () => {
-		expect( reducer( undefined, {} ) ).to.have.keys( [
-			'currentView',
-			'emailAddressFormInput',
-			'isFetchingEmail',
-			'requestAuthError',
-			'requestAuthSuccess',
-			'requestEmailError',
-			'requestEmailSuccess',
-		] );
+		expect( reducer( undefined, {} ) ).to.have.keys(
+			[
+				'currentView',
+				'emailAddressFormInput',
+				'isFetchingEmail',
+				'requestAuthError',
+				'requestAuthSuccess',
+				'requestEmailError',
+				'requestEmailSuccess',
+			],
+		);
 	} );
 
 	describe( 'emailAddressFormInput', () => {

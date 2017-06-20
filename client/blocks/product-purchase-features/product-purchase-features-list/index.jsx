@@ -19,7 +19,7 @@ import {
 	PLAN_JETPACK_BUSINESS,
 	PLAN_JETPACK_PREMIUM_MONTHLY,
 	PLAN_JETPACK_BUSINESS_MONTHLY,
-	PLAN_JETPACK_PERSONAL_MONTHLY
+	PLAN_JETPACK_PERSONAL_MONTHLY,
 } from 'lib/plans/constants';
 import FindNewTheme from './find-new-theme';
 import AdvertisingRemoved from './advertising-removed';
@@ -41,8 +41,9 @@ import { recordTracksEvent } from 'state/analytics/actions';
 
 class ProductPurchaseFeaturesList extends Component {
 	static propTypes = {
-		plan: PropTypes
-			.oneOf( [ PLAN_FREE,
+		plan: PropTypes.oneOf(
+			[
+				PLAN_FREE,
 				PLAN_PERSONAL,
 				PLAN_PREMIUM,
 				PLAN_BUSINESS,
@@ -53,20 +54,17 @@ class ProductPurchaseFeaturesList extends Component {
 				PLAN_JETPACK_PREMIUM_MONTHLY,
 				PLAN_JETPACK_PERSONAL,
 				PLAN_JETPACK_PERSONAL_MONTHLY,
-				] )
-			.isRequired,
-		isPlaceholder: PropTypes.bool
+			],
+		).isRequired,
+		isPlaceholder: PropTypes.bool,
 	};
 
 	static defaultProps = {
-		isPlaceholder: false
+		isPlaceholder: false,
 	};
 
 	getBusinessFeatures() {
-		const {
-			selectedSite,
-			planHasDomainCredit,
-		} = this.props;
+		const { selectedSite, planHasDomainCredit } = this.props;
 
 		return [
 			<CustomDomain
@@ -74,48 +72,24 @@ class ProductPurchaseFeaturesList extends Component {
 				hasDomainCredit={ planHasDomainCredit }
 				key="customDomainFeature"
 			/>,
-			<AdvertisingRemoved
-				isBusinessPlan
-				key="advertisingRemovedFeature"
-			/>,
-			<GoogleVouchers
-				selectedSite={ selectedSite }
-				key="googleVouchersFeature"
-			/>,
-			<CustomizeTheme
-				selectedSite={ selectedSite }
-				key="customizeThemeFeature"
-			/>,
+			<AdvertisingRemoved isBusinessPlan key="advertisingRemovedFeature" />,
+			<GoogleVouchers selectedSite={ selectedSite } key="googleVouchersFeature" />,
+			<CustomizeTheme selectedSite={ selectedSite } key="customizeThemeFeature" />,
 			<BusinessOnboarding
 				key="businessOnboarding"
 				onClick={ this.props.recordBusinessOnboardingClick }
 			/>,
-			<VideoAudioPosts
-				selectedSite={ selectedSite }
-				key="videoAudioPostsFeature"
-			/>,
-			<GoogleAnalyticsStats
-				selectedSite={ selectedSite }
-				key="googleAnalyticsStatsFeature"
-			/>,
-			<FindNewTheme
-				selectedSite={ selectedSite }
-				key="findNewThemeFeature"
-			/>,
+			<VideoAudioPosts selectedSite={ selectedSite } key="videoAudioPostsFeature" />,
+			<GoogleAnalyticsStats selectedSite={ selectedSite } key="googleAnalyticsStatsFeature" />,
+			<FindNewTheme selectedSite={ selectedSite } key="findNewThemeFeature" />,
 			isWordadsInstantActivationEligible( selectedSite )
-				? <MonetizeSite
-					selectedSite={ selectedSite }
-					key="monetizeSiteFeature"
-				/>
-				: null
+				? <MonetizeSite selectedSite={ selectedSite } key="monetizeSiteFeature" />
+				: null,
 		];
 	}
 
 	getPremiumFeatures() {
-		const {
-			selectedSite,
-			planHasDomainCredit
-		} = this.props;
+		const { selectedSite, planHasDomainCredit } = this.props;
 
 		return [
 			<CustomDomain
@@ -123,36 +97,18 @@ class ProductPurchaseFeaturesList extends Component {
 				hasDomainCredit={ planHasDomainCredit }
 				key="customDomainFeature"
 			/>,
-			<AdvertisingRemoved
-				isBusinessPlan={ false }
-				key="advertisingRemovedFeature"
-			/>,
-			<GoogleVouchers
-				selectedSite={ selectedSite }
-				key="googleVouchersFeature"
-			/>,
-			<CustomizeTheme
-				selectedSite={ selectedSite }
-				key="customizeThemeFeature"
-			/>,
-			<VideoAudioPosts
-				selectedSite={ selectedSite }
-				key="videoAudioPostsFeature"
-			/>,
+			<AdvertisingRemoved isBusinessPlan={ false } key="advertisingRemovedFeature" />,
+			<GoogleVouchers selectedSite={ selectedSite } key="googleVouchersFeature" />,
+			<CustomizeTheme selectedSite={ selectedSite } key="customizeThemeFeature" />,
+			<VideoAudioPosts selectedSite={ selectedSite } key="videoAudioPostsFeature" />,
 			isWordadsInstantActivationEligible( selectedSite )
-				? <MonetizeSite
-					selectedSite={ selectedSite }
-					key="monetizeSiteFeature"
-				/>
-				: null
+				? <MonetizeSite selectedSite={ selectedSite } key="monetizeSiteFeature" />
+				: null,
 		];
 	}
 
 	getPersonalFeatures() {
-		const {
-			selectedSite,
-			planHasDomainCredit
-		} = this.props;
+		const { selectedSite, planHasDomainCredit } = this.props;
 
 		return [
 			<CustomDomain
@@ -160,88 +116,49 @@ class ProductPurchaseFeaturesList extends Component {
 				hasDomainCredit={ planHasDomainCredit }
 				key="customDomainFeature"
 			/>,
-			<AdvertisingRemoved
-				isBusinessPlan={ false }
-				key="advertisingRemovedFeature"
-			/>
+			<AdvertisingRemoved isBusinessPlan={ false } key="advertisingRemovedFeature" />,
 		];
 	}
 
 	getJetpackFreeFeatures() {
-		const {	selectedSite } = this.props;
+		const { selectedSite } = this.props;
 
 		return [
-			<JetpackWordPressCom
-				selectedSite={ selectedSite }
-				key="jetpackWordPressCom"
-			/>,
-			<JetpackReturnToDashboard
-				selectedSite={ selectedSite }
-				key="jetpackReturnToDashboard"
-			/>
+			<JetpackWordPressCom selectedSite={ selectedSite } key="jetpackWordPressCom" />,
+			<JetpackReturnToDashboard selectedSite={ selectedSite } key="jetpackReturnToDashboard" />,
 		];
 	}
 
 	getJetpackPremiumFeatures() {
-		const {	selectedSite } = this.props;
+		const { selectedSite } = this.props;
 
 		return [
-			<JetpackBackupSecurity
-				key="jetpackBackupSecurity"
-			/>,
-			<JetpackAntiSpam
-				key="jetpackAntiSpam"
-			/>,
-			<JetpackWordPressCom
-				selectedSite={ selectedSite }
-				key="jetpackWordPressCom"
-			/>,
-			<JetpackReturnToDashboard
-				selectedSite={ selectedSite }
-				key="jetpackReturnToDashboard"
-			/>
+			<JetpackBackupSecurity key="jetpackBackupSecurity" />,
+			<JetpackAntiSpam key="jetpackAntiSpam" />,
+			<JetpackWordPressCom selectedSite={ selectedSite } key="jetpackWordPressCom" />,
+			<JetpackReturnToDashboard selectedSite={ selectedSite } key="jetpackReturnToDashboard" />,
 		];
 	}
 
 	getJetpackPersonalFeatures() {
-		const {	selectedSite } = this.props;
+		const { selectedSite } = this.props;
 
 		return [
-			<JetpackBackupSecurity
-				key="jetpackBackupSecurity"
-			/>,
-			<JetpackAntiSpam
-				key="jetpackAntiSpam"
-			/>,
-			<JetpackWordPressCom
-				selectedSite={ selectedSite }
-				key="jetpackWordPressCom"
-			/>,
-			<JetpackReturnToDashboard
-				selectedSite={ selectedSite }
-				key="jetpackReturnToDashboard"
-			/>
+			<JetpackBackupSecurity key="jetpackBackupSecurity" />,
+			<JetpackAntiSpam key="jetpackAntiSpam" />,
+			<JetpackWordPressCom selectedSite={ selectedSite } key="jetpackWordPressCom" />,
+			<JetpackReturnToDashboard selectedSite={ selectedSite } key="jetpackReturnToDashboard" />,
 		];
 	}
 
 	getJetpackBusinessFeatures() {
-		const {	selectedSite } = this.props;
+		const { selectedSite } = this.props;
 
 		return [
-			<JetpackBackupSecurity
-				key="jetpackBackupSecurity"
-			/>,
-			<JetpackAntiSpam
-				key="jetpackAntiSpam"
-			/>,
-			<JetpackWordPressCom
-				selectedSite={ selectedSite }
-				key="jetpackWordPressCom"
-			/>,
-			<JetpackReturnToDashboard
-				selectedSite={ selectedSite }
-				key="jetpackReturnToDashboard"
-			/>
+			<JetpackBackupSecurity key="jetpackBackupSecurity" />,
+			<JetpackAntiSpam key="jetpackAntiSpam" />,
+			<JetpackWordPressCom selectedSite={ selectedSite } key="jetpackWordPressCom" />,
+			<JetpackReturnToDashboard selectedSite={ selectedSite } key="jetpackReturnToDashboard" />,
 		];
 	}
 
@@ -285,16 +202,18 @@ class ProductPurchaseFeaturesList extends Component {
 }
 
 export default connect(
-	( state ) => {
-		const selectedSite = getSelectedSite( state ),
-			selectedSiteId = getSelectedSiteId( state );
+	state => {
+		const selectedSite = getSelectedSite( state ), selectedSiteId = getSelectedSiteId( state );
 
 		return {
 			selectedSite,
-			planHasDomainCredit: hasDomainCredit( state, selectedSiteId )
+			planHasDomainCredit: hasDomainCredit( state, selectedSiteId ),
 		};
 	},
 	{
-		recordBusinessOnboardingClick: partial( recordTracksEvent, 'calypso_plan_features_onboarding_click' )
-	}
+		recordBusinessOnboardingClick: partial(
+			recordTracksEvent,
+			'calypso_plan_features_onboarding_click',
+		),
+	},
 )( ProductPurchaseFeaturesList );

@@ -11,7 +11,9 @@ import { includes, without } from 'lodash';
  * Module variables
  */
 const debug = debugModule( 'calypso:protect-form' );
-const confirmText = i18n.translate( 'You have unsaved changes. Are you sure you want to leave this page?' );
+const confirmText = i18n.translate(
+	'You have unsaved changes. Are you sure you want to leave this page?',
+);
 const beforeUnloadText = i18n.translate( 'You have unsaved changes.' );
 let formsChanged = [];
 
@@ -43,7 +45,7 @@ export const protectForm = WrappedComponent => {
 
 		markSaved = () => {
 			formsChanged = without( formsChanged, this );
-		}
+		};
 
 		render() {
 			return (
@@ -62,7 +64,8 @@ export const checkFormHandler = ( context, next ) => {
 		return next();
 	}
 	debug( 'unsaved form changes detected' );
-	if ( window.confirm( confirmText ) ) { // eslint-disable-line no-alert
+	if ( window.confirm( confirmText ) ) {
+		// eslint-disable-line no-alert
 		formsChanged = [];
 		next();
 	} else {

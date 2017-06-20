@@ -22,28 +22,53 @@ export const GetApps = ( { translate } ) => (
 
 			<section className="get-apps__app">
 				<div className="get-apps__app-icon">
-					<img src="/calypso/images/me/get-apps-osx.svg" alt={ translate( 'Mac' ) } width="96" height="96" />
+					<img
+						src="/calypso/images/me/get-apps-osx.svg"
+						alt={ translate( 'Mac' ) }
+						width="96"
+						height="96"
+					/>
 				</div>
-				<p><strong>{ translate( 'Mac' ) }</strong><br />
-				{ translate( 'Requires 10.11 or newer' ) }</p>
-				<Button href="https://apps.wordpress.com/d/osx?ref=getapps">{ translate( 'Download', { context: 'verb' } ) }</Button>
+				<p>
+					<strong>{ translate( 'Mac' ) }</strong><br />
+					{ translate( 'Requires 10.11 or newer' ) }
+				</p>
+				<Button href="https://apps.wordpress.com/d/osx?ref=getapps">
+					{ translate( 'Download', { context: 'verb' } ) }
+				</Button>
 			</section>
 
 			<section className="get-apps__app">
 				<div className="get-apps__app-icon">
-					<img src="/calypso/images/me/get-apps-windows.svg" alt={ translate( 'Windows' ) } width="96" height="96" />
+					<img
+						src="/calypso/images/me/get-apps-windows.svg"
+						alt={ translate( 'Windows' ) }
+						width="96"
+						height="96"
+					/>
 				</div>
-				<p><strong>{ translate( 'Windows' ) }</strong><br />
-				{ translate( 'Requires 7 or newer' ) }</p>
-				<Button href="https://apps.wordpress.com/d/windows?ref=getapps">{ translate( 'Download' ) }</Button>
+				<p>
+					<strong>{ translate( 'Windows' ) }</strong><br />
+					{ translate( 'Requires 7 or newer' ) }
+				</p>
+				<Button href="https://apps.wordpress.com/d/windows?ref=getapps">
+					{ translate( 'Download' ) }
+				</Button>
 			</section>
 
 			<section className="get-apps__app">
 				<div className="get-apps__app-icon">
-					<img src="/calypso/images/me/get-apps-linux.svg" alt={ translate( 'Linux' ) } width="96" height="96" />
+					<img
+						src="/calypso/images/me/get-apps-linux.svg"
+						alt={ translate( 'Linux' ) }
+						width="96"
+						height="96"
+					/>
 				</div>
-				<p><strong>{ translate( 'Linux' ) }</strong><br />
-				{ translate( 'Choose your distribution' ) }</p>
+				<p>
+					<strong>{ translate( 'Linux' ) }</strong><br />
+					{ translate( 'Choose your distribution' ) }
+				</p>
 				<Button href="https://apps.wordpress.com/d/linux?ref=getapps">
 					{ translate( '.TAR.GZ' ) }
 				</Button>
@@ -59,7 +84,12 @@ export const GetApps = ( { translate } ) => (
 
 			<section className="get-apps__app">
 				<div className="get-apps__app-icon">
-					<img src="/calypso/images/me/get-apps-ios.svg" alt={ translate( 'iOS' ) } width="96" height="96" />
+					<img
+						src="/calypso/images/me/get-apps-ios.svg"
+						alt={ translate( 'iOS' ) }
+						width="96"
+						height="96"
+					/>
 				</div>
 				<p><strong>{ translate( 'iOS' ) }</strong></p>
 				<a href="https://itunes.apple.com/us/app/wordpress/id335703880?mt=8">
@@ -72,7 +102,12 @@ export const GetApps = ( { translate } ) => (
 
 			<section className="get-apps__app">
 				<div className="get-apps__app-icon">
-					<img src="/calypso/images/me/get-apps-android.svg" alt={ translate( 'Android' ) } width="96" height="96" />
+					<img
+						src="/calypso/images/me/get-apps-android.svg"
+						alt={ translate( 'Android' ) }
+						width="96"
+						height="96"
+					/>
 				</div>
 				<p><strong>{ translate( 'Android' ) }</strong></p>
 				<a href="https://play.google.com/store/apps/details?id=org.wordpress.android">

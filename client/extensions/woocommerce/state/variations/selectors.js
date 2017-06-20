@@ -8,5 +8,5 @@
  */
 export function getVariation( state, productId, variationId ) {
 	// TODO: Add fetched variations data.
-	return productId && variationId === 3 && { id: variationId } || undefined;
+	return ( productId && variationId === 3 && { id: variationId } ) || undefined;
 }

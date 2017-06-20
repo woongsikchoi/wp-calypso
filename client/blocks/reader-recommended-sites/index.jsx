@@ -50,7 +50,7 @@ export class RecommendedSites extends React.PureComponent {
 				recordTracksRailcarRender(
 					'recommended_site',
 					railcar,
-					{ ui_algo: 'following_manage_recommended_site', ui_position: index }
+					{ ui_algo: 'following_manage_recommended_site', ui_position: index },
 				);
 			};
 		}

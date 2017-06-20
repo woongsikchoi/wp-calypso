@@ -8,7 +8,6 @@ import i18n from 'i18n-calypso';
  * Internal dependencies
  */
 class AddressView extends Component {
-
 	static propTypes = {
 		address: PropTypes.shape( {
 			name: PropTypes.string.isRequired,

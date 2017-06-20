@@ -14,11 +14,11 @@ export default [
 	{
 		name: 'insert_media_item',
 		item: <GridiconButton icon="add-image" label={ i18n.translate( 'Add Media' ) } />,
-		cmd: 'wpcomAddMedia'
+		cmd: 'wpcomAddMedia',
 	},
 	{
 		name: 'insert_contact_form',
 		item: <GridiconButton icon="mention" label={ i18n.translate( 'Add Contact Form' ) } />,
-		cmd: 'wpcomContactForm'
-	}
+		cmd: 'wpcomContactForm',
+	},
 ];

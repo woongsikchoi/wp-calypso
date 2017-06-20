@@ -22,7 +22,7 @@ class ShippingOrigin extends Component {
 				name: 'Octopus Outlet Emporium',
 				street: '27 Main Street',
 				city: 'Ellington, CT 06029',
-				country: 'United States'
+				country: 'United States',
 			},
 		};
 	}
@@ -34,13 +34,16 @@ class ShippingOrigin extends Component {
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Shipping Origin' ) }
-					description={ translate( 'The address of where you will be shipping from.' ) } />
+					description={ translate( 'The address of where you will be shipping from.' ) }
+				/>
 				<Notice
 					status="is-info"
 					className="shipping__address-notice"
-					text={ translate( 'This is the address you entered while signing up for a WordPress.com Store.' ) }
-					showDismiss={ true } >
-				</Notice>
+					text={ translate(
+						'This is the address you entered while signing up for a WordPress.com Store.',
+					) }
+					showDismiss={ true }
+				/>
 				<Card>
 					<AddressView address={ this.state.address } />
 				</Card>

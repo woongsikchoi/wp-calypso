@@ -23,7 +23,7 @@ export default React.createClass( {
 
 	getInitialState() {
 		return {
-			rawContent: ''
+			rawContent: '',
 		};
 	},
 
@@ -41,13 +41,13 @@ export default React.createClass( {
 
 	onRawContentChange() {
 		this.setState( {
-			rawContent: PostEditStore.getRawContent()
+			rawContent: PostEditStore.getRawContent(),
 		} );
 	},
 
 	render() {
 		const currentUser = user.get();
-		const localeSlug = currentUser && currentUser.localeSlug || 'en';
+		const localeSlug = ( currentUser && currentUser.localeSlug ) || 'en';
 
 		switch ( localeSlug ) {
 			case 'ja':
@@ -68,15 +68,11 @@ export default React.createClass( {
 
 		return (
 			<div className="editor-word-count">
-				{ this.translate(
-					'%d word',
-					'%d words',
-					{
-						count: wordCount,
-						args: [ wordCount ]
-					}
-				) }
+				{ this.translate( '%d word', '%d words', {
+					count: wordCount,
+					args: [ wordCount ],
+				} ) }
 			</div>
 		);
-	}
+	},
 } );

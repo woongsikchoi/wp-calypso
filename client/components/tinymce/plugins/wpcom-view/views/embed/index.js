@@ -104,7 +104,7 @@ export default class EmbedViewManager extends EventEmitter {
 			const url = currentMatch[ 2 ];
 
 			// Disregard URL if it's not a supported embed pattern for the site
-			const isMatchingPattern = list.embeds.some( ( pattern ) => pattern.test( url ) );
+			const isMatchingPattern = list.embeds.some( pattern => pattern.test( url ) );
 			if ( ! isMatchingPattern ) {
 				continue;
 			}
@@ -119,7 +119,7 @@ export default class EmbedViewManager extends EventEmitter {
 
 			return {
 				index: currentMatch.index + currentMatch[ 1 ].length,
-				content: url
+				content: url,
 			};
 		}
 	}

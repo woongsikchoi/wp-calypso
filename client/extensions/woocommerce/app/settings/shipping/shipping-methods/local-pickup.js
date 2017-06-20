@@ -21,7 +21,7 @@ class LocalPickupMethod extends Component {
 			showTooltip: false,
 			currencySymbolPrefix: '$',
 			currencySymbolSuffix: '',
-			...props
+			...props,
 		};
 	}
 
@@ -39,25 +39,29 @@ class LocalPickupMethod extends Component {
 					<FormCurrencyInput
 						currencySymbolPrefix={ this.state.currencySymbolPrefix }
 						currencySymbolSuffix={ this.state.currencySymbolSuffix }
-						value={ this.state.price } />
+						value={ this.state.price }
+					/>
 				</FormFieldSet>
 				<FormFieldSet>
 					<FormCheckbox
 						checked={ this.state.taxable }
-						className="shipping-methods__local-pickup-taxable" />
+						className="shipping-methods__local-pickup-taxable"
+					/>
 					{ translate( 'Taxable' ) }
 					<span
 						className="shipping-methods__local-pickup-taxable-help"
 						ref="taxableHelp"
 						onMouseEnter={ toggleTooltip }
-						onMouseLeave={ toggleTooltip } >
-					<Gridicon icon="help-outline" size={ 18 } />
+						onMouseLeave={ toggleTooltip }
+					>
+						<Gridicon icon="help-outline" size={ 18 } />
 					</span>
 					<Tooltip
 						isVisible={ this.state.showTooltip }
 						context={ this.refs && this.refs.taxableHelp }
 						className="shipping-methods__local-pickup-taxable-tooltip is-dialog-visible"
-						position="top">
+						position="top"
+					>
 						{ translate( 'Taxable explanation' ) }
 					</Tooltip>
 				</FormFieldSet>

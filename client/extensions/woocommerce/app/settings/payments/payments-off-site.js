@@ -11,7 +11,6 @@ import ExtendedHeader from 'woocommerce/components/extended-header';
 import PaymentMethodList from './payment-method-list';
 
 class SettingsPaymentsOnSite extends Component {
-
 	render() {
 		const { translate } = this.props;
 
@@ -19,13 +18,11 @@ class SettingsPaymentsOnSite extends Component {
 			<div className="payments__type-container">
 				<ExtendedHeader
 					label={ translate( 'Off-site credit card payment methods' ) }
-					description={
-						translate(
-							'Send customers to a third party web site ' +
-							'to complete payment, like PayPal. '
-						)
-					} />
-					<PaymentMethodList methodType="off-site" />
+					description={ translate(
+						'Send customers to a third party web site ' + 'to complete payment, like PayPal. ',
+					) }
+				/>
+				<PaymentMethodList methodType="off-site" />
 			</div>
 		);
 	}

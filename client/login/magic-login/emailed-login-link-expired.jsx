@@ -13,9 +13,12 @@ import config from 'config';
 import EmptyContent from 'components/empty-content';
 import RedirectWhenLoggedIn from 'components/redirect-when-logged-in';
 
-const lostPasswordURL = addQueryArgs( {
-	action: 'lostpassword',
-}, config( 'login_url' ) );
+const lostPasswordURL = addQueryArgs(
+	{
+		action: 'lostpassword',
+	},
+	config( 'login_url' ),
+);
 
 class EmailedLoginLinkExpired extends React.Component {
 	render() {
@@ -37,7 +40,7 @@ class EmailedLoginLinkExpired extends React.Component {
 					secondaryAction={ translate( 'Reset my password' ) }
 					secondaryActionURL={ lostPasswordURL }
 					title={ translate( 'Login link is expired or invalid' ) }
-					/>
+				/>
 			</div>
 		);
 	}

@@ -49,7 +49,7 @@ class PurchaseMeta extends Component {
 			.isRequired,
 		selectedPurchase: React.PropTypes.object,
 		selectedSite: React.PropTypes.oneOfType(
-			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ]
+			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ],
 		),
 	};
 
@@ -75,7 +75,7 @@ class PurchaseMeta extends Component {
 					components: {
 						period: <span className="manage-purchase__time-period" />,
 					},
-				}
+				},
 			);
 		}
 
@@ -95,7 +95,7 @@ class PurchaseMeta extends Component {
 				components: {
 					period: <span className="manage-purchase__time-period" />,
 				},
-			}
+			},
 		);
 	}
 
@@ -153,7 +153,7 @@ class PurchaseMeta extends Component {
 		if ( isIncludedWithPlan( purchase ) ) {
 			const attachedPlanUrl = paths.managePurchase(
 				this.props.selectedSite.slug,
-				purchase.attachedToPurchaseId
+				purchase.attachedToPurchaseId,
 			);
 
 			return (
@@ -280,7 +280,7 @@ class PurchaseMeta extends Component {
 						components: {
 							contactSupportLink: <a href={ support.CALYPSO_CONTACT } />,
 						},
-					}
+					},
 				) }
 			</div>
 		);

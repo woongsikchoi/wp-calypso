@@ -12,7 +12,7 @@ import {
 	isCurrentlyEditingShippingZone,
 	canChangeShippingZoneTitle,
 	canRemoveShippingZone,
-	canEditShippingZoneLocations
+	canEditShippingZoneLocations,
 } from '../selectors';
 import { LOADING } from 'woocommerce/state/constants';
 import { createState } from 'woocommerce/state/test/helpers';
@@ -62,7 +62,7 @@ describe( 'selectors', () => {
 			expect( getShippingZones( state ) ).to.deep.equal( [] );
 		} );
 
-		it( 'should return an empty list when the zones didn\'t load', () => {
+		it( "should return an empty list when the zones didn't load", () => {
 			const state = createState( {
 				site: {
 					shippingZones: null,
@@ -85,10 +85,9 @@ describe( 'selectors', () => {
 				ui: {},
 			} );
 
-			expect( getShippingZones( state ) ).to.deep.equal( [
-				{ id: 1, methodIds: [], name: 'Zone1' },
-				{ id: 2, methodIds: [], name: 'Zone2' },
-			] );
+			expect( getShippingZones( state ) ).to.deep.equal(
+				[ { id: 1, methodIds: [], name: 'Zone1' }, { id: 2, methodIds: [], name: 'Zone2' } ],
+			);
 		} );
 
 		it( 'should apply the "edits" changes to the zone list', () => {
@@ -99,39 +98,37 @@ describe( 'selectors', () => {
 						{ id: 2, methodIds: [], name: 'Zone2' },
 						{ id: 3, methodIds: [], name: 'Zone3' },
 					],
-					shippingZoneLocations: { 1: emptyZoneLocations, 2: emptyZoneLocations, 3: emptyZoneLocations },
+					shippingZoneLocations: {
+						1: emptyZoneLocations,
+						2: emptyZoneLocations,
+						3: emptyZoneLocations,
+					},
 				},
 				ui: {
 					shipping: {
 						zones: {
-							creates: [
-								{ id: { index: 0 }, methodIds: [], name: 'NewZone4' },
-							],
-							updates: [
-								{ id: 2, name: 'EditedZone2' },
-							],
-							deletes: [
-								{ id: 1 },
-							],
+							creates: [ { id: { index: 0 }, methodIds: [], name: 'NewZone4' } ],
+							updates: [ { id: 2, name: 'EditedZone2' } ],
+							deletes: [ { id: 1 } ],
 							currentlyEditingId: null,
 						},
 					},
 				},
 			} );
 
-			expect( getShippingZones( state ) ).to.deep.equal( [
-				{ id: 2, methodIds: [], name: 'EditedZone2' },
-				{ id: 3, methodIds: [], name: 'Zone3' },
-				{ id: { index: 0 }, methodIds: [], name: 'NewZone4' },
-			] );
+			expect( getShippingZones( state ) ).to.deep.equal(
+				[
+					{ id: 2, methodIds: [], name: 'EditedZone2' },
+					{ id: 3, methodIds: [], name: 'Zone3' },
+					{ id: { index: 0 }, methodIds: [], name: 'NewZone4' },
+				],
+			);
 		} );
 
 		it( 'should NOT apply the uncommitted changes made in the modal', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [], name: 'Zone1' },
-					],
+					shippingZones: [ { id: 1, methodIds: [], name: 'Zone1' } ],
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
 				ui: {
@@ -147,7 +144,9 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getShippingZones( state ) ).to.deep.equal( [ { id: 1, methodIds: [], name: 'Zone1' } ] );
+			expect( getShippingZones( state ) ).to.deep.equal(
+				[ { id: 1, methodIds: [], name: 'Zone1' } ],
+			);
 		} );
 	} );
 
@@ -155,9 +154,7 @@ describe( 'selectors', () => {
 		it( 'should return null when there is no zone being edited', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [] },
-					],
+					shippingZones: [ { id: 1, methodIds: [] } ],
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
 				ui: {
@@ -194,16 +191,16 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal( { id: 1, methodIds: [], name: 'MyZone' } );
+			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal(
+				{ id: 1, methodIds: [], name: 'MyZone' },
+			);
 			expect( isCurrentlyEditingShippingZone( state ) ).to.be.true;
 		} );
 
 		it( 'should return the zone being edited, with both the committed and non-committed changes overlayed', () => {
 			const state = createState( {
 				site: {
-					shippingZones: [
-						{ id: 1, methodIds: [], name: 'MyZone' },
-					],
+					shippingZones: [ { id: 1, methodIds: [], name: 'MyZone' } ],
 					shippingZoneLocations: { 1: emptyZoneLocations },
 				},
 				ui: {
@@ -218,7 +215,9 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal( { id: 1, methodIds: [], name: 'MyNewZone' } );
+			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal(
+				{ id: 1, methodIds: [], name: 'MyNewZone' },
+			);
 			expect( isCurrentlyEditingShippingZone( state ) ).to.be.true;
 		} );
 
@@ -239,20 +238,22 @@ describe( 'selectors', () => {
 				},
 			} );
 
-			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal( { id: { index: 0 }, name: 'MyNewZone' } );
+			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal(
+				{ id: { index: 0 }, name: 'MyNewZone' },
+			);
 			expect( isCurrentlyEditingShippingZone( state ) ).to.be.true;
 		} );
 	} );
 
 	describe( 'is shipping zone editable', () => {
-		it( 'is editable when it\'s a locally created zone', () => {
+		it( "is editable when it's a locally created zone", () => {
 			const zoneId = { index: 0 };
 			expect( canChangeShippingZoneTitle( zoneId ) ).to.be.true;
 			expect( canRemoveShippingZone( zoneId ) ).to.be.true;
 			expect( canEditShippingZoneLocations( zoneId ) ).to.be.true;
 		} );
 
-		it( 'is editable when it\'s a regular zone', () => {
+		it( "is editable when it's a regular zone", () => {
 			const zoneId = 7;
 			expect( canChangeShippingZoneTitle( zoneId ) ).to.be.true;
 			expect( canRemoveShippingZone( zoneId ) ).to.be.true;

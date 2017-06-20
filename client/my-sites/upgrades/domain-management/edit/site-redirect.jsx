@@ -54,8 +54,7 @@ const SiteRedirect = React.createClass( {
 
 						{ this.getAutoRenewalOrExpirationDate() }
 
-						<SubscriptionSettings
-							onClick={ this.handlePaymentSettingsClick } />
+						<SubscriptionSettings onClick={ this.handlePaymentSettingsClick } />
 					</Card>
 				</div>
 
@@ -68,11 +67,16 @@ const SiteRedirect = React.createClass( {
 
 	siteRedirectNavItem() {
 		return (
-			<VerticalNavItem path={ paths.domainManagementRedirectSettings( this.props.selectedSite.slug, this.props.domain.name ) }>
+			<VerticalNavItem
+				path={ paths.domainManagementRedirectSettings(
+					this.props.selectedSite.slug,
+					this.props.domain.name,
+				) }
+			>
 				{ this.props.translate( 'Redirect Settings' ) }
 			</VerticalNavItem>
 		);
-	}
+	},
 } );
 
 export default localize( SiteRedirect );

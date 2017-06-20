@@ -1,4 +1,3 @@
-
 /**
  * Gets product fetched from server.
  *
@@ -8,6 +7,5 @@
  */
 export function getProduct( state, productId ) {
 	// TODO: Add fetched product data.
-	return productId === 1 && { id: productId } || undefined;
+	return ( productId === 1 && { id: productId } ) || undefined;
 }
-

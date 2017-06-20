@@ -11,18 +11,18 @@ import React, { Component, PropTypes } from 'react';
 class ProcessOrdersWidget extends Component {
 	static propTypes = {
 		className: PropTypes.string,
-	}
+	};
 
 	render = () => {
 		const { className } = this.props;
 		const classes = classNames( 'card', 'process-orders-widget__container', className );
 
 		return (
-			<div className={ classes } >
+			<div className={ classes }>
 				{ 'TODO Process Orders Widget' }
 			</div>
 		);
-	}
+	};
 }
 
 export default ProcessOrdersWidget;

@@ -7,11 +7,7 @@ import { set } from 'lodash';
 /**
  * Internal dependencies
  */
-import {
-	getActionList,
-	getCurrentStepIndex,
-	getStepCountRemaining,
-} from '../selectors';
+import { getActionList, getCurrentStepIndex, getStepCountRemaining } from '../selectors';
 
 describe( 'selectors', () => {
 	describe( 'getActionList', () => {
@@ -45,10 +41,17 @@ describe( 'selectors', () => {
 
 			const actionList = {
 				steps: [
-					{ description: 'Action Step 1', action: { type: 'ACTION1' },
-						startTime: fiveSecondsAgo, endTime: threeSecondsAgo },
-					{ description: 'Action Step 2', action: { type: 'ACTION2' },
-						startTime: twoSecondsAgo },
+					{
+						description: 'Action Step 1',
+						action: { type: 'ACTION1' },
+						startTime: fiveSecondsAgo,
+						endTime: threeSecondsAgo,
+					},
+					{
+						description: 'Action Step 2',
+						action: { type: 'ACTION2' },
+						startTime: twoSecondsAgo,
+					},
 					{ description: 'Action Step 3', action: { type: 'ACTION3' } },
 				],
 				successAction: { type: '%%SUCCESS%%' },
@@ -66,10 +69,18 @@ describe( 'selectors', () => {
 
 			const actionList = {
 				steps: [
-					{ description: 'Action Step 1', action: { type: 'ACTION1' },
-						startTime: fiveSecondsAgo, endTime: threeSecondsAgo },
-					{ description: 'Action Step 2', action: { type: 'ACTION2' },
-						startTime: twoSecondsAgo, endTime: oneSecondAgo },
+					{
+						description: 'Action Step 1',
+						action: { type: 'ACTION1' },
+						startTime: fiveSecondsAgo,
+						endTime: threeSecondsAgo,
+					},
+					{
+						description: 'Action Step 2',
+						action: { type: 'ACTION2' },
+						startTime: twoSecondsAgo,
+						endTime: oneSecondAgo,
+					},
 				],
 				successAction: { type: '%%SUCCESS%%' },
 				failureAction: { type: '%%FAILURE%%' },
@@ -107,8 +118,11 @@ describe( 'selectors', () => {
 
 			const actionList = {
 				steps: [
-					{ description: 'Action Step 1', action: { type: 'ACTION1' },
-						startTime: fiveSecondsAgo },
+					{
+						description: 'Action Step 1',
+						action: { type: 'ACTION1' },
+						startTime: fiveSecondsAgo,
+					},
 					{ description: 'Action Step 2', action: { type: 'ACTION2' } },
 				],
 			};
@@ -124,10 +138,18 @@ describe( 'selectors', () => {
 
 			const actionList = {
 				steps: [
-					{ description: 'Action Step 1', action: { type: 'ACTION1' },
-						startTime: fiveSecondsAgo, endTime: threeSecondsAgo },
-					{ description: 'Action Step 2', action: { type: 'ACTION2' },
-						startTime: twoSecondsAgo, endTime: oneSecondAgo },
+					{
+						description: 'Action Step 1',
+						action: { type: 'ACTION1' },
+						startTime: fiveSecondsAgo,
+						endTime: threeSecondsAgo,
+					},
+					{
+						description: 'Action Step 2',
+						action: { type: 'ACTION2' },
+						startTime: twoSecondsAgo,
+						endTime: oneSecondAgo,
+					},
 				],
 				successAction: { type: '%%SUCCESS%%' },
 				failureAction: { type: '%%FAILURE%%' },
@@ -137,4 +159,3 @@ describe( 'selectors', () => {
 		} );
 	} );
 } );
-

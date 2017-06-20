@@ -7,17 +7,15 @@ import config from 'config';
 
 export default class Emojify extends PureComponent {
 	static propTypes = {
-		children: PropTypes.oneOfType( [
-			PropTypes.array.isRequired,
-			PropTypes.object.isRequired,
-			PropTypes.string.isRequired,
-		] ),
-		className: PropTypes.string
-	}
+		children: PropTypes.oneOfType(
+			[ PropTypes.array.isRequired, PropTypes.object.isRequired, PropTypes.string.isRequired ],
+		),
+		className: PropTypes.string,
+	};
 
 	static defaultProps = {
-		className: 'emojify__emoji'
-	}
+		className: 'emojify__emoji',
+	};
 
 	componentDidMount() {
 		this.parseEmoji();
@@ -42,13 +40,11 @@ export default class Emojify extends PureComponent {
 				}
 
 				return ''.concat( options.base, options.size, '/', icon, options.ext );
-			}
+			},
 		} );
-	}
+	};
 
 	render() {
-		return (
-			<div className="emojify" ref="emojified">{ this.props.children }</div>
-		);
+		return <div className="emojify" ref="emojified">{ this.props.children }</div>;
 	}
 }

@@ -16,20 +16,17 @@ import QuerySitePlans from 'components/data/query-site-plans';
 import { getPlansBySite } from 'state/sites/plans/selectors';
 import { getSelectedSite } from 'state/ui/selectors';
 
-const stores = [
-	DomainsStore,
-	CartStore
-];
+const stores = [ DomainsStore, CartStore ];
 
 function getStateFromStores( props ) {
 	return {
 		cart: CartStore.get(),
 		context: props.context,
-		domains: ( props.selectedSite ? DomainsStore.getBySite( props.selectedSite.ID ) : null ),
+		domains: props.selectedSite ? DomainsStore.getBySite( props.selectedSite.ID ) : null,
 		products: props.products,
 		selectedDomainName: props.selectedDomainName,
 		selectedSite: props.selectedSite,
-		sitePlans: props.sitePlans
+		sitePlans: props.sitePlans,
 	};
 }
 
@@ -39,7 +36,7 @@ const DomainManagementData = React.createClass( {
 		productsList: PropTypes.object.isRequired,
 		selectedDomainName: PropTypes.string,
 		selectedSite: PropTypes.object,
-		sitePlans: PropTypes.object.isRequired
+		sitePlans: PropTypes.object.isRequired,
 	},
 
 	mixins: [ observe( 'productsList' ) ],
@@ -74,12 +71,10 @@ const DomainManagementData = React.createClass( {
 					sitePlans={ this.props.sitePlans }
 					context={ this.props.context }
 				/>
-				{ this.props.selectedSite &&
-					<QuerySitePlans siteId={ this.props.selectedSite.ID } />
-				}
+				{ this.props.selectedSite && <QuerySitePlans siteId={ this.props.selectedSite.ID } /> }
 			</div>
 		);
-	}
+	},
 } );
 
 const mapStateToProps = state => {

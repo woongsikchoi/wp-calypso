@@ -22,7 +22,7 @@ describe( 'actions', () => {
 		const siteId = '123';
 
 		useSandbox();
-		useNock( ( nock ) => {
+		useNock( nock => {
 			nock( 'https://public-api.wordpress.com:443' )
 				.persist()
 				.get( '/rest/v1.1/jetpack-blogs/123/rest-api/' )
@@ -32,16 +32,18 @@ describe( 'actions', () => {
 						body: orders,
 						headers: { 'X-WP-TotalPages': 3, 'X-WP-Total': 30 },
 						status: 200,
-					}
+					},
 				} )
 				.get( '/rest/v1.1/jetpack-blogs/234/rest-api/' )
-				.query( { path: '/wc/v3/orders&page=invalid&per_page=100&_envelope&_method=get', json: true } )
+				.query(
+					{ path: '/wc/v3/orders&page=invalid&per_page=100&_envelope&_method=get', json: true },
+				)
 				.reply( 404, {
 					data: {
 						message: 'Invalid parameter(s): page',
 						error: 'rest_invalid_param',
 						status: 400,
-					}
+					},
 				} );
 		} );
 
@@ -49,7 +51,9 @@ describe( 'actions', () => {
 			const getState = () => ( {} );
 			const dispatch = spy();
 			fetchOrders( siteId, 1 )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith( { type: WOOCOMMERCE_ORDERS_REQUEST, siteId, page: 1 } );
+			expect( dispatch ).to.have.been.calledWith(
+				{ type: WOOCOMMERCE_ORDERS_REQUEST, siteId, page: 1 },
+			);
 		} );
 
 		it( 'should dispatch a success action with orders list when request completes', () => {
@@ -63,7 +67,7 @@ describe( 'actions', () => {
 					siteId,
 					page: 1,
 					totalPages: 3,
-					orders
+					orders,
 				} );
 			} );
 		} );
@@ -93,12 +97,12 @@ describe( 'actions', () => {
 									},
 									items: {},
 									pages: {},
-									totalPages: 1
-								}
-							}
-						}
-					}
-				}
+									totalPages: 1,
+								},
+							},
+						},
+					},
+				},
 			} );
 			const dispatch = spy();
 			fetchOrders( 123, 1 )( dispatch, getState );
