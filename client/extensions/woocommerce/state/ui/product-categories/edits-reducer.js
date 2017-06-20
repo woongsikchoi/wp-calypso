@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { compact } from 'lodash';
 
 /**
  * Internal dependencies
@@ -34,13 +35,15 @@ function editProductCategory( array, category, data ) {
 	let found = false;
 
 	// Look for this object in the appropriate create or edit array first.
-	const newArray = prevArray.map( ( c ) => {
+	const newArray = compact( prevArray.map( ( c ) => {
 		if ( category.id === c.id ) {
 			found = true;
-			return { ...c, ...data };
+
+			// If data is null, remove this edit, otherwise update the edit data.
+			return ( data ? { ...c, ...data } : undefined );
 		}
 		return c;
-	} );
+	} ) );
 
 	if ( ! found ) {
 		// update or create not already in edit state, so add it now.
