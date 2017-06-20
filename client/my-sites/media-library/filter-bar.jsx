@@ -19,6 +19,7 @@ import Search from 'components/search';
 import TrackComponentView from 'lib/analytics/track-component-view';
 import PlanStorage from 'blocks/plan-storage';
 import FilterItem from './filter-item';
+import SelectDropdown from 'components/select-dropdown';
 
 export class MediaLibraryFilterBar extends Component {
 	static propTypes = {
@@ -85,8 +86,8 @@ export class MediaLibraryFilterBar extends Component {
 		this.props.onFilterChange( filter );
 	};
 
-	changeSource = source => {
-		this.props.onSourceChange( source );
+	changeSource = choice => {
+		this.props.onSourceChange( choice.value );
 	};
 
 	renderTabItems() {
@@ -106,17 +107,14 @@ export class MediaLibraryFilterBar extends Component {
 	}
 
 	renderSourceItem() {
-		const nextService = this.props.source === '' ? 'google_photos' : '';
 		const { translate } = this.props;
-		const services = {
-			'': 'WordPress',
-			google_photos: translate( 'Photos from Google' ),
-		};
+		const services = [
+			{ value: '', label: 'WordPress' },
+			{ value: 'google_photos', label: translate( 'Photos from Google' ) },
+		];
 
 		return (
-			<FilterItem onChange={ this.changeSource } value={ nextService }>
-				{ services[ this.props.source ] }
-			</FilterItem>
+			<SelectDropdown options={ services } onSelect={ this.changeSource } initialSelected={ this.props.source } />
 		);
 	}
 

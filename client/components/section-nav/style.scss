@@ -215,7 +215,7 @@
 	@include breakpoint( ">480px" ) {
 		display: flex;
 		width: 100%;
-		overflow: hidden;
+/*		overflow: hidden; */
 
 		.is-dropdown & {
 			display: none;
