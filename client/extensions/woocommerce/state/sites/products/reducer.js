@@ -25,10 +25,10 @@ export default createReducer( {}, {
 } );
 
 function productUpdated( state, action ) {
-	const { product } = action;
+	const { data } = action;
 	const products = state.products || [];
 	return { ...state,
-		products: updateCachedProduct( products, product ),
+		products: updateCachedProduct( products, data ),
 	};
 }
 
