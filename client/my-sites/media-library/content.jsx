@@ -58,6 +58,12 @@ const MediaLibraryContent = React.createClass( {
 		};
 	},
 
+	componentWillMount: function() {
+		if ( ! this.props.isRequesting ) {
+			this.props.requestKeyringConnections();
+		}
+	},
+
 	renderErrors: function() {
 		var errorTypes, notices;
 
@@ -179,6 +185,27 @@ const MediaLibraryContent = React.createClass( {
 		return MEDIA_IMAGE_PHOTON;
 	},
 
+	renderExternalMedia() {
+		if ( this.props.isRequesting ) {
+			return (
+				<MediaLibraryList key="list-loading" />
+			);
+		}
+
+		const connectMessage = translate( 'To show Photos from Google, you will need to connect to your Google account. You can do that in {{link}}your Sharing settings{{/link}}.', {
+			components: {
+				link: <a href="/sharing/" />
+			}
+		} );
+
+		return (
+			<div className="media-library__connect-message">
+				<p><img src="/calypso/images/sharing/google-photos-logo.svg" width="96" height="96" /></p>
+				<p>{ connectMessage }</p>
+			</div>
+		);
+	},
+
 	getThumbnailType() {
 		if ( this.props.source !== '' ) {
 			return MEDIA_IMAGE_THUMBNAIL;
@@ -194,6 +221,10 @@ const MediaLibraryContent = React.createClass( {
 	renderMediaList: function() {
 		if ( ! this.props.site ) {
 			return <MediaLibraryList key="list-loading" />;
+		}
+
+		if ( this.props.source !== '' && ! some( this.props.connectedServices, item => item.service === this.props.source ) ) {
+			return this.renderExternalMedia();
 		}
 
 		return (

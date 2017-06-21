@@ -110,7 +110,7 @@ export class MediaLibraryFilterBar extends Component {
 		const { translate } = this.props;
 		const services = [
 			{ value: '', label: 'WordPress' },
-			{ value: 'google_photos', label: translate( 'Photos from Google' ) },
+			{ value: 'google_photos', label: translate( 'Google' ) },
 		];
 
 		return (
@@ -148,9 +148,11 @@ export class MediaLibraryFilterBar extends Component {
 	render() {
 		return (
 			<div className="media-library__filter-bar">
+				<div className="media-library__source-picker">
+					{ this.renderSourceItem() }
+				</div>
 				<SectionNav selectedText={ this.getFilterLabel( this.props.filter ) } hasSearch={ true }>
 					<SectionNavTabs>
-						{ this.renderSourceItem() }
 						{ this.renderTabItems() }
 					</SectionNavTabs>
 					{ this.renderSearchSection() }
