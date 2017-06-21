@@ -30,7 +30,6 @@ import Dialog from 'components/dialog';
 import { deletePostShareAction } from 'state/sharing/publicize/publicize-actions/actions';
 import analytics from 'lib/analytics';
 import SharingPreviewModal from './sharing-preview-modal';
-import { UpgradeToPremiumNudge } from 'blocks/post-share/nudges';
 import Notice from 'components/notice';
 
 class PublicizeActionsList extends PureComponent {
@@ -177,8 +176,6 @@ class PublicizeActionsList extends PureComponent {
 
 	renderActionsList = () => {
 		const {
-			hasRepublicizeFeature,
-			hasRepublicizeSchedulingFeature,
 			publishedActions,
 			scheduledActions,
 			translate,
@@ -192,14 +189,11 @@ class PublicizeActionsList extends PureComponent {
 			);
 		}
 
-		if ( hasRepublicizeFeature && ! hasRepublicizeSchedulingFeature ) {
-			return <UpgradeToPremiumNudge { ...this.props } />;
-		}
 		if ( scheduledActions.length === 0 ) {
 			return <Notice
 				status="is-info"
 				showDismiss={ false }
-				text={ translate( 'Did you know you can decide exactly when Publicize shares your post? You can!' +
+				text={ translate( 'Did you know you can decide exactly when Publicize shares your post? You can! ' +
 					'Click the calendar icon next to "Share post" to schedule your social shares.' ) }
 			/>;
 		}
@@ -234,7 +228,6 @@ class PublicizeActionsList extends PureComponent {
 	render() {
 		const {
 			hasRepublicizeFeature,
-			hasRepublicizeSchedulingFeature,
 			postId,
 			siteId,
 		} = this.props;
@@ -243,7 +236,7 @@ class PublicizeActionsList extends PureComponent {
 			<div>
 				<SectionNav className="post-share__footer-nav" selectedText={ 'some text' }>
 					<NavTabs label="Status" selectedText="Published">
-						{ ( hasRepublicizeFeature || hasRepublicizeSchedulingFeature ) &&
+						{ hasRepublicizeFeature &&
 							<NavItem
 								selected={ this.state.selectedShareTab === SCHEDULED }
 								count={ this.props.scheduledActions.length }
