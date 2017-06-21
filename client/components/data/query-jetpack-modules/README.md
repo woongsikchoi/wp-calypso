@@ -32,7 +32,7 @@ export default function MyJetpackModulesList( { jetpackModules } ) {
 
 <table>
 	<tr><th>Type</th><td>Number</td></tr>
-	<tr><th>Required</th><td>Yes</td></tr>
+	<tr><th>Required</th><td>No</td></tr>
 </table>
 
 The site ID for which Jetpack modules should be requested.
