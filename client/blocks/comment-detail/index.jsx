@@ -185,6 +185,7 @@ export class CommentDetail extends Component {
 							blockUser={ this.blockUser }
 							commentContent={ commentContent }
 							commentDate={ commentDate }
+							commentStatus={ commentStatus }
 							repliedToComment={ repliedToComment }
 						/>
 						<CommentDetailReply />
