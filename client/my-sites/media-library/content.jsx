@@ -185,7 +185,7 @@ const MediaLibraryContent = React.createClass( {
 	renderExternalMedia() {
 		if ( this.props.isRequesting ) {
 			return (
-				<MediaLibraryList key="list-loading" />
+				<MediaLibraryList key="list-loading" filterRequiresUpgrade={ this.props.filterRequiresUpgrade } />
 			);
 		}
 
@@ -217,7 +217,7 @@ const MediaLibraryContent = React.createClass( {
 
 	renderMediaList: function() {
 		if ( ! this.props.site ) {
-			return <MediaLibraryList key="list-loading" />;
+			return <MediaLibraryList key="list-loading" filterRequiresUpgrade={ this.props.filterRequiresUpgrade } />;
 		}
 
 		if ( this.props.source !== '' && ! some( this.props.connectedServices, item => item.service === this.props.source ) ) {
