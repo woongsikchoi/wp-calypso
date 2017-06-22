@@ -29,6 +29,9 @@ class MediaModalSecondaryActions extends Component {
 		disabled: PropTypes.bool,
 		onDelete: PropTypes.func,
 		onViewDetails: PropTypes.func,
+		onCopyItem: PropTypes.func,
+		source: React.PropTypes.string,
+		modal: React.PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -44,12 +47,29 @@ class MediaModalSecondaryActions extends Component {
 			translate,
 			user,
 			view,
+			source,
+			modal,
 
 			onDelete,
 			onViewDetails,
+			onCopyItem,
 		} = this.props;
 
 		const buttons = [];
+
+		if ( source ) {
+			if ( ! modal && selectedItems.length > 0 ) {
+				buttons.push( {
+					key: 'edit',
+					text: translate( 'Copy to library' ),  // XXX check text
+					disabled: disabled,
+					primary: true,
+					onClick: onCopyItem
+				} );
+			}
+
+			return buttons;
+		}
 
 		if ( ModalViews.LIST === view && selectedItems.length ) {
 			buttons.push( {

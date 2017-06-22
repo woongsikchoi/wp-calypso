@@ -28,6 +28,7 @@ export default React.createClass( {
 		sliderPositionCount: PropTypes.number,
 		onMediaScaleChange: React.PropTypes.func,
 		onAddMedia: PropTypes.func,
+		onCopyItem: React.PropTypes.func,
 		sticky: React.PropTypes.bool,
 	},
 

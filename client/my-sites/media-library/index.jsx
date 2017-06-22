@@ -37,10 +37,12 @@ module.exports = React.createClass( {
 		onScaleChange: React.PropTypes.func,
 		onEditItem: React.PropTypes.func,
 		onSourceChange: React.PropTypes.func,
+		onCopyItem: React.PropTypes.func,
 		fullScreenDropZone: React.PropTypes.bool,
 		containerWidth: React.PropTypes.number,
 		single: React.PropTypes.bool,
-		scrollable: React.PropTypes.bool
+		scrollable: React.PropTypes.bool,
+		modal: React.PropTypes.bool,
 	},
 
 	getDefaultProps: function() {
@@ -50,6 +52,7 @@ module.exports = React.createClass( {
 			onScaleChange: () => {},
 			onSourceChange: () => {},
 			scrollable: false,
+			modal: true,
 			source: '',
 		};
 	},
@@ -136,8 +139,10 @@ module.exports = React.createClass( {
 				containerWidth={ this.props.containerWidth }
 				single={ this.props.single }
 				scrollable={ this.props.scrollable }
+				modal={ this.props.modal }
 				onAddMedia={ this.onAddMedia }
 				onAddAndEditImage={ this.props.onAddAndEditImage }
+				onCopyItem={ this.props.onCopyItem }
 				onMediaScaleChange={ this.props.onScaleChange }
 				selectedItems={ this.props.mediaLibrarySelectedItems }
 				onDeleteItem={ this.props.onDeleteItem }

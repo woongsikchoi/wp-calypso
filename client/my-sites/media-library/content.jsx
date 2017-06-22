@@ -44,7 +44,9 @@ const MediaLibraryContent = React.createClass( {
 		scrollable: React.PropTypes.bool,
 		onAddMedia: React.PropTypes.func,
 		onMediaScaleChange: React.PropTypes.func,
+		onCopyItem: React.PropTypes.func,
 		onEditItem: React.PropTypes.func,
+		modal: React.PropTypes.bool,
 	},
 
 	getDefaultProps: function() {
@@ -52,6 +54,7 @@ const MediaLibraryContent = React.createClass( {
 			mediaValidationErrors: Object.freeze( {} ),
 			onAddMedia: noop,
 			source: '',
+			modal: true,
 		};
 	},
 

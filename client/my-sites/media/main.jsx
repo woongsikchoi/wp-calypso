@@ -25,7 +25,8 @@ class Media extends Component {
 	static propTypes = {
 		selectedSite: PropTypes.object,
 		filter: PropTypes.string,
-		search: PropTypes.string
+		search: PropTypes.string,
+		source: PropTypes.string,
 	};
 
 	state = {
@@ -53,6 +54,26 @@ class Media extends Component {
 		}
 
 		page( redirect );
+	};
+
+	onSourceChange = source => {
+		const url = `/media/${ this.props.selectedSite.slug }` + ( source ? `?source=${ source }` : '' );
+
+		MediaActions.changeSource( this.props.selectedSite.ID, source );
+		page( url );
+	};
+
+	handleCopyItem = () => {
+		const site = this.props.selectedSite;
+		const items = MediaLibrarySelectedStore.getAll( site.ID );
+		const targetSource = this.props.source;
+
+		this.onSourceChange( '' );
+		this.setState( {
+			selectedImages: [],
+		}, () => {
+			MediaActions.addExternal( site.ID, items, targetSource );
+		} );
 	};
 
 	openDetailsModalForASingleImage = ( image ) => {
@@ -288,7 +309,10 @@ class Media extends Component {
 							onEditItem={ this.openDetailsModalForASingleImage }
 							onViewDetails={ this.openDetailsModalForAllSelected }
 							onDeleteItem={ this.handleDeleteMediaEvent }
+							onCopyItem={ this.handleCopyItem }
 							modal={ false }
+							source={ this.props.source }
+							onSourceChange={ this.onSourceChange }
 							containerWidth={ this.state.containerWidth } />
 					</MediaLibrarySelectedData>
 				) }
