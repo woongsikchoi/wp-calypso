@@ -42,6 +42,7 @@ import FormButton from 'components/forms/form-button';
 import { countries } from 'components/phone-input/data';
 import { toIcannFormat } from 'components/phone-input/phone-number';
 import FormPhoneMediaInput from 'components/forms/form-phone-media-input';
+import SecurePaymentFormPlaceholder from './secure-payment-form-placeholder.jsx';
 import wp from 'lib/wp';
 import ExtraInfoForm, { tldsWithAdditionalDetailsForms } from 'components/domains/registrant-extra-info';
 import config from 'config';
@@ -556,7 +557,21 @@ export class DomainDetailsForm extends PureComponent {
 					title={ title }>
 					{ this.renderCurrentForm() }
 				</PaymentBox>
-			<QueryContactDetailsCache />
+			</div>
+		);
+	}
+}
+
+export class DomainDetailsFormContainer extends PureComponent {
+	render() {
+		return (
+			<div>
+				<QueryContactDetailsCache />
+				{
+					this.props.contactDetails
+						? <DomainDetailsForm { ...this.props } />
+						: <SecurePaymentFormPlaceholder />
+				}
 			</div>
 		);
 	}
@@ -565,4 +580,4 @@ export class DomainDetailsForm extends PureComponent {
 export default connect(
 	state => ( { contactDetails: getContactDetailsCache( state ) } ),
 	{ updateContactDetailsCache }
-)( localize( DomainDetailsForm ) );
+)( localize( DomainDetailsFormContainer ) );
