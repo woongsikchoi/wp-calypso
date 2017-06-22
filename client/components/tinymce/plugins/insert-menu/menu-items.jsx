@@ -1,5 +1,7 @@
+/**
+ * External dependencies
+ */
 import React from 'react';
-
 import Gridicon from 'gridicons';
 import i18n from 'i18n-calypso';
 
@@ -15,6 +17,11 @@ export default [
 		name: 'insert_media_item',
 		item: <GridiconButton icon="add-image" label={ i18n.translate( 'Add Media' ) } />,
 		cmd: 'wpcomAddMedia'
+	},
+	{
+		name: 'insert_from_google',
+		item: <GridiconButton icon="add-image" label={ i18n.translate( 'Add from Google' ) } />,
+		cmd: 'googleAddMedia'
 	},
 	{
 		name: 'insert_contact_form',
