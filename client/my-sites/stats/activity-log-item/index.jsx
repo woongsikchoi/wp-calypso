@@ -19,55 +19,76 @@ class ActivityLogItem extends Component {
 	static propTypes = {
 		allowRestore: PropTypes.bool.isRequired,
 		siteId: PropTypes.number.isRequired,
-		timestamp: PropTypes.number.isRequired,
 		requestRestore: PropTypes.func.isRequired,
-		title: PropTypes.string,
-		subTitle: PropTypes.string,
-		className: PropTypes.string,
-		icon: PropTypes.string,
-		status: PropTypes.oneOf( [ 'is-success', 'is-warning', 'is-error', 'is-info' ] ),
-		user: PropTypes.object,
-		actionText: PropTypes.string,
-		description: PropTypes.string
+
+		log: PropTypes.shape( {
+			ts_site: PropTypes.number.isRequired,
+			ts_utc: PropTypes.number.isRequired,
+			name: PropTypes.string.isRequired,
+
+			actor: PropTypes.shape( {
+				display_name: PropTypes.string,
+				login: PropTypes.string,
+				user_email: PropTypes.string,
+				wpcom_user_id: PropTypes.number,
+			} ),
+			group: PropTypes.string,
+
+			object: PropTypes.shape( {
+				post: PropTypes.shape( {
+					id: PropTypes.number.isRequired,
+					status: PropTypes.string,
+					type: PropTypes.string,
+					title: PropTypes.string,
+				} ),
+
+				comment: PropTypes.shape( {
+					approved: PropTypes.bool,
+					id: PropTypes.number,
+				} ),
+
+				user: PropTypes.shape( {
+					display_name: PropTypes.string,
+					login: PropTypes.string,
+				} ),
+
+			} ),
+		} ).isRequired,
 	};
 
-	static defaultProps = {
-		allowRestore: true,
-		status: 'is-info',
-		icon: 'info-outline'
-	};
+	static defaultProps = { allowRestore: true };
 
 	handleClickRestore = () => {
 		const {
 			requestRestore,
-			timestamp,
+			log,
 		} = this.props;
-		requestRestore( timestamp );
+		requestRestore( log.ts_utc );
 	};
 
 	getTime() {
 		const {
 			moment,
-			timestamp
+			log,
 		} = this.props;
 
 		return (
 			<div className="activity-log-item__time">
-				{ moment( timestamp ).format( 'LT' ) }
+				{ moment( log.ts_site ).format( 'LT' ) }
 			</div>
 		);
 	}
 
 	getIcon() {
-		const {
-			icon,
-			status
-		} = this.props;
-
+		const { log } = this.props;
 		const classes = classNames(
 			'activity-log-item__icon',
-			status
+			this.getStatus(),
 		);
+		let icon = 'info-outline';
+		switch ( log.name ) {
+			case
+		}
 
 		return (
 			<div className={ classes }>
